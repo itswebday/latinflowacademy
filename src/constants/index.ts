@@ -1,0 +1,6 @@
+export {
+  NAV_MENU_CLOSING_DELAY,
+  NAV_MENU_CLOSING_DURATION,
+  NAV_MENU_OPENING_DURATION,
+} from "./app";
+export { LOCALES, DEFAULT_LOCALE } from "./locales";

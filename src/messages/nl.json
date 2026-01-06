@@ -1,0 +1,117 @@
+{
+  "general": {
+    "cookieNotification": "Wij gebruiken cookies om uw ervaring te verbeteren en ons verkeer te analyseren. Door onze website te blijven gebruiken, stemt u in met ons gebruik van cookies. Voor meer informatie, lees ons",
+    "cookiePolicy": "cookiebeleid",
+    "accept": "Accepteren",
+    "decline": "Weigeren",
+    "videoTagNotSupported": "Uw browser ondersteunt de video-tag niet.",
+    "errors": {
+      "localizedUrls": "Vertaalde URL's laden mislukt"
+    }
+  },
+
+  "home": {
+    "title": "Home",
+    "url": "/nl"
+  },
+
+  "blog": {
+    "title": "Blog",
+    "url": "/nl/blog",
+    "noPosts": "Nog geen blogposts.",
+    "readMore": "Lees meer",
+    "backToOverview": "Terug naar blogoverzicht",
+    "minRead": "min lezen",
+    "publishedAt": "Gepubliceerd op",
+    "notFound": "Blog Post Niet Gevonden",
+    "otherPosts": {
+      "heading": "Meer Artikelen",
+      "paragraph": "Ontdek meer interessante artikelen"
+    }
+  },
+
+  "news": {
+    "title": "Nieuws",
+    "url": "/nl/nieuws",
+    "noPosts": "Nog geen nieuwsberichten.",
+    "readMore": "Lees meer",
+    "backToOverview": "Terug naar nieuwsoverzicht",
+    "publishedAt": "Gepubliceerd op",
+    "notFound": "Nieuwsbericht Niet Gevonden",
+    "otherPosts": {
+      "heading": "Ander Nieuws"
+    }
+  },
+
+  "danceStyles": {
+    "title": "Dansstijlen",
+    "url": "/nl/dansstijlen",
+    "noPosts": "Nog geen dansstijlen.",
+    "readMore": "Lees meer",
+    "backToOverview": "Terug naar dansstijlen overzicht",
+    "publishedAt": "Gepubliceerd op",
+    "notFound": "Dansstijl Niet Gevonden",
+    "otherDanceStylesPosts": {
+      "heading": "Andere Dansstijlen"
+    }
+  },
+
+  "teachers": {
+    "title": "Docenten",
+    "url": "/nl/docenten",
+    "noPosts": "Nog geen docenten.",
+    "readMore": "Lees meer",
+    "backToOverview": "Terug naar docenten overzicht",
+    "publishedAt": "Gepubliceerd op",
+    "notFound": "Docent Niet Gevonden",
+    "otherPosts": {
+      "heading": "Andere Docenten"
+    }
+  },
+
+  "privacyPolicy": {
+    "title": "Privacybeleid",
+    "url": "/nl/privacybeleid"
+  },
+
+  "cookiePolicy": {
+    "title": "Cookiebeleid",
+    "url": "/nl/cookiebeleid"
+  },
+
+  "termsAndConditions": {
+    "title": "Algemene voorwaarden",
+    "url": "/nl/algemene-voorwaarden"
+  },
+
+  "pageNotFound": {
+    "title": "Pagina Niet Gevonden",
+    "paragraph": "De pagina die u zoekt bestaat niet."
+  },
+
+  "blocks": {
+    "prices": {
+      "buyButton": "Koop lessen"
+    }
+  },
+
+  "footer": {
+    "contact": {
+      "heading": "CONTACT"
+    },
+    "location": {
+      "heading": "LOCATIE"
+    },
+    "quickLinks": {
+      "heading": "Quick links"
+    },
+    "socialMedia": {
+      "heading": "STAY UP TO DATE WITH US"
+    },
+    "legalLinks": {
+      "heading": "NAVIGATIE",
+      "crn": "KvK",
+      "vat": "BTW"
+    }
+  }
+}

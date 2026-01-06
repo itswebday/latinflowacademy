@@ -1,0 +1,117 @@
+{
+  "general": {
+    "cookieNotification": "We use cookies to improve your experience and analyze our traffic. By using our website, you agree to our use of cookies. For more information, read our",
+    "cookiePolicy": "cookie policy",
+    "accept": "Accept",
+    "decline": "Decline",
+    "videoTagNotSupported": "Your browser does not support the video tag.",
+    "errors": {
+      "localizedUrls": "Failed to load translated URLs"
+    }
+  },
+
+  "home": {
+    "title": "Home",
+    "url": "/"
+  },
+
+  "blog": {
+    "title": "Blog",
+    "url": "/blog",
+    "noPosts": "No blog posts yet. Check back soon!",
+    "readMore": "Read more",
+    "backToOverview": "Back to blog overview",
+    "minRead": "min read",
+    "publishedAt": "Published on",
+    "notFound": "Blog Post Not Found",
+    "otherPosts": {
+      "heading": "More Articles",
+      "paragraph": "Discover more interesting articles"
+    }
+  },
+
+  "news": {
+    "title": "News",
+    "url": "/news",
+    "noPosts": "No news posts yet. Check back soon!",
+    "readMore": "Read more",
+    "backToOverview": "Back to news overview",
+    "publishedAt": "Published on",
+    "notFound": "News Post Not Found",
+    "otherPosts": {
+      "heading": "Other News"
+    }
+  },
+
+  "danceStyles": {
+    "title": "Dance Styles",
+    "url": "/dance-styles",
+    "noPosts": "No dance styles yet. Check back soon!",
+    "readMore": "Read more",
+    "backToOverview": "Back to dance styles overview",
+    "publishedAt": "Published on",
+    "notFound": "Dance Style Not Found",
+    "otherPosts": {
+      "heading": "Other Dance Styles"
+    }
+  },
+
+  "teachers": {
+    "title": "Teachers",
+    "url": "/teachers",
+    "noPosts": "No teachers yet. Check back soon!",
+    "readMore": "Read more",
+    "backToOverview": "Back to teachers overview",
+    "publishedAt": "Published on",
+    "notFound": "Teacher Not Found",
+    "otherPosts": {
+      "heading": "Other Teachers"
+    }
+  },
+
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "url": "/privacy-policy"
+  },
+
+  "cookiePolicy": {
+    "title": "Cookie Policy",
+    "url": "/cookie-policy"
+  },
+
+  "termsAndConditions": {
+    "title": "Terms and Conditions",
+    "url": "/terms-and-conditions"
+  },
+
+  "pageNotFound": {
+    "title": "Page Not Found",
+    "paragraph": "The page you're looking for doesn't exist."
+  },
+
+  "blocks": {
+    "prices": {
+      "buyButton": "Buy classes"
+    }
+  },
+
+  "footer": {
+    "contact": {
+      "heading": "CONTACT"
+    },
+    "location": {
+      "heading": "LOCATION"
+    },
+    "quickLinks": {
+      "heading": "Quick links"
+    },
+    "socialMedia": {
+      "heading": "STAY UP TO DATE WITH US"
+    },
+    "legalLinks": {
+      "heading": "NAVIGATION",
+      "crn": "KvK",
+      "vat": "VAT"
+    }
+  }
+}
