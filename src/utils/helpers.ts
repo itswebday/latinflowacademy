@@ -31,7 +31,7 @@ export const getMediaUrlAndAlt = (
 
 export const scrollToTop = () => {
   window.scrollTo({
-    top: -100,
+    top: 0,
     behavior: "smooth",
   });
 };
@@ -196,16 +196,8 @@ export const getUrl = (rawUrl: RawUrl, globals: Globals): string => {
     return getFromGlobal((global) => global.blog);
   }
 
-  if (rawUrl.urlType === "news") {
-    return getFromGlobal((global) => global.news);
-  }
-
-  if (rawUrl.urlType === "dance-styles") {
-    return getFromGlobal((global) => global.danceStyles);
-  }
-
-  if (rawUrl.urlType === "teachers") {
-    return getFromGlobal((global) => global.teachers);
+  if (rawUrl.urlType === "events") {
+    return getFromGlobal((global) => global.events);
   }
 
   if (rawUrl.urlType === "privacy-policy") {
@@ -221,11 +213,7 @@ export const getUrl = (rawUrl: RawUrl, globals: Globals): string => {
   }
 
   const pageValue =
-    rawUrl.page?.value ||
-    rawUrl.blogPost?.value ||
-    rawUrl.newsPost?.value ||
-    rawUrl.danceStylePost?.value ||
-    rawUrl.teacherPost?.value;
+    rawUrl.page?.value || rawUrl.blogPost?.value || rawUrl.eventPost?.value;
   const pageUrl =
     typeof pageValue === "object" && pageValue !== null && "url" in pageValue
       ? pageValue.url || ""
@@ -329,7 +317,10 @@ export const highlightText = (
       React.createElement(
         "span",
         {
-          className: twMerge("text-primary", highlightClassName),
+          className: twMerge(
+            "bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent",
+            highlightClassName,
+          ),
           key: `highlight-${match.start}`,
         },
         match.text,

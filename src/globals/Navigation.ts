@@ -105,30 +105,8 @@ export const Navigation: GlobalConfig = {
           },
         },
         {
-          name: "showOnNewsPage",
-          label: "Show on news page",
-          type: "checkbox",
-          defaultValue: true,
-          admin: {
-            condition: (_, siblingData) => {
-              return siblingData?.showOnEveryPage === false;
-            },
-          },
-        },
-        {
-          name: "showOnDanceStylesPage",
-          label: "Show on dance styles page",
-          type: "checkbox",
-          defaultValue: true,
-          admin: {
-            condition: (_, siblingData) => {
-              return siblingData?.showOnEveryPage === false;
-            },
-          },
-        },
-        {
-          name: "showOnTeachersPage",
-          label: "Show on teachers page",
+          name: "showOnEventsPage",
+          label: "Show on events page",
           type: "checkbox",
           defaultValue: true,
           admin: {

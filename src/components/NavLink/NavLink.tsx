@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -21,6 +22,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   onClick,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
 
   const handleClick = createLinkClickHandler(href, pathname, {
@@ -31,11 +33,31 @@ const NavLink: React.FC<NavLinkProps> = ({
     onClick,
   });
 
+  const content = (
+    <motion.div
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.2 }}
+    >
+      {/* Underline animation */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-0.5 bg-linear-to-r from-primary to-secondary"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        style={{ originX: 0 }}
+      />
+      {children}
+    </motion.div>
+  );
+
   const attributes = {
     className: `
-      flex items-center px-nav-link text-white
-      transition-colors duration-200 hover:text-primary
-      ${isClicked ? "opacity-50 pointer-events-none" : ""}
+      flex items-center py-2
+      ${isClicked && "pointer-events-none"}
       ${className}
     `,
     onClick: handleClick,
@@ -49,10 +71,10 @@ const NavLink: React.FC<NavLinkProps> = ({
       rel={target === "_blank" ? "noopener noreferrer" : undefined}
       prefetch={true}
     >
-      {children}
+      {content}
     </Link>
   ) : (
-    <div {...attributes}>{children}</div>
+    <div {...attributes}>{content}</div>
   );
 };
 

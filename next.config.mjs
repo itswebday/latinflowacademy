@@ -14,17 +14,17 @@ const baseConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "euphoriaacademy.com",
+        hostname: "latinflowacademy.com",
         pathname: "/api/media/file/**",
       },
       {
         protocol: "https",
-        hostname: "www.euphoriaacademy.com",
+        hostname: "www.latinflowacademy.com",
         pathname: "/api/media/file/**",
       },
       {
         protocol: "https",
-        hostname: "euphoriaacademy.vercel.app",
+        hostname: "latinflowacademy.vercel.app",
         pathname: "/api/media/file/**",
       },
       {
@@ -59,16 +59,8 @@ const baseConfig = {
   async rewrites() {
     return [
       {
-        source: "/nl/nieuws",
-        destination: "/nl/news",
-      },
-      {
-        source: "/nl/dansstijlen",
-        destination: "/nl/dance-styles",
-      },
-      {
-        source: "/nl/docenten",
-        destination: "/nl/teachers",
+        source: "/nl/evenementen",
+        destination: "/nl/events",
       },
       {
         source: "/nl/privacybeleid",
@@ -92,10 +84,10 @@ const baseConfig = {
         has: [
           {
             type: "host",
-            value: "euphoriaacademy.com",
+            value: "latinflowacademy.com",
           },
         ],
-        destination: "https://www.euphoriaacademy.com/:path*",
+        destination: "https://www.latinflowacademy.com/:path*",
         permanent: true,
       },
     ];

@@ -1,9 +1,7 @@
 export { BlogPosts } from "./BlogPosts";
-export { DanceStylesPosts } from "./DanceStylesPosts";
+export { EventsPosts } from "./EventsPosts";
 export { FormSubmissions } from "./FormSubmissions";
 export { Forms } from "./Forms";
 export { Media } from "./Media";
-export { NewsPosts } from "./NewsPosts";
 export { Pages } from "./Pages";
-export { TeachersPosts } from "./TeachersPosts";
 export { Users } from "./Users";

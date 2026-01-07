@@ -71,9 +71,7 @@ export interface Config {
     media: Media;
     pages: Page;
     'blog-posts': BlogPost;
-    'news-posts': NewsPost;
-    'dance-styles-posts': DanceStylesPost;
-    'teachers-posts': TeachersPost;
+    'events-posts': EventsPost;
     forms: Form;
     'form-submissions': FormSubmission;
     'payload-kv': PayloadKv;
@@ -88,9 +86,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
-    'news-posts': NewsPostsSelect<false> | NewsPostsSelect<true>;
-    'dance-styles-posts': DanceStylesPostsSelect<false> | DanceStylesPostsSelect<true>;
-    'teachers-posts': TeachersPostsSelect<false> | TeachersPostsSelect<true>;
+    'events-posts': EventsPostsSelect<false> | EventsPostsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -107,9 +103,7 @@ export interface Config {
     home: Home;
     hero: Hero;
     blog: Blog;
-    news: News;
-    'dance-styles': DanceStyle;
-    teachers: Teacher;
+    events: Event;
     navigation: Navigation;
     footer: Footer;
     'privacy-policy': PrivacyPolicy;
@@ -120,9 +114,7 @@ export interface Config {
     home: HomeSelect<false> | HomeSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
     blog: BlogSelect<false> | BlogSelect<true>;
-    news: NewsSelect<false> | NewsSelect<true>;
-    'dance-styles': DanceStylesSelect<false> | DanceStylesSelect<true>;
-    teachers: TeachersSelect<false> | TeachersSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'privacy-policy': PrivacyPolicySelect<false> | PrivacyPolicySelect<true>;
@@ -251,22 +243,7 @@ export interface Page {
   id: number;
   title: string;
   blocks?:
-    | (
-        | AccordionBlock
-        | CallToActionBlock
-        | DanceStylesBlock
-        | HeadingBlock
-        | PricesBlock
-        | ScheduleBlock
-        | StoryBlock
-        | StudioRentalBlock
-        | TeachersBlock
-        | TextImageBlock
-        | TextBlock
-        | TextWithHighlightsBlock
-        | USPsBlock
-        | VisualBlock
-      )[]
+    | (CallToActionBlock | HeadingBlock | ScheduleBlock | StoryBlock | TextImageBlock | TextBlock | VisualBlock)[]
     | null;
   meta?: {
     title?: string | null;
@@ -289,33 +266,6 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "AccordionBlock".
- */
-export interface AccordionBlock {
-  tabs?:
-    | {
-        name: string;
-        id?: string | null;
-      }[]
-    | null;
-  items: {
-    tab: string;
-    summary: string;
-    details: string;
-    id?: string | null;
-  }[];
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
-  applyCustomId?: boolean | null;
-  customId?: string | null;
-  hidden?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'accordion-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -350,27 +300,13 @@ export interface CallToActionBlock {
     [k: string]: unknown;
   };
   button: {
-    variant: 'primaryButton' | 'greenLink' | 'grayLink' | 'underlineLink';
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
     text: string;
     custom?: boolean | null;
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?:
-      | (
-          | ''
-          | 'home'
-          | 'page'
-          | 'blog'
-          | 'blog-post'
-          | 'news'
-          | 'news-post'
-          | 'dance-styles'
-          | 'dance-style-post'
-          | 'teachers'
-          | 'teacher-post'
-        )
-      | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -379,17 +315,9 @@ export interface CallToActionBlock {
       relationTo: 'blog-posts';
       value: number | BlogPost;
     } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
-    } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
-    } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
     scrollTarget?: string | null;
     newTab?: boolean | null;
@@ -451,9 +379,9 @@ export interface BlogPost {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "news-posts".
+ * via the `definition` "events-posts".
  */
-export interface NewsPost {
+export interface EventsPost {
   id: number;
   title: string;
   image: number | Media;
@@ -490,27 +418,13 @@ export interface NewsPost {
   };
   showButton?: boolean | null;
   button?: {
-    variant: 'primaryButton' | 'greenLink' | 'grayLink' | 'underlineLink';
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
     text: string;
     custom?: boolean | null;
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?:
-      | (
-          | ''
-          | 'home'
-          | 'page'
-          | 'blog'
-          | 'blog-post'
-          | 'news'
-          | 'news-post'
-          | 'dance-styles'
-          | 'dance-style-post'
-          | 'teachers'
-          | 'teacher-post'
-        )
-      | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -519,17 +433,9 @@ export interface NewsPost {
       relationTo: 'blog-posts';
       value: number | BlogPost;
     } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
-    } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
-    } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
     scrollTarget?: string | null;
     newTab?: boolean | null;
@@ -557,113 +463,6 @@ export interface NewsPost {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "dance-styles-posts".
- */
-export interface DanceStylesPost {
-  id: number;
-  name: string;
-  squareImage: number | Media;
-  landscapeImage: number | Media;
-  title: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  iframeUrl?: string | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
-  publishedAt?: string | null;
-  /**
-   * Automatisch gegenereerd op basis van de name
-   */
-  slug?: string | null;
-  /**
-   * Automatically generated from slug
-   */
-  url?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "teachers-posts".
- */
-export interface TeachersPost {
-  id: number;
-  name: string;
-  image: number | Media;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
-  publishedAt?: string | null;
-  /**
-   * Automatisch gegenereerd op basis van de name
-   */
-  slug?: string | null;
-  /**
-   * Automatically generated from slug
-   */
-  url?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DanceStylesBlock".
- */
-export interface DanceStylesBlock {
-  swiper?: boolean | null;
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
-  applyCustomId?: boolean | null;
-  customId?: string | null;
-  hidden?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'dance-styles-block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HeadingBlock".
  */
 export interface HeadingBlock {
@@ -685,61 +484,6 @@ export interface HeadingBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'heading-block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PricesBlock".
- */
-export interface PricesBlock {
-  categories: {
-    name: string;
-    prices: {
-      title: string;
-      subtitle?: string | null;
-      price: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      description: {
-        root: {
-          type: string;
-          children: {
-            type: any;
-            version: number;
-            [k: string]: unknown;
-          }[];
-          direction: ('ltr' | 'rtl') | null;
-          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-          indent: number;
-          version: number;
-        };
-        [k: string]: unknown;
-      };
-      url?: string | null;
-      id?: string | null;
-    }[];
-    id?: string | null;
-  }[];
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
-  applyCustomId?: boolean | null;
-  customId?: string | null;
-  hidden?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'prices-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -818,57 +562,6 @@ export interface StoryBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StudioRentalBlock".
- */
-export interface StudioRentalBlock {
-  studios: {
-    name: string;
-    description?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    iframeUrl: string;
-    id?: string | null;
-  }[];
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
-  applyCustomId?: boolean | null;
-  customId?: string | null;
-  hidden?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'studio-rental-block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TeachersBlock".
- */
-export interface TeachersBlock {
-  swiper?: boolean | null;
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
-  applyCustomId?: boolean | null;
-  customId?: string | null;
-  hidden?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'teachers-block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TextImageBlock".
  */
 export interface TextImageBlock {
@@ -902,27 +595,13 @@ export interface TextImageBlock {
   };
   showButton?: boolean | null;
   button?: {
-    variant: 'primaryButton' | 'greenLink' | 'grayLink' | 'underlineLink';
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
     text: string;
     custom?: boolean | null;
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?:
-      | (
-          | ''
-          | 'home'
-          | 'page'
-          | 'blog'
-          | 'blog-post'
-          | 'news'
-          | 'news-post'
-          | 'dance-styles'
-          | 'dance-style-post'
-          | 'teachers'
-          | 'teacher-post'
-        )
-      | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -931,17 +610,9 @@ export interface TextImageBlock {
       relationTo: 'blog-posts';
       value: number | BlogPost;
     } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
-    } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
-    } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
     scrollTarget?: string | null;
     newTab?: boolean | null;
@@ -1010,27 +681,13 @@ export interface TextBlock {
   };
   showButton?: boolean | null;
   button?: {
-    variant: 'primaryButton' | 'greenLink' | 'grayLink' | 'underlineLink';
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
     text: string;
     custom?: boolean | null;
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?:
-      | (
-          | ''
-          | 'home'
-          | 'page'
-          | 'blog'
-          | 'blog-post'
-          | 'news'
-          | 'news-post'
-          | 'dance-styles'
-          | 'dance-style-post'
-          | 'teachers'
-          | 'teacher-post'
-        )
-      | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -1039,17 +696,9 @@ export interface TextBlock {
       relationTo: 'blog-posts';
       value: number | BlogPost;
     } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
-    } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
-    } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
     scrollTarget?: string | null;
     newTab?: boolean | null;
@@ -1065,71 +714,6 @@ export interface TextBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'text-block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TextWithHighlightsBlock".
- */
-export interface TextWithHighlightsBlock {
-  showSubheading?: boolean | null;
-  subheading?: {
-    icon?: (number | null) | Media;
-    text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  showHeading?: boolean | null;
-  heading?: {
-    icon?: (number | null) | Media;
-    text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  text: string;
-  hlTexts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  centered?: boolean | null;
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
-  applyCustomId?: boolean | null;
-  customId?: string | null;
-  hidden?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'text-with-hl-block';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "USPsBlock".
- */
-export interface USPsBlock {
-  usps: {
-    icon: number | Media;
-    text: string;
-    id?: string | null;
-  }[];
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
-  applyCustomId?: boolean | null;
-  customId?: string | null;
-  hidden?: boolean | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'usps-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1213,12 +797,8 @@ export interface Form {
                 | 'page'
                 | 'blog'
                 | 'blog-post'
-                | 'news'
-                | 'news-post'
-                | 'dance-styles'
-                | 'dance-style-post'
-                | 'teachers'
-                | 'teacher-post'
+                | 'events'
+                | 'event-post'
                 | 'privacy-policy'
                 | 'cookie-policy'
                 | 'terms-and-conditions'
@@ -1232,17 +812,9 @@ export interface Form {
             relationTo: 'blog-posts';
             value: number | BlogPost;
           } | null;
-          newsPost?: {
-            relationTo: 'news-posts';
-            value: number | NewsPost;
-          } | null;
-          danceStylePost?: {
-            relationTo: 'dance-styles-posts';
-            value: number | DanceStylesPost;
-          } | null;
-          teacherPost?: {
-            relationTo: 'teachers-posts';
-            value: number | TeachersPost;
+          eventPost?: {
+            relationTo: 'events-posts';
+            value: number | EventsPost;
           } | null;
           scrollTarget?: string | null;
           newTab?: boolean | null;
@@ -1414,16 +986,8 @@ export interface PayloadLockedDocument {
         value: number | BlogPost;
       } | null)
     | ({
-        relationTo: 'news-posts';
-        value: number | NewsPost;
-      } | null)
-    | ({
-        relationTo: 'dance-styles-posts';
-        value: number | DanceStylesPost;
-      } | null)
-    | ({
-        relationTo: 'teachers-posts';
-        value: number | TeachersPost;
+        relationTo: 'events-posts';
+        value: number | EventsPost;
       } | null)
     | ({
         relationTo: 'forms';
@@ -1569,19 +1133,12 @@ export interface PagesSelect<T extends boolean = true> {
   blocks?:
     | T
     | {
-        'accordion-block'?: T | AccordionBlockSelect<T>;
         'call-to-action-block'?: T | CallToActionBlockSelect<T>;
-        'dance-styles-block'?: T | DanceStylesBlockSelect<T>;
         'heading-block'?: T | HeadingBlockSelect<T>;
-        'prices-block'?: T | PricesBlockSelect<T>;
         'schedule-block'?: T | ScheduleBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
-        'studio-rental-block'?: T | StudioRentalBlockSelect<T>;
-        'teachers-block'?: T | TeachersBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
-        'text-with-hl-block'?: T | TextWithHighlightsBlockSelect<T>;
-        'usps-block'?: T | USPsBlockSelect<T>;
         'visual-block'?: T | VisualBlockSelect<T>;
       };
   meta?:
@@ -1598,34 +1155,6 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "AccordionBlock_select".
- */
-export interface AccordionBlockSelect<T extends boolean = true> {
-  tabs?:
-    | T
-    | {
-        name?: T;
-        id?: T;
-      };
-  items?:
-    | T
-    | {
-        tab?: T;
-        summary?: T;
-        details?: T;
-        id?: T;
-      };
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
-  applyCustomId?: T;
-  customId?: T;
-  hidden?: T;
-  id?: T;
-  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1659,27 +1188,10 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
       };
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
-  applyCustomId?: T;
-  customId?: T;
-  hidden?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "DanceStylesBlock_select".
- */
-export interface DanceStylesBlockSelect<T extends boolean = true> {
-  swiper?: T;
   background?: T;
   paddingTop?: T;
   paddingBottom?: T;
@@ -1703,36 +1215,6 @@ export interface HeadingBlockSelect<T extends boolean = true> {
         id?: T;
       };
   centered?: T;
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
-  applyCustomId?: T;
-  customId?: T;
-  hidden?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PricesBlock_select".
- */
-export interface PricesBlockSelect<T extends boolean = true> {
-  categories?:
-    | T
-    | {
-        name?: T;
-        prices?:
-          | T
-          | {
-              title?: T;
-              subtitle?: T;
-              price?: T;
-              description?: T;
-              url?: T;
-              id?: T;
-            };
-        id?: T;
-      };
   background?: T;
   paddingTop?: T;
   paddingBottom?: T;
@@ -1805,43 +1287,6 @@ export interface StoryBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "StudioRentalBlock_select".
- */
-export interface StudioRentalBlockSelect<T extends boolean = true> {
-  studios?:
-    | T
-    | {
-        name?: T;
-        description?: T;
-        iframeUrl?: T;
-        id?: T;
-      };
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
-  applyCustomId?: T;
-  customId?: T;
-  hidden?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TeachersBlock_select".
- */
-export interface TeachersBlockSelect<T extends boolean = true> {
-  swiper?: T;
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
-  applyCustomId?: T;
-  customId?: T;
-  hidden?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TextImageBlock_select".
  */
 export interface TextImageBlockSelect<T extends boolean = true> {
@@ -1876,9 +1321,7 @@ export interface TextImageBlockSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
       };
@@ -1950,83 +1393,12 @@ export interface TextBlockSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
       };
   centered?: T;
   width?: T;
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
-  applyCustomId?: T;
-  customId?: T;
-  hidden?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TextWithHighlightsBlock_select".
- */
-export interface TextWithHighlightsBlockSelect<T extends boolean = true> {
-  showSubheading?: T;
-  subheading?:
-    | T
-    | {
-        icon?: T;
-        text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-      };
-  showHeading?: T;
-  heading?:
-    | T
-    | {
-        icon?: T;
-        text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-      };
-  text?: T;
-  hlTexts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  centered?: T;
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
-  applyCustomId?: T;
-  customId?: T;
-  hidden?: T;
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "USPsBlock_select".
- */
-export interface USPsBlockSelect<T extends boolean = true> {
-  usps?:
-    | T
-    | {
-        icon?: T;
-        text?: T;
-        id?: T;
-      };
   background?: T;
   paddingTop?: T;
   paddingBottom?: T;
@@ -2087,9 +1459,9 @@ export interface BlogPostsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "news-posts_select".
+ * via the `definition` "events-posts_select".
  */
-export interface NewsPostsSelect<T extends boolean = true> {
+export interface EventsPostsSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   date?: T;
@@ -2108,59 +1480,10 @@ export interface NewsPostsSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
       };
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  publishedAt?: T;
-  slug?: T;
-  url?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "dance-styles-posts_select".
- */
-export interface DanceStylesPostsSelect<T extends boolean = true> {
-  name?: T;
-  squareImage?: T;
-  landscapeImage?: T;
-  title?: T;
-  description?: T;
-  iframeUrl?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  publishedAt?: T;
-  slug?: T;
-  url?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "teachers-posts_select".
- */
-export interface TeachersPostsSelect<T extends boolean = true> {
-  name?: T;
-  image?: T;
-  description?: T;
   meta?:
     | T
     | {
@@ -2208,9 +1531,7 @@ export interface FormsSelect<T extends boolean = true> {
               urlType?: T;
               page?: T;
               blogPost?: T;
-              newsPost?: T;
-              danceStylePost?: T;
-              teacherPost?: T;
+              eventPost?: T;
               scrollTarget?: T;
               newTab?: T;
             };
@@ -2316,22 +1637,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Home {
   id: number;
   blocks?:
-    | (
-        | AccordionBlock
-        | CallToActionBlock
-        | DanceStylesBlock
-        | HeadingBlock
-        | PricesBlock
-        | ScheduleBlock
-        | StoryBlock
-        | StudioRentalBlock
-        | TeachersBlock
-        | TextImageBlock
-        | TextBlock
-        | TextWithHighlightsBlock
-        | USPsBlock
-        | VisualBlock
-      )[]
+    | (CallToActionBlock | HeadingBlock | ScheduleBlock | StoryBlock | TextImageBlock | TextBlock | VisualBlock)[]
     | null;
   meta?: {
     title?: string | null;
@@ -2366,24 +1672,22 @@ export interface Hero {
         }[]
       | null;
   };
-  subheading: {
-    icon?: (number | null) | Media;
+  paragraph: {
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
+  socialMediaLinks: {
+    icon: number | Media;
+    url: string;
+    id?: string | null;
+  }[];
   button: {
-    variant: 'primaryButton' | 'greenLink' | 'grayLink' | 'underlineLink';
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
     text: string;
     custom?: boolean | null;
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'page' | 'blog-post' | 'news-post' | 'dance-style-post' | 'teacher-post') | null;
+    urlType?: ('' | 'page' | 'blog-post' | 'event-post') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -2392,17 +1696,33 @@ export interface Hero {
       relationTo: 'blog-posts';
       value: number | BlogPost;
     } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
+    scrollTarget?: string | null;
+    newTab?: boolean | null;
+  };
+  showSecondButton?: boolean | null;
+  secondButton?: {
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
+    text: string;
+    custom?: boolean | null;
+    url?: string | null;
+    scroll?: boolean | null;
+    targetPage?: ('current' | 'home' | 'page') | null;
+    urlType?: ('' | 'page' | 'blog-post' | 'event-post') | null;
+    page?: {
+      relationTo: 'pages';
+      value: number | Page;
     } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
+    blogPost?: {
+      relationTo: 'blog-posts';
+      value: number | BlogPost;
+    } | null;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
     scrollTarget?: string | null;
     newTab?: boolean | null;
@@ -2449,9 +1769,9 @@ export interface Blog {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "news".
+ * via the `definition` "events".
  */
-export interface News {
+export interface Event {
   id: number;
   heading: {
     icon?: (number | null) | Media;
@@ -2485,86 +1805,6 @@ export interface News {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "dance-styles".
- */
-export interface DanceStyle {
-  id: number;
-  heading: {
-    icon?: (number | null) | Media;
-    text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  text: string;
-  hlTexts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
-  publishedAt?: string | null;
-  /**
-   * Automatically set
-   */
-  url?: string | null;
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "teachers".
- */
-export interface Teacher {
-  id: number;
-  heading: {
-    icon?: (number | null) | Media;
-    text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  text: string;
-  hlTexts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
-  publishedAt?: string | null;
-  /**
-   * Automatically set
-   */
-  url?: string | null;
-  _status?: ('draft' | 'published') | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
 export interface Navigation {
@@ -2577,21 +1817,7 @@ export interface Navigation {
         url?: string | null;
         scroll?: boolean | null;
         targetPage?: ('current' | 'home' | 'page') | null;
-        urlType?:
-          | (
-              | ''
-              | 'home'
-              | 'page'
-              | 'blog'
-              | 'blog-post'
-              | 'news'
-              | 'news-post'
-              | 'dance-styles'
-              | 'dance-style-post'
-              | 'teachers'
-              | 'teacher-post'
-            )
-          | null;
+        urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
         page?: {
           relationTo: 'pages';
           value: number | Page;
@@ -2600,17 +1826,9 @@ export interface Navigation {
           relationTo: 'blog-posts';
           value: number | BlogPost;
         } | null;
-        newsPost?: {
-          relationTo: 'news-posts';
-          value: number | NewsPost;
-        } | null;
-        danceStylePost?: {
-          relationTo: 'dance-styles-posts';
-          value: number | DanceStylesPost;
-        } | null;
-        teacherPost?: {
-          relationTo: 'teachers-posts';
-          value: number | TeachersPost;
+        eventPost?: {
+          relationTo: 'events-posts';
+          value: number | EventsPost;
         } | null;
         scrollTarget?: string | null;
         newTab?: boolean | null;
@@ -2623,21 +1841,7 @@ export interface Navigation {
               url?: string | null;
               scroll?: boolean | null;
               targetPage?: ('current' | 'home' | 'page') | null;
-              urlType?:
-                | (
-                    | ''
-                    | 'home'
-                    | 'page'
-                    | 'blog'
-                    | 'blog-post'
-                    | 'news'
-                    | 'news-post'
-                    | 'dance-styles'
-                    | 'dance-style-post'
-                    | 'teachers'
-                    | 'teacher-post'
-                  )
-                | null;
+              urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
               page?: {
                 relationTo: 'pages';
                 value: number | Page;
@@ -2646,17 +1850,9 @@ export interface Navigation {
                 relationTo: 'blog-posts';
                 value: number | BlogPost;
               } | null;
-              newsPost?: {
-                relationTo: 'news-posts';
-                value: number | NewsPost;
-              } | null;
-              danceStylePost?: {
-                relationTo: 'dance-styles-posts';
-                value: number | DanceStylesPost;
-              } | null;
-              teacherPost?: {
-                relationTo: 'teachers-posts';
-                value: number | TeachersPost;
+              eventPost?: {
+                relationTo: 'events-posts';
+                value: number | EventsPost;
               } | null;
               scrollTarget?: string | null;
               newTab?: boolean | null;
@@ -2666,9 +1862,7 @@ export interface Navigation {
         showOnEveryPage?: boolean | null;
         showOnHomePage?: boolean | null;
         showOnBlogPage?: boolean | null;
-        showOnNewsPage?: boolean | null;
-        showOnDanceStylesPage?: boolean | null;
-        showOnTeachersPage?: boolean | null;
+        showOnEventsPage?: boolean | null;
         showOnLegalPages?: boolean | null;
         pages?: (number | Page)[] | null;
         id?: string | null;
@@ -2676,27 +1870,13 @@ export interface Navigation {
     | null;
   showButton?: boolean | null;
   button?: {
-    variant: 'primaryButton' | 'greenLink' | 'grayLink' | 'underlineLink';
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
     text: string;
     custom?: boolean | null;
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?:
-      | (
-          | ''
-          | 'home'
-          | 'page'
-          | 'blog'
-          | 'blog-post'
-          | 'news'
-          | 'news-post'
-          | 'dance-styles'
-          | 'dance-style-post'
-          | 'teachers'
-          | 'teacher-post'
-        )
-      | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -2705,17 +1885,9 @@ export interface Navigation {
       relationTo: 'blog-posts';
       value: number | BlogPost;
     } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
-    } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
-    } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
     scrollTarget?: string | null;
     newTab?: boolean | null;
@@ -2745,49 +1917,8 @@ export interface Footer {
     line3?: string | null;
     url: string;
   };
-  quickLinks: {
+  openingHours: {
     text: string;
-    custom?: boolean | null;
-    url?: string | null;
-    scroll?: boolean | null;
-    targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?:
-      | (
-          | ''
-          | 'home'
-          | 'page'
-          | 'blog'
-          | 'blog-post'
-          | 'news'
-          | 'news-post'
-          | 'dance-styles'
-          | 'dance-style-post'
-          | 'teachers'
-          | 'teacher-post'
-        )
-      | null;
-    page?: {
-      relationTo: 'pages';
-      value: number | Page;
-    } | null;
-    blogPost?: {
-      relationTo: 'blog-posts';
-      value: number | BlogPost;
-    } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
-    } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
-    } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
-    } | null;
-    scrollTarget?: string | null;
-    newTab?: boolean | null;
     id?: string | null;
   }[];
   socialMediaLinks: {
@@ -2801,7 +1932,20 @@ export interface Footer {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'privacy-policy' | 'cookie-policy' | 'terms-and-conditions') | null;
+    urlType?:
+      | (
+          | ''
+          | 'home'
+          | 'page'
+          | 'blog'
+          | 'blog-post'
+          | 'events'
+          | 'event-post'
+          | 'privacy-policy'
+          | 'cookie-policy'
+          | 'terms-and-conditions'
+        )
+      | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -2810,17 +1954,9 @@ export interface Footer {
       relationTo: 'blog-posts';
       value: number | BlogPost;
     } | null;
-    newsPost?: {
-      relationTo: 'news-posts';
-      value: number | NewsPost;
-    } | null;
-    danceStylePost?: {
-      relationTo: 'dance-styles-posts';
-      value: number | DanceStylesPost;
-    } | null;
-    teacherPost?: {
-      relationTo: 'teachers-posts';
-      value: number | TeachersPost;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
     } | null;
     scrollTarget?: string | null;
     newTab?: boolean | null;
@@ -2956,19 +2092,12 @@ export interface HomeSelect<T extends boolean = true> {
   blocks?:
     | T
     | {
-        'accordion-block'?: T | AccordionBlockSelect<T>;
         'call-to-action-block'?: T | CallToActionBlockSelect<T>;
-        'dance-styles-block'?: T | DanceStylesBlockSelect<T>;
         'heading-block'?: T | HeadingBlockSelect<T>;
-        'prices-block'?: T | PricesBlockSelect<T>;
         'schedule-block'?: T | ScheduleBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
-        'studio-rental-block'?: T | StudioRentalBlockSelect<T>;
-        'teachers-block'?: T | TeachersBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
-        'text-with-hl-block'?: T | TextWithHighlightsBlockSelect<T>;
-        'usps-block'?: T | USPsBlockSelect<T>;
         'visual-block'?: T | VisualBlockSelect<T>;
       };
   meta?:
@@ -3002,17 +2131,17 @@ export interface HeroSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  subheading?:
+  paragraph?:
+    | T
+    | {
+        text?: T;
+      };
+  socialMediaLinks?:
     | T
     | {
         icon?: T;
-        text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
+        url?: T;
+        id?: T;
       };
   button?:
     | T
@@ -3026,9 +2155,24 @@ export interface HeroSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
+        scrollTarget?: T;
+        newTab?: T;
+      };
+  showSecondButton?: T;
+  secondButton?:
+    | T
+    | {
+        variant?: T;
+        text?: T;
+        custom?: T;
+        url?: T;
+        scroll?: T;
+        targetPage?: T;
+        urlType?: T;
+        page?: T;
+        blogPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
       };
@@ -3075,9 +2219,9 @@ export interface BlogSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "news_select".
+ * via the `definition` "events_select".
  */
-export interface NewsSelect<T extends boolean = true> {
+export interface EventsSelect<T extends boolean = true> {
   heading?:
     | T
     | {
@@ -3111,82 +2255,6 @@ export interface NewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "dance-styles_select".
- */
-export interface DanceStylesSelect<T extends boolean = true> {
-  heading?:
-    | T
-    | {
-        icon?: T;
-        text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-      };
-  text?: T;
-  hlTexts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  publishedAt?: T;
-  url?: T;
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "teachers_select".
- */
-export interface TeachersSelect<T extends boolean = true> {
-  heading?:
-    | T
-    | {
-        icon?: T;
-        text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-      };
-  text?: T;
-  hlTexts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  publishedAt?: T;
-  url?: T;
-  _status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation_select".
  */
 export interface NavigationSelect<T extends boolean = true> {
@@ -3202,9 +2270,7 @@ export interface NavigationSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
         dropdown?: T;
@@ -3220,9 +2286,7 @@ export interface NavigationSelect<T extends boolean = true> {
               urlType?: T;
               page?: T;
               blogPost?: T;
-              newsPost?: T;
-              danceStylePost?: T;
-              teacherPost?: T;
+              eventPost?: T;
               scrollTarget?: T;
               newTab?: T;
               id?: T;
@@ -3230,9 +2294,7 @@ export interface NavigationSelect<T extends boolean = true> {
         showOnEveryPage?: T;
         showOnHomePage?: T;
         showOnBlogPage?: T;
-        showOnNewsPage?: T;
-        showOnDanceStylesPage?: T;
-        showOnTeachersPage?: T;
+        showOnEventsPage?: T;
         showOnLegalPages?: T;
         pages?: T;
         id?: T;
@@ -3250,9 +2312,7 @@ export interface NavigationSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
       };
@@ -3287,22 +2347,10 @@ export interface FooterSelect<T extends boolean = true> {
         line3?: T;
         url?: T;
       };
-  quickLinks?:
+  openingHours?:
     | T
     | {
         text?: T;
-        custom?: T;
-        url?: T;
-        scroll?: T;
-        targetPage?: T;
-        urlType?: T;
-        page?: T;
-        blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
-        scrollTarget?: T;
-        newTab?: T;
         id?: T;
       };
   socialMediaLinks?:
@@ -3323,9 +2371,7 @@ export interface FooterSelect<T extends boolean = true> {
         urlType?: T;
         page?: T;
         blogPost?: T;
-        newsPost?: T;
-        danceStylePost?: T;
-        teacherPost?: T;
+        eventPost?: T;
         scrollTarget?: T;
         newTab?: T;
         id?: T;
@@ -3419,25 +2465,15 @@ export interface TaskSchedulePublish {
           value: number | BlogPost;
         } | null)
       | ({
-          relationTo: 'news-posts';
-          value: number | NewsPost;
-        } | null)
-      | ({
-          relationTo: 'dance-styles-posts';
-          value: number | DanceStylesPost;
-        } | null)
-      | ({
-          relationTo: 'teachers-posts';
-          value: number | TeachersPost;
+          relationTo: 'events-posts';
+          value: number | EventsPost;
         } | null);
     global?:
       | (
           | 'home'
           | 'hero'
           | 'blog'
-          | 'news'
-          | 'dance-styles'
-          | 'teachers'
+          | 'events'
           | 'navigation'
           | 'footer'
           | 'privacy-policy'

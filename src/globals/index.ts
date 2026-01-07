@@ -1,11 +1,9 @@
 export { Blog } from "./Blog";
 export { CookiePolicy } from "./CookiePolicy";
-export { DanceStyles } from "./DanceStyles";
+export { Events } from "./Events";
 export { Footer } from "./Footer";
 export { Hero } from "./Hero";
 export { Home } from "./Home";
 export { Navigation } from "./Navigation";
-export { News } from "./News";
 export { PrivacyPolicy } from "./PrivacyPolicy";
-export { Teachers } from "./Teachers";
 export { TermsAndConditions } from "./TermsAndConditions";

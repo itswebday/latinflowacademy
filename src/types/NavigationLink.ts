@@ -12,9 +12,7 @@ export type NavigationLink = {
   showOnEveryPage: boolean;
   showOnHomePage: boolean;
   showOnBlogPage: boolean;
-  showOnNewsPage: boolean;
-  showOnDanceStylesPage: boolean;
-  showOnTeachersPage: boolean;
+  showOnEventsPage: boolean;
   showOnLegalPages: boolean;
   pageSlugs: string[];
 };

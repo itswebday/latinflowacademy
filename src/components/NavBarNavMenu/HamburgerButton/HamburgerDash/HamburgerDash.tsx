@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useNavMenu } from "@/contexts";
 
 type HamburgerDashProps = {
@@ -9,32 +10,40 @@ type HamburgerDashProps = {
 const HamburgerDash: React.FC<HamburgerDashProps> = ({ dashIndex }) => {
   const navMenu = useNavMenu();
 
+  const variants = {
+    top: {
+      closed: { rotate: 0, y: 0 },
+      open: { rotate: 45, y: 8 },
+    },
+    middle: {
+      closed: { opacity: 1, scale: 1 },
+      open: { opacity: 0, scale: 0 },
+    },
+    bottom: {
+      closed: { rotate: 0, y: 0 },
+      open: { rotate: -45, y: -8 },
+    },
+  };
+
+  const getVariant = () => {
+    switch (dashIndex) {
+      case 0:
+        return variants.top;
+      case 1:
+        return variants.middle;
+      case 2:
+        return variants.bottom;
+    }
+  };
+
   return (
-    <div
-      className={`
-        w-full h-0.5 bg-white duration-500
-        ${
-          dashIndex === 0
-            ? navMenu.isOpen && !navMenu.isClosing
-              ? "rotate-45 translate-y-[7px] transition-transform"
-              : ""
-            : ""
-        }
-        ${
-          dashIndex === 1
-            ? navMenu.isOpen && !navMenu.isClosing
-              ? "opacity-0 transition-opacity"
-              : ""
-            : ""
-        }
-        ${
-          dashIndex === 2
-            ? navMenu.isOpen && !navMenu.isClosing
-              ? "-rotate-45 -translate-y-[7px] transition-transform"
-              : ""
-            : ""
-        }
-      `}
+    <motion.div
+      className="w-6 h-0.5 bg-white rounded-full"
+      animate={navMenu.isOpen ? getVariant().open : getVariant().closed}
+      transition={{
+        duration: 0.3,
+        ease: "easeInOut",
+      }}
     />
   );
 };

@@ -4,6 +4,7 @@ import { useLocale } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 import { DEFAULT_LOCALE } from "@/constants";
 import { useNavMenu } from "@/contexts";
 import { LocaleOption } from "@/types";
@@ -22,10 +23,11 @@ const LogoLink: React.FC<LogoLinkProps> = ({ className, src, alt }) => {
 
   return (
     <Link
-      className={`
-        relative
-        ${className}
-      `}
+      className={twMerge(
+        "relative transition-all duration-300",
+        "hover:scale-105 hover:drop-shadow-[0_0_12px_rgba(236,72,153,0.4)]",
+        className,
+      )}
       href={`${locale === DEFAULT_LOCALE ? "/" : `/${locale}`}`}
       prefetch={true}
       onClick={(e) => {
@@ -39,7 +41,7 @@ const LogoLink: React.FC<LogoLinkProps> = ({ className, src, alt }) => {
     >
       {/* Logo */}
       <Image
-        className="object-contain"
+        className="object-contain transition-all duration-300"
         src={src}
         alt={alt}
         width={512}

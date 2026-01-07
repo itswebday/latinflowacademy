@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { NavLink } from "@/components";
 import { usePage } from "@/contexts";
@@ -35,18 +36,8 @@ const NavBar: React.FC<NavBarProps> = ({ className, links }) => {
       return true;
     }
 
-    // Show on news page
-    if (currentPage === "news" && link.showOnNewsPage) {
-      return true;
-    }
-
-    // Show on dance styles page
-    if (currentPage === "danceStyles" && link.showOnDanceStylesPage) {
-      return true;
-    }
-
-    // Show on teachers page
-    if (currentPage === "teachers" && link.showOnTeachersPage) {
+    // Show on events page
+    if (currentPage === "events" && link.showOnEventsPage) {
       return true;
     }
 
@@ -67,41 +58,68 @@ const NavBar: React.FC<NavBarProps> = ({ className, links }) => {
 
     return false;
   });
-
   return (
-    <div className={twMerge("flex items-center gap-3 h-full", className)}>
+    <motion.div
+      className={twMerge("flex items-center gap-8 h-full", className)}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
       {/* Links */}
       {filteredLinks.map((link, index) => {
         if ((link.subLinks || []).length === 0) {
           return (
-            <NavLink
+            <motion.div
               key={index}
-              className="text-[13px] h-full"
-              href={link.href}
-              target={link.newTab ? "_blank" : "_self"}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.4,
+                delay: index * 0.1,
+                ease: "easeOut",
+              }}
             >
-              {link.text}
-            </NavLink>
+              {/* Link */}
+              <NavLink
+                href={link.href}
+                target={link.newTab ? "_blank" : "_self"}
+              >
+                <span
+                  className={twMerge(
+                    "relative text-[15px] font-semibold font-montserrat-alternates",
+                    "text-white/90 transition-all duration-300",
+                    "hover:text-primary hover:drop-shadow-[0_0_8px_rgba(236,72,153,0.5)]",
+                  )}
+                >
+                  {link.text}
+                </span>
+              </NavLink>
+            </motion.div>
           );
         }
 
         return (
-          <NavBarDropdownLink
+          <motion.div
             key={index}
-            className="text-[14px]"
-            text={link.text}
-            href={link.clickable ? link.href : undefined}
-            newTab={link.newTab}
-            subLinks={link.subLinks.map((subLink) => ({
-              text: subLink.text,
-              href: subLink.href,
-              newTab: subLink.newTab,
-            }))}
-            clickable={link.clickable}
-          />
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
+          >
+            <NavBarDropdownLink
+              text={link.text}
+              href={link.clickable ? link.href : undefined}
+              newTab={link.newTab}
+              subLinks={link.subLinks.map((subLink) => ({
+                text: subLink.text,
+                href: subLink.href,
+                newTab: subLink.newTab,
+              }))}
+              clickable={link.clickable}
+            />
+          </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 };
 

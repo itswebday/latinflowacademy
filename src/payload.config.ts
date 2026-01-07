@@ -25,27 +25,23 @@ import sharp from "sharp";
 import { fileURLToPath } from "url";
 import {
   BlogPosts,
-  DanceStylesPosts,
+  EventsPosts,
   FormSubmissions,
   Forms,
   Media,
-  NewsPosts,
   Pages,
-  TeachersPosts,
   Users,
 } from "@/collections";
 import { DEFAULT_LOCALE, LOCALES } from "@/constants";
 import {
   Blog,
   CookiePolicy,
-  DanceStyles,
+  Events,
   Footer,
   Hero,
   Home,
   Navigation,
-  News,
   PrivacyPolicy,
-  Teachers,
   TermsAndConditions,
 } from "@/globals";
 import { getLinkFields } from "@/utils";
@@ -87,9 +83,7 @@ export default buildConfig({
     Home,
     Hero,
     Blog,
-    News,
-    DanceStyles,
-    Teachers,
+    Events,
     Navigation,
     Footer,
     PrivacyPolicy,
@@ -101,9 +95,7 @@ export default buildConfig({
     Media,
     Pages,
     BlogPosts,
-    NewsPosts,
-    DanceStylesPosts,
-    TeachersPosts,
+    EventsPosts,
     Forms,
     FormSubmissions,
   ],

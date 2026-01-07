@@ -1,17 +1,13 @@
 export {
   generateBlogUrl,
   generateCookiePolicyUrl,
-  generateDanceStylesUrl,
+  generateEventsUrl,
   generateHomeUrl,
-  generateNewsUrl,
   generatePrivacyPolicyUrl,
-  generateTeachersUrl,
   generateTermsAndConditionsUrl,
 } from "./generateGlobalUrl";
 export { generateBlogPostUrl } from "./generateBlogPostUrl";
-export { generateDanceStyleUrl } from "./generateDanceStyleUrl";
-export { generateNewsPostUrl } from "./generateNewsPostUrl";
-export { generateTeacherUrl } from "./generateTeacherUrl";
+export { generateEventPostUrl } from "./generateEventPostUrl";
 export { generateUrlWithoutLocale } from "./generateUrlWithoutLocale";
 export { populatePublishedAtCollection } from "./populatePublishedAtCollection";
 export {

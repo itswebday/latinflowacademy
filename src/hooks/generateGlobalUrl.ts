@@ -68,9 +68,5 @@ export const generateCookiePolicyUrl =
   createGenerateGlobalUrlFromMessagesHook("cookiePolicy.url");
 export const generateTermsAndConditionsUrl =
   createGenerateGlobalUrlFromMessagesHook("termsAndConditions.url");
-export const generateNewsUrl =
-  createGenerateGlobalUrlFromMessagesHook("news.url");
-export const generateDanceStylesUrl =
-  createGenerateGlobalUrlFromMessagesHook("danceStyles.url");
-export const generateTeachersUrl =
-  createGenerateGlobalUrlFromMessagesHook("teachers.url");
+export const generateEventsUrl =
+  createGenerateGlobalUrlFromMessagesHook("events.url");

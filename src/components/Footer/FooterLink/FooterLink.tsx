@@ -36,7 +36,8 @@ const FooterLink: React.FC<FooterLinkProps> = ({
     <Link
       className={twMerge(
         "flex items-center py-0.5",
-        "transition-opacity duration-200 hover:opacity-80",
+        "transition-colors duration-300",
+        "hover:text-primary",
         isClicked && "pointer-events-none",
         className,
       )}
@@ -52,7 +53,6 @@ const FooterLink: React.FC<FooterLinkProps> = ({
     <div
       className={twMerge(
         "flex items-center py-0.5",
-        "transition-opacity duration-200 hover:opacity-80",
         isClicked && "pointer-events-none",
         className,
       )}

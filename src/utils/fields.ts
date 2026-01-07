@@ -442,12 +442,8 @@ export const getLinkFields = ({
     { label: "Other page", value: "page" },
     { label: "Blog overview", value: "blog" },
     { label: "Blog post", value: "blog-post" },
-    { label: "News overview", value: "news" },
-    { label: "News post", value: "news-post" },
-    { label: "Dance styles overview", value: "dance-styles" },
-    { label: "Dance style", value: "dance-style-post" },
-    { label: "Teachers overview", value: "teachers" },
-    { label: "Teacher", value: "teacher-post" },
+    { label: "Events overview", value: "events" },
+    { label: "Event post", value: "event-post" },
     { label: "Privacy policy", value: "privacy-policy" },
     { label: "Cookie policy", value: "cookie-policy" },
     { label: "Terms and conditions", value: "terms-and-conditions" },
@@ -592,13 +588,13 @@ export const getLinkFields = ({
   });
 
   baseFields.push({
-    name: "newsPost",
-    label: "News post",
+    name: "eventPost",
+    label: "Event post",
     type: "relationship",
-    relationTo: ["news-posts"],
+    relationTo: ["events-posts"],
     required: true,
     admin: {
-      ...(hiddenFields.includes("newsPost")
+      ...(hiddenFields.includes("eventPost")
         ? { hidden: true }
         : {
             condition: (_, siblingData) => {
@@ -610,11 +606,11 @@ export const getLinkFields = ({
                 return (
                   !siblingData?.custom &&
                   (!siblingData?.dropdown || siblingData?.clickable) &&
-                  siblingData?.urlType === "news-post"
+                  siblingData?.urlType === "event-post"
                 );
               }
               return (
-                !siblingData?.custom && siblingData?.urlType === "news-post"
+                !siblingData?.custom && siblingData?.urlType === "event-post"
               );
             },
           }),
@@ -627,127 +623,18 @@ export const getLinkFields = ({
         if (
           !siblingData?.custom &&
           (!siblingData?.dropdown || siblingData?.clickable) &&
-          siblingData?.urlType === "news-post" &&
+          siblingData?.urlType === "event-post" &&
           !value
         ) {
-          return "News post is required when 'Link type' is 'News post'";
+          return "Event post is required when 'Link type' is 'Event post'";
         }
       } else {
         if (
           !siblingData?.custom &&
-          siblingData?.urlType === "news-post" &&
+          siblingData?.urlType === "event-post" &&
           !value
         ) {
-          return "News post is required when 'Link type' is 'News post'";
-        }
-      }
-      return true;
-    },
-  });
-
-  baseFields.push({
-    name: "danceStylePost",
-    label: "Dance style post",
-    type: "relationship",
-    relationTo: ["dance-styles-posts"],
-    required: true,
-    admin: {
-      ...(hiddenFields.includes("danceStylePost")
-        ? { hidden: true }
-        : {
-            condition: (_, siblingData) => {
-              if (siblingData?.scroll) {
-                return false;
-              }
-
-              if (includeDropdown) {
-                return (
-                  !siblingData?.custom &&
-                  (!siblingData?.dropdown || siblingData?.clickable) &&
-                  siblingData?.urlType === "dance-style-post"
-                );
-              }
-              return (
-                !siblingData?.custom &&
-                siblingData?.urlType === "dance-style-post"
-              );
-            },
-          }),
-    },
-    validate: (
-      value: unknown,
-      { siblingData }: { siblingData?: Record<string, unknown> },
-    ) => {
-      if (includeDropdown) {
-        if (
-          !siblingData?.custom &&
-          (!siblingData?.dropdown || siblingData?.clickable) &&
-          siblingData?.urlType === "dance-style-post" &&
-          !value
-        ) {
-          return "Dance style post is required when 'Link type' is 'Dance style post'";
-        }
-      } else {
-        if (
-          !siblingData?.custom &&
-          siblingData?.urlType === "dance-style-post" &&
-          !value
-        ) {
-          return "Dance style post is required when 'Link type' is 'Dance style post'";
-        }
-      }
-      return true;
-    },
-  });
-
-  baseFields.push({
-    name: "teacherPost",
-    label: "Teacher post",
-    type: "relationship",
-    relationTo: ["teachers-posts"],
-    required: true,
-    admin: {
-      ...(hiddenFields.includes("teacherPost")
-        ? { hidden: true }
-        : {
-            condition: (_, siblingData) => {
-              if (siblingData?.scroll) {
-                return false;
-              }
-
-              if (includeDropdown) {
-                return (
-                  !siblingData?.custom &&
-                  (!siblingData?.dropdown || siblingData?.clickable) &&
-                  siblingData?.urlType === "teacher-post"
-                );
-              }
-              return (
-                !siblingData?.custom && siblingData?.urlType === "teacher-post"
-              );
-            },
-          }),
-    },
-    validate: (
-      value: unknown,
-      { siblingData }: { siblingData?: Record<string, unknown> },
-    ) => {
-      if (includeDropdown) {
-        if (
-          !siblingData?.custom &&
-          (!siblingData?.dropdown || siblingData?.clickable) &&
-          siblingData?.urlType === "teacher-post" &&
-          !value
-        ) {
-          return "Teacher post is required when 'Link type' is 'Teacher post'";
-        }
-      } else {
-        if (
-          !siblingData?.custom &&
-          siblingData?.urlType === "teacher-post" &&
-          !value
-        ) {
-          return "Teacher post is required when 'Link type' is 'Teacher post'";
+          return "Event post is required when 'Link type' is 'Event post'";
         }
       }
       return true;
@@ -859,20 +746,20 @@ export const getButtonLinkFields = ({
       type: "select",
       options: [
         {
-          label: "Green button",
+          label: "Primary button",
           value: "primaryButton",
         },
         {
-          label: "Green link",
-          value: "greenLink",
+          label: "White button",
+          value: "whiteButton",
         },
         {
-          label: "Gray link",
-          value: "grayLink",
+          label: "Dark button",
+          value: "darkButton",
         },
         {
-          label: "Underline link",
-          value: "underlineLink",
+          label: "Transparent button",
+          value: "transparentButton",
         },
       ],
       defaultValue: "primaryButton",

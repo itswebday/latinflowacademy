@@ -1,7 +1,7 @@
 {
-  "name": "euphoriaacademy",
+  "name": "latinflowacademy",
   "version": "1.0.0",
-  "description": "Euphoria Academy website",
+  "description": "Latin Flow Academy website",
   "license": "MIT",
   "type": "module",
   "scripts": {

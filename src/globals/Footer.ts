@@ -117,26 +117,37 @@ export const Footer: GlobalConfig = {
       ],
     },
     {
-      name: "quickLinks",
+      name: "openingHours",
       labels: {
-        singular: "Quick link",
-        plural: "Quick links",
+        singular: "Line",
+        plural: "Opening hours",
       },
       type: "array",
       defaultValue: [],
       minRows: 1,
+      maxRows: 4,
       required: true,
       admin: {
         initCollapsed: true,
       },
-      fields: getLinkFields(),
+      fields: [
+        {
+          name: "text",
+          label: "",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+      ],
     },
     {
       name: "socialMediaLinks",
       label: "Social media links",
       type: "array",
-      maxRows: 4,
+      defaultValue: [],
       minRows: 1,
+      maxRows: 4,
       required: true,
       labels: {
         singular: "Social media link",
@@ -168,6 +179,7 @@ export const Footer: GlobalConfig = {
       type: "array",
       defaultValue: [],
       minRows: 1,
+      maxRows: 4,
       required: true,
       labels: {
         singular: "Legal link",
@@ -177,18 +189,7 @@ export const Footer: GlobalConfig = {
         initCollapsed: true,
       },
       fields: getLinkFields({
-        excludePages: [
-          "home",
-          "page",
-          "blog",
-          "blog-post",
-          "news",
-          "news-post",
-          "dance-styles",
-          "dance-style-post",
-          "teachers",
-          "teacher-post",
-        ],
+        excludePages: [],
       }),
     },
     {

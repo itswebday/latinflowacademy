@@ -12,7 +12,8 @@
 
   "home": {
     "title": "Home",
-    "url": "/"
+    "url": "/",
+    "scrollDown": "SCROLL DOWN"
   },
 
   "blog": {
@@ -30,42 +31,16 @@
     }
   },
 
-  "news": {
-    "title": "News",
-    "url": "/news",
-    "noPosts": "No news posts yet. Check back soon!",
+  "events": {
+    "title": "Events",
+    "url": "/events",
+    "noPosts": "No events yet. Check back soon!",
     "readMore": "Read more",
-    "backToOverview": "Back to news overview",
+    "backToOverview": "Back to events overview",
     "publishedAt": "Published on",
-    "notFound": "News Post Not Found",
+    "notFound": "Event Not Found",
     "otherPosts": {
-      "heading": "Other News"
-    }
-  },
-
-  "danceStyles": {
-    "title": "Dance Styles",
-    "url": "/dance-styles",
-    "noPosts": "No dance styles yet. Check back soon!",
-    "readMore": "Read more",
-    "backToOverview": "Back to dance styles overview",
-    "publishedAt": "Published on",
-    "notFound": "Dance Style Not Found",
-    "otherPosts": {
-      "heading": "Other Dance Styles"
-    }
-  },
-
-  "teachers": {
-    "title": "Teachers",
-    "url": "/teachers",
-    "noPosts": "No teachers yet. Check back soon!",
-    "readMore": "Read more",
-    "backToOverview": "Back to teachers overview",
-    "publishedAt": "Published on",
-    "notFound": "Teacher Not Found",
-    "otherPosts": {
-      "heading": "Other Teachers"
+      "heading": "Other Events"
     }
   },
 
@@ -89,27 +64,14 @@
     "paragraph": "The page you're looking for doesn't exist."
   },
 
-  "blocks": {
-    "prices": {
-      "buyButton": "Buy classes"
-    }
-  },
-
   "footer": {
-    "contact": {
-      "heading": "CONTACT"
-    },
-    "location": {
-      "heading": "LOCATION"
-    },
-    "quickLinks": {
-      "heading": "Quick links"
-    },
     "socialMedia": {
-      "heading": "STAY UP TO DATE WITH US"
+      "heading": "FOLLOW US"
+    },
+    "openingHours": {
+      "heading": "OPENING HOURS"
     },
     "legalLinks": {
-      "heading": "NAVIGATION",
       "crn": "KvK",
       "vat": "VAT"
     }

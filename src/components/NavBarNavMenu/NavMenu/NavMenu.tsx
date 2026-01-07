@@ -1,26 +1,35 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { NavLink } from "@/components";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { twMerge } from "tailwind-merge";
+import { ButtonLink, type ButtonLinkProps } from "@/components";
 import { useNavMenu, usePage } from "@/contexts";
+import { createLinkClickHandler } from "@/utils";
 import type { NavigationLink } from "@/types";
 
 type NavMenuProps = {
   className?: string;
   links: NavigationLink[];
   slideOutMenu?: boolean;
+  button?: {
+    variant: ButtonLinkProps["variant"];
+    text: string;
+    href: string;
+    newTab: boolean;
+  };
 };
 
-const NavMenu: React.FC<NavMenuProps> = ({ className, links }) => {
-  const scrollableRef = useRef<HTMLDivElement>(null);
-  const navMenu = useNavMenu();
+const NavMenu: React.FC<NavMenuProps> = ({
+  className,
+  links,
+  slideOutMenu = false,
+  button,
+}) => {
+  const pathname = usePathname();
+  const { isOpen, close } = useNavMenu();
   const { currentPage, currentPageSlug } = usePage();
-
-  useEffect(() => {
-    if (navMenu.isOpening && scrollableRef.current) {
-      scrollableRef.current.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [navMenu.isOpening]);
 
   // Filter links based on visibility rules
   const filteredLinks = links.filter((link) => {
@@ -43,18 +52,8 @@ const NavMenu: React.FC<NavMenuProps> = ({ className, links }) => {
       return true;
     }
 
-    // Show on news page
-    if (currentPage === "news" && link.showOnNewsPage) {
-      return true;
-    }
-
-    // Show on dance styles page
-    if (currentPage === "danceStyles" && link.showOnDanceStylesPage) {
-      return true;
-    }
-
-    // Show on teachers page
-    if (currentPage === "teachers" && link.showOnTeachersPage) {
+    // Show on events page
+    if (currentPage === "events" && link.showOnEventsPage) {
       return true;
     }
 
@@ -77,85 +76,142 @@ const NavMenu: React.FC<NavMenuProps> = ({ className, links }) => {
   });
 
   return (
-    <>
-      {/* Sliding navigation menu */}
-      <div
-        className={`
-          z-40 fixed left-0 inset-y-0 w-full px-8
-          bg-dark transition-transform duration-500
-          xs:left-auto xs:right-0 xs:w-[550px]
-          ${navMenu.isOpen ? "" : "translate-x-full"}
-          ${className}
-        `}
-      >
-        {/* Links */}
-        <div
-          className={`
-            flex flex-col w-full h-full pt-[72px] pb-[256px] overflow-y-scroll
-            [&::-webkit-scrollbar]:hidden
-            [-ms-overflow-style:none]
-            [scrollbar-width:none]
-          `}
-          ref={scrollableRef}
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className={twMerge(
+            "z-90 fixed inset-0 flex flex-col bg-dark",
+            !isOpen && "pointer-events-none",
+            className,
+          )}
+          initial={slideOutMenu ? { x: "100%", opacity: 0 } : { opacity: 0 }}
+          animate={slideOutMenu ? { x: 0, opacity: 1 } : { opacity: 1 }}
+          exit={slideOutMenu ? { x: "100%", opacity: 0 } : { opacity: 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              close();
+            }
+          }}
         >
-          {/* Navigation links */}
-          {filteredLinks.map((link, index) => (
-            <div
-              className={`
-                flex flex-col text-nowrap
-                ${link.subLinks.length > 0 ? "mb-3" : ""}
-              `}
-              key={index}
-            >
-              {/* Heading or main link */}
-              {link.subLinks.length > 0 && !link.clickable ? (
-                <>
-                  {/* Heading when not clickable */}
-                  <p className="text-[18px] text-white ml-3">{link.text}</p>
-                </>
-              ) : (
-                <>
-                  {/* Main link when clickable */}
-                  <NavLink
-                    className="text-[18px] h-full"
-                    href={link.href}
-                    onClick={navMenu.close}
-                  >
-                    {link.text}
-                  </NavLink>
-                </>
-              )}
+          {/* Top bar with close button area */}
+          <div className="w-full h-nav-bar border-b border-white/10" />
 
-              {/* Sublinks */}
-              <div className="text-[13px] flex flex-col px-4 py-3">
-                {link.subLinks.map((sublink, subIndex) => (
-                  <NavLink
-                    className="h-full py-2"
-                    key={subIndex}
-                    href={sublink.href}
-                    target={sublink.newTab ? "_blank" : "_self"}
-                    onClick={navMenu.close}
-                  >
-                    {sublink.text}
-                  </NavLink>
-                ))}
-              </div>
+          {/* Container */}
+          <motion.div
+            className={twMerge(
+              "flex-1 w-5/6 max-w-2xl py-12 mx-auto overflow-y-auto",
+            )}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            {/* Button */}
+            {button && (
+              <motion.div
+                className="mb-8"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.15 }}
+              >
+                <ButtonLink
+                  variant={button.variant}
+                  href={button.href}
+                  target={button.newTab ? "_blank" : "_self"}
+                  onClick={close}
+                >
+                  {button.text}
+                </ButtonLink>
+              </motion.div>
+            )}
+
+            {/* Links */}
+            <div className="flex flex-col gap-4">
+              {filteredLinks.map((link, index) => (
+                <motion.div
+                  className="flex flex-col"
+                  key={index}
+                  initial={{ x: slideOutMenu ? 50 : 0, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: 0.2 + index * 0.1,
+                    ease: "easeOut",
+                  }}
+                >
+                  {link.clickable ? (
+                    <Link
+                      className={twMerge(
+                        "px-4 py-3 rounded-lg",
+                        "transition-colors duration-200",
+                        "hover:bg-white/10",
+                      )}
+                      href={link.href}
+                      target={link.newTab ? "_blank" : "_self"}
+                      rel={link.newTab ? "noopener noreferrer" : undefined}
+                      prefetch={true}
+                      onClick={createLinkClickHandler(link.href, pathname, {
+                        onNavigate: close,
+                        onClick: close,
+                      })}
+                    >
+                      <span className="text-[16px] font-semibold font-montserrat-alternates text-white">
+                        {link.text}
+                      </span>
+                    </Link>
+                  ) : (
+                    <div className="px-4 py-3 opacity-60">
+                      <span className="text-[16px] font-semibold font-montserrat-alternates text-white/70">
+                        {link.text}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Sublinks */}
+                  {link.subLinks.length > 0 && (
+                    <motion.div
+                      className="flex flex-col pl-6 mt-2 gap-2"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      transition={{ duration: 0.3, delay: 0.25 + index * 0.1 }}
+                    >
+                      {link.subLinks.map((sublink, i) => (
+                        <Link
+                          className={twMerge(
+                            "px-4 py-2 rounded-lg",
+                            "transition-colors duration-200",
+                            "hover:bg-white/5",
+                          )}
+                          key={i}
+                          href={sublink.href}
+                          target={sublink.newTab ? "_blank" : "_self"}
+                          rel={
+                            sublink.newTab ? "noopener noreferrer" : undefined
+                          }
+                          prefetch={true}
+                          onClick={createLinkClickHandler(
+                            sublink.href,
+                            pathname,
+                            {
+                              onNavigate: close,
+                              onClick: close,
+                            },
+                          )}
+                        >
+                          <span className="text-[15px] font-medium font-montserrat-alternates text-white/80">
+                            {sublink.text}
+                          </span>
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </motion.div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Dark overlay to close the navigation menu */}
-      <div
-        className={`
-          z-30 fixed inset-0 bg-black opacity-0 animate-fade-in-half
-          top-[calc(var(--height-nav-bar)+var(--height-news-summary))]
-          xl:hidden
-          ${navMenu.isOpen ? "" : "hidden"}
-        `}
-        onClick={navMenu.close}
-      />
-    </>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

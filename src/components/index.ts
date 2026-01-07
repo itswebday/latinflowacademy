@@ -1,3 +1,4 @@
+export { AnimatedWrapper } from "./animations";
 export { default as BackgroundImage } from "./BackgroundImage";
 export { default as BackgroundVideo } from "./BackgroundVideo";
 export { default as ButtonLink, type ButtonLinkProps } from "./ButtonLink";
@@ -9,5 +10,4 @@ export { default as PageWrapper } from "./PageWrapper";
 export { default as PreviewListener } from "./PreviewListener";
 export { default as ScrollRestoration } from "./ScrollRestoration";
 export { default as SwiperContainer } from "./SwiperContainer";
-export { default as Tabs } from "./Tabs";
 export { default as TranslateButton } from "./TranslateButton";

@@ -9,12 +9,8 @@ export type RawUrl = {
     | "page"
     | "blog"
     | "blog-post"
-    | "news"
-    | "news-post"
-    | "dance-styles"
-    | "dance-style-post"
-    | "teachers"
-    | "teacher-post"
+    | "events"
+    | "event-post"
     | "privacy-policy"
     | "cookie-policy"
     | "terms-and-conditions";
@@ -26,16 +22,8 @@ export type RawUrl = {
     relationTo: "blog-posts";
     value: number | { url: string; slug: string };
   };
-  newsPost?: {
-    relationTo: "news-posts";
-    value: number | { url: string; slug: string };
-  };
-  danceStylePost?: {
-    relationTo: "dance-styles-posts";
-    value: number | { url: string; slug: string };
-  };
-  teacherPost?: {
-    relationTo: "teachers-posts";
+  eventPost?: {
+    relationTo: "events-posts";
     value: number | { url: string; slug: string };
   };
 };

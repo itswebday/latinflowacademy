@@ -261,14 +261,8 @@ export const revalidateCookiePolicy = createGlobalRevalidateHook();
 // Revalidate terms and conditions
 export const revalidateTermsAndConditions = createGlobalRevalidateHook();
 
-// Revalidate news
-export const revalidateNews = createGlobalRevalidateHook("news");
-
-// Revalidate dance styles
-export const revalidateDanceStyles = createGlobalRevalidateHook("dance-styles");
-
-// Revalidate teachers
-export const revalidateTeachers = createGlobalRevalidateHook("teachers");
+// Revalidate events
+export const revalidateEvents = createGlobalRevalidateHook("events");
 
 // Revalidate navigation
 export const revalidateNavigation: GlobalAfterChangeHook = async ({
@@ -365,18 +359,14 @@ const revalidateNavigationAndFooter = async () => {
     const [
       homeHref,
       blogHref,
-      newsHref,
-      danceStylesHref,
-      teachersHref,
+      eventsHref,
       privacyPolicyHref,
       cookiePolicyHref,
       termsAndConditionsHref,
     ] = await Promise.all([
       getHrefFromMessages(locale, "home.url"),
       getHrefFromMessages(locale, "blog.url"),
-      getHrefFromMessages(locale, "news.url"),
-      getHrefFromMessages(locale, "danceStyles.url"),
-      getHrefFromMessages(locale, "teachers.url"),
+      getHrefFromMessages(locale, "events.url"),
       getHrefFromMessages(locale, "privacyPolicy.url"),
       getHrefFromMessages(locale, "cookiePolicy.url"),
       getHrefFromMessages(locale, "termsAndConditions.url"),
@@ -384,9 +374,7 @@ const revalidateNavigationAndFooter = async () => {
 
     if (homeHref) pathsToRevalidate.push(homeHref);
     if (blogHref) pathsToRevalidate.push(blogHref);
-    if (newsHref) pathsToRevalidate.push(newsHref);
-    if (danceStylesHref) pathsToRevalidate.push(danceStylesHref);
-    if (teachersHref) pathsToRevalidate.push(teachersHref);
+    if (eventsHref) pathsToRevalidate.push(eventsHref);
     if (privacyPolicyHref) pathsToRevalidate.push(privacyPolicyHref);
     if (cookiePolicyHref) pathsToRevalidate.push(cookiePolicyHref);
     if (termsAndConditionsHref) pathsToRevalidate.push(termsAndConditionsHref);
@@ -467,16 +455,16 @@ const revalidateNavigationAndFooter = async () => {
     });
   }
 
-  // Fetch and revalidate all published news posts for all locales
+  // Fetch and revalidate all published event posts for all locales
   for (const locale of LOCALES) {
-    const newsHref = await getHrefFromMessages(locale, "news.url");
+    const eventsHref = await getHrefFromMessages(locale, "events.url");
 
-    if (!newsHref) {
+    if (!eventsHref) {
       continue;
     }
 
     const results = await payload.find({
-      collection: "news-posts",
+      collection: "events-posts",
       overrideAccess: true,
       draft: false,
       depth: 0,
@@ -495,79 +483,8 @@ const revalidateNavigationAndFooter = async () => {
 
     results.docs?.forEach((post) => {
       if (post.slug && typeof post.slug === "string") {
-        const newsPostPath = `${newsHref}/${post.slug}`;
-        revalidatePath(newsPostPath);
-      }
-    });
-  }
-
-  // Fetch and revalidate all published dance styles posts for all locales
-  for (const locale of LOCALES) {
-    const danceStylesHref = await getHrefFromMessages(
-      locale,
-      "danceStyles.url",
-    );
-
-    if (!danceStylesHref) {
-      continue;
-    }
-
-    const results = await payload.find({
-      collection: "dance-styles-posts",
-      overrideAccess: true,
-      draft: false,
-      depth: 0,
-      limit: 1000,
-      pagination: false,
-      locale: locale as LocaleOption,
-      where: {
-        _status: {
-          equals: "published",
-        },
-      },
-      select: {
-        slug: true,
-      },
-    });
-
-    results.docs?.forEach((post) => {
-      if (post.slug && typeof post.slug === "string") {
-        const danceStylePostPath = `${danceStylesHref}/${post.slug}`;
-        revalidatePath(danceStylePostPath);
-      }
-    });
-  }
-
-  // Fetch and revalidate all published teachers posts for all locales
-  for (const locale of LOCALES) {
-    const teachersHref = await getHrefFromMessages(locale, "teachers.url");
-
-    if (!teachersHref) {
-      continue;
-    }
-
-    const results = await payload.find({
-      collection: "teachers-posts",
-      overrideAccess: true,
-      draft: false,
-      depth: 0,
-      limit: 1000,
-      pagination: false,
-      locale: locale as LocaleOption,
-      where: {
-        _status: {
-          equals: "published",
-        },
-      },
-      select: {
-        slug: true,
-      },
-    });
-
-    results.docs?.forEach((post) => {
-      if (post.slug && typeof post.slug === "string") {
-        const teacherPostPath = `${teachersHref}/${post.slug}`;
-        revalidatePath(teacherPostPath);
+        const eventPostPath = `${eventsHref}/${post.slug}`;
+        revalidatePath(eventPostPath);
       }
     });
   }
@@ -630,86 +547,30 @@ export const revalidateBlogPostDelete: CollectionAfterDeleteHook<
   return doc;
 };
 
-// Get news listing paths
-const getNewsListingPaths = (url: string | null): string[] => {
+// Get events listing paths
+const getEventsListingPaths = (url: string | null): string[] => {
   if (!url) {
     return [];
   }
 
   const basePath = extractBasePath(url);
 
-  if (!basePath || !basePath.startsWith("/news")) {
+  if (!basePath || !basePath.startsWith("/events")) {
     return [];
   }
 
-  return generateLocalizedPaths("/news");
+  return generateLocalizedPaths("/events");
 };
 
-// Custom hook for news posts that also revalidates sitemap
-export const revalidateNewsPost: CollectionAfterChangeHook<BlogPost> = async (
-  args,
-) => {
-  const { doc, previousDoc, req } = args;
-
-  if (!req.context.disableRevalidate) {
-    const baseHook =
-      createCollectionRevalidateHook<BlogPost>(getNewsListingPaths);
-    const result = baseHook(args);
-
-    // Revalidate sitemap when content changes
-    if (doc._status === "published" || previousDoc?._status === "published") {
-      revalidateSitemap();
-    }
-
-    return result;
-  }
-
-  return doc;
-};
-
-// Custom hook for news post deletion that also revalidates sitemap
-export const revalidateNewsPostDelete: CollectionAfterDeleteHook<
-  BlogPost
-> = async (args) => {
-  const { doc, req } = args;
-
-  if (!req.context.disableRevalidate) {
-    const baseHook = createCollectionDeleteHook<BlogPost>(getNewsListingPaths);
-    const result = baseHook(args);
-
-    // Revalidate sitemap when content is deleted
-    revalidateSitemap();
-
-    return result;
-  }
-
-  return doc;
-};
-
-// Get dance style pages listing paths
-const getDanceStylePagesListingPaths = (url: string | null): string[] => {
-  if (!url) {
-    return [];
-  }
-
-  const basePath = extractBasePath(url);
-
-  if (!basePath || !basePath.startsWith("/dance-styles")) {
-    return [];
-  }
-
-  return generateLocalizedPaths("/dance-styles");
-};
-
-// Custom hook for dance style pages that also revalidates sitemap
-export const revalidateDanceStyle: CollectionAfterChangeHook<BlogPost> = async (
+// Custom hook for event posts that also revalidates sitemap
+export const revalidateEventPost: CollectionAfterChangeHook<BlogPost> = async (
   args,
 ) => {
   const { doc, previousDoc, req } = args;
 
   if (!req.context.disableRevalidate) {
     const baseHook = createCollectionRevalidateHook<BlogPost>(
-      getDanceStylePagesListingPaths,
+      getEventsListingPaths,
     );
     const result = baseHook(args);
 
@@ -724,74 +585,15 @@ export const revalidateDanceStyle: CollectionAfterChangeHook<BlogPost> = async (
   return doc;
 };
 
-// Custom hook for dance style page deletion that also revalidates sitemap
-export const revalidateDanceStyleDelete: CollectionAfterDeleteHook<
+// Custom hook for event post deletion that also revalidates sitemap
+export const revalidateEventPostDelete: CollectionAfterDeleteHook<
   BlogPost
 > = async (args) => {
   const { doc, req } = args;
 
   if (!req.context.disableRevalidate) {
     const baseHook = createCollectionDeleteHook<BlogPost>(
-      getDanceStylePagesListingPaths,
-    );
-    const result = baseHook(args);
-
-    // Revalidate sitemap when content is deleted
-    revalidateSitemap();
-
-    return result;
-  }
-
-  return doc;
-};
-
-// Get teacher pages listing paths
-const getTeacherPagesListingPaths = (url: string | null): string[] => {
-  if (!url) {
-    return [];
-  }
-
-  const basePath = extractBasePath(url);
-
-  if (!basePath || !basePath.startsWith("/teachers")) {
-    return [];
-  }
-
-  return generateLocalizedPaths("/teachers");
-};
-
-// Custom hook for teacher pages that also revalidates sitemap
-export const revalidateTeacher: CollectionAfterChangeHook<BlogPost> = async (
-  args,
-) => {
-  const { doc, previousDoc, req } = args;
-
-  if (!req.context.disableRevalidate) {
-    const baseHook = createCollectionRevalidateHook<BlogPost>(
-      getTeacherPagesListingPaths,
-    );
-    const result = baseHook(args);
-
-    // Revalidate sitemap when content changes
-    if (doc._status === "published" || previousDoc?._status === "published") {
-      revalidateSitemap();
-    }
-
-    return result;
-  }
-
-  return doc;
-};
-
-// Custom hook for teacher page deletion that also revalidates sitemap
-export const revalidateTeacherDelete: CollectionAfterDeleteHook<
-  BlogPost
-> = async (args) => {
-  const { doc, req } = args;
-
-  if (!req.context.disableRevalidate) {
-    const baseHook = createCollectionDeleteHook<BlogPost>(
-      getTeacherPagesListingPaths,
+      getEventsListingPaths,
     );
     const result = baseHook(args);
 

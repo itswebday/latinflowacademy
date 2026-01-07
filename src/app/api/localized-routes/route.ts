@@ -47,13 +47,8 @@ export const GET = async (request: NextRequest) => {
           return "pages";
         case "blog":
           return "blog-posts";
-        case "news":
-          return "news-posts";
-        case "dance-styles":
-        case "danceStyles":
-          return "dance-styles-posts";
-        case "teachers":
-          return "teachers-posts";
+        case "events":
+          return "events-posts";
         default:
           return null;
       }
@@ -119,12 +114,7 @@ export const GET = async (request: NextRequest) => {
     } else {
       if (currentPage) {
         // Normalize currentPage to global slug format (kebab-case)
-        const globalSlug =
-          currentPage === "danceStyles"
-            ? "dance-styles"
-            : currentPage === "teachers"
-              ? "teachers"
-              : currentPage;
+        const globalSlug = currentPage;
 
         const globalResults = await Promise.all(
           LOCALES.map((loc) =>

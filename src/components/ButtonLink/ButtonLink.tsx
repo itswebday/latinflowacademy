@@ -12,7 +12,11 @@ export type ButtonLinkProps = {
   children: React.ReactNode;
   className?: string;
   href: string;
-  variant?: "primaryButton" | "greenLink" | "grayLink" | "underlineLink";
+  variant?:
+    | "primaryButton"
+    | "whiteButton"
+    | "darkButton"
+    | "transparentButton";
   target?: "_blank" | "_self";
   onClick?: () => void;
 };
@@ -41,27 +45,42 @@ const ButtonLink: React.FC<ButtonLinkProps> = ({
     switch (variant) {
       case "primaryButton":
         return twMerge(
-          "px-6 py-3 text-white bg-primary rounded-sm",
-          "hover:scale-105 hover:text-darkgreen",
+          "text-white bg-linear-to-r from-primary to-secondary",
+          "rounded-full shadow-lg shadow-primary/30",
+          "hover:scale-105 hover:shadow-xl hover:shadow-primary/40",
+          "transition-all duration-300",
         );
-      case "greenLink":
-        return "text-primary hover:text-darkgreen";
-      case "grayLink":
-        return "flex-row-reverse text-gray hover:text-primary";
-      case "underlineLink":
-        return "text-gray underline hover:text-primary";
+      case "whiteButton":
+        return twMerge(
+          "text-dark bg-white rounded-full shadow-lg shadow-dark/10",
+          "hover:scale-105 hover:shadow-xl hover:shadow-dark/20",
+          "border-2 border-white/50",
+          "transition-all duration-300",
+        );
+      case "darkButton":
+        return twMerge(
+          "text-white bg-dark rounded-full shadow-lg shadow-dark/50",
+          "border-2 border-dark/80 transition-all duration-300",
+          "hover:scale-105 hover:shadow-xl hover:shadow-dark/70",
+        );
+      case "transparentButton":
+        return twMerge(
+          "text-white bg-transparent rounded-full border-2 border-white/30",
+          "backdrop-blur-sm transition-all duration-300",
+          "hover:scale-105 hover:border-white/60 hover:bg-white/5",
+        );
       default:
-        return "text-gray underline hover:text-primary";
+        return "";
     }
   };
 
   return (
     <Link
       className={twMerge(
-        "relative flex items-center gap-2 w-fit font-semibold",
-        "transition duration-200",
+        "relative flex items-center gap-3 w-fit pl-8 pr-6 py-4 font-semibold",
+        "overflow-hidden",
         getVariantStyles(),
-        isClicked && "opacity-50 pointer-events-none",
+        isClicked && "opacity-70 pointer-events-none",
         className,
       )}
       href={href}
@@ -71,40 +90,70 @@ const ButtonLink: React.FC<ButtonLinkProps> = ({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Button animation */}
-      {variant === "primaryButton" && (
+      {/* Hover shine effect */}
+      {(variant === "primaryButton" ||
+        variant === "whiteButton" ||
+        variant === "darkButton" ||
+        variant === "transparentButton") && (
         <motion.div
-          className="absolute inset-0 opacity-0"
+          className="absolute inset-0 opacity-0 rounded-full"
           animate={{
-            opacity: isHovered ? 0.1 : 0,
+            opacity: isHovered ? 0.2 : 0,
           }}
           style={{
             background:
-              "linear-gradient(135deg, rgba(255,255,255,0.15) 0%, " +
-              "rgba(255,255,255,0) 100%)",
+              "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, " +
+              "rgba(255,255,255,0) 50%, rgba(255,255,255,0.3) 100%)",
           }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
         />
       )}
 
-      {/* Clicked animation */}
-      {isClicked && variant === "primaryButton" && (
-        <motion.div
-          className="absolute inset-0 bg-white/20 rounded-sm"
-          animate={{ opacity: 0, scale: 2.5 }}
-          initial={{ opacity: 0.6, scale: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        />
-      )}
+      {/* Ripple effect on click */}
+      {isClicked &&
+        (variant === "primaryButton" ||
+          variant === "whiteButton" ||
+          variant === "darkButton" ||
+          variant === "transparentButton") && (
+          <motion.div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background:
+                variant === "primaryButton"
+                  ? "radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%)"
+                  : variant === "whiteButton"
+                    ? "radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%)"
+                    : variant === "darkButton"
+                      ? "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)"
+                      : "radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%)",
+            }}
+            animate={{ opacity: 0, scale: 2.5 }}
+            initial={{ opacity: 0.8, scale: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
+        )}
 
       {/* Button text */}
-      <span className="z-10 relative text-[15px]">{children}</span>
+      <span
+        className={twMerge(
+          "z-10 relative -translate-y-[0.5px]",
+          "font-montserrat-alternates uppercase",
+        )}
+      >
+        {children}
+      </span>
 
-      {/* Arrow */}
+      {/* Arrow with animation */}
       {variant && (
-        <span className="z-10 relative">
-          <ChevronRight className="relative w-4 h-4" />
-        </span>
+        <motion.span
+          className="z-10 relative"
+          animate={{
+            x: isHovered ? 4 : 0,
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <ChevronRight className="relative w-5 h-5 -translate-y-[0.5px]" />
+        </motion.span>
       )}
     </Link>
   );

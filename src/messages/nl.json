@@ -12,7 +12,8 @@
 
   "home": {
     "title": "Home",
-    "url": "/nl"
+    "url": "/nl",
+    "scrollDown": "SCROLL OMLAAG"
   },
 
   "blog": {
@@ -30,42 +31,16 @@
     }
   },
 
-  "news": {
-    "title": "Nieuws",
-    "url": "/nl/nieuws",
-    "noPosts": "Nog geen nieuwsberichten.",
+  "events": {
+    "title": "Evenementen",
+    "url": "/nl/evenementen",
+    "noPosts": "Nog geen evenementen.",
     "readMore": "Lees meer",
-    "backToOverview": "Terug naar nieuwsoverzicht",
+    "backToOverview": "Terug naar evenementen overzicht",
     "publishedAt": "Gepubliceerd op",
-    "notFound": "Nieuwsbericht Niet Gevonden",
+    "notFound": "Evenement Niet Gevonden",
     "otherPosts": {
-      "heading": "Ander Nieuws"
-    }
-  },
-
-  "danceStyles": {
-    "title": "Dansstijlen",
-    "url": "/nl/dansstijlen",
-    "noPosts": "Nog geen dansstijlen.",
-    "readMore": "Lees meer",
-    "backToOverview": "Terug naar dansstijlen overzicht",
-    "publishedAt": "Gepubliceerd op",
-    "notFound": "Dansstijl Niet Gevonden",
-    "otherDanceStylesPosts": {
-      "heading": "Andere Dansstijlen"
-    }
-  },
-
-  "teachers": {
-    "title": "Docenten",
-    "url": "/nl/docenten",
-    "noPosts": "Nog geen docenten.",
-    "readMore": "Lees meer",
-    "backToOverview": "Terug naar docenten overzicht",
-    "publishedAt": "Gepubliceerd op",
-    "notFound": "Docent Niet Gevonden",
-    "otherPosts": {
-      "heading": "Andere Docenten"
+      "heading": "Andere Evenementen"
     }
   },
 
@@ -89,27 +64,14 @@
     "paragraph": "De pagina die u zoekt bestaat niet."
   },
 
-  "blocks": {
-    "prices": {
-      "buyButton": "Koop lessen"
-    }
-  },
-
   "footer": {
-    "contact": {
-      "heading": "CONTACT"
-    },
-    "location": {
-      "heading": "LOCATIE"
-    },
-    "quickLinks": {
-      "heading": "Quick links"
-    },
     "socialMedia": {
-      "heading": "STAY UP TO DATE WITH US"
+      "heading": "VOLG ONS"
+    },
+    "openingHours": {
+      "heading": "OPENINGSTIJDEN"
     },
     "legalLinks": {
-      "heading": "NAVIGATIE",
       "crn": "KvK",
       "vat": "BTW"
     }

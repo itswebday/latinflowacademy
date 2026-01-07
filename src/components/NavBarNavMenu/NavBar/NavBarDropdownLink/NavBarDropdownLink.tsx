@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { NavLink } from "@/components";
+import { ChevronDown } from "@/components/icons";
 import { createLinkClickHandler } from "@/utils";
-import NavBarDropdownArrow from "./NavBarDropdownArrow";
-import NavBarDropdownMenu from "./NavBarDropdownMenu";
 
 export type NavBarDropdownLinkProps = {
   className?: string;
@@ -47,49 +47,89 @@ const NavBarDropdownLink: React.FC<NavBarDropdownLinkProps> = ({
     }
   };
 
-  // Container attributes
-  const attributes = {
-    className: `
-      relative flex items-center h-full px-nav-link text-white
-      hover:text-primary
-      ${isClicked ? "opacity-50 pointer-events-none" : ""}
-      ${className}
-    `,
-  };
-
-  // Text and dropdown arrow
-  const children = (
-    <div
-      className={`
-        flex items-center gap-1 h-full transition-colors duration-200
-        ${className}
-      `}
-      onClick={handleClick}
-    >
-      {text}
-      <NavBarDropdownArrow isHovered={isHovered} />
-    </div>
-  );
-
   return (
     <div
-      className="relative h-full"
+      className={twMerge(
+        "relative h-full",
+        isClicked && "pointer-events-none",
+        className,
+      )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Link or not depending on href */}
-      {href && clickable ? (
-        <Link href={href} target={newTab ? "_blank" : "_self"} {...attributes}>
-          {children}
-        </Link>
-      ) : (
-        <div {...attributes}>{children}</div>
-      )}
+      {/* Link */}
+      <NavLink
+        className="h-full"
+        href={clickable ? href : undefined}
+        target={newTab ? "_blank" : "_self"}
+      >
+        {/* Text and dropdown arrow */}
+        <div className="flex items-center gap-2 h-full" onClick={handleClick}>
+          {/* Text */}
+          <span
+            className={twMerge(
+              "text-[15px] font-semibold font-montserrat-alternates",
+              "text-white transition-colors duration-200",
+              isHovered && "text-primary",
+            )}
+          >
+            {text}
+          </span>
 
-      {/* Dropdown menu */}
-      {isHovered && (
-        <NavBarDropdownMenu className={className} subLinks={subLinks} />
-      )}
+          {/* Dropdown arrow */}
+          <div
+            className={twMerge(
+              "flex items-center transition-transform duration-200",
+              isHovered && "rotate-180",
+            )}
+          >
+            <ChevronDown
+              className={twMerge(
+                "w-4 h-4 text-white/70 transition-colors duration-200",
+                isHovered && "text-primary",
+              )}
+            />
+          </div>
+        </div>
+      </NavLink>
+
+      {/* Dropdown list */}
+      <AnimatePresence>
+        {isHovered && subLinks.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{
+              duration: 0.2,
+              ease: "easeOut",
+            }}
+            className={twMerge(
+              "z-95 absolute -left-2 top-full flex flex-col w-56",
+              "rounded-lg bg-white shadow-lg",
+              "border border-gray-200 overflow-hidden",
+            )}
+          >
+            {/* Sublinks */}
+            {subLinks.map((subLink, index) => (
+              <NavLink
+                key={index}
+                className={twMerge(
+                  "block px-5 py-3",
+                  "transition-colors duration-200",
+                  "hover:bg-gray-100",
+                )}
+                href={subLink.href}
+                target={subLink.newTab ? "_blank" : "_self"}
+              >
+                <span className="text-[14px] font-medium font-montserrat-alternates text-dark/80">
+                  {subLink.text}
+                </span>
+              </NavLink>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

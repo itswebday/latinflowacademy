@@ -40,18 +40,72 @@ export const Hero: GlobalConfig = {
     ...getHeadingFields({
       hiddenFields: ["icon"],
     }),
-    ...getHeadingFields({
-      fieldName: "subheading",
-      fieldLabel: "Subheading",
-      hiddenFields: ["icon"],
-    }),
+    {
+      name: "paragraph",
+      label: "Paragraph",
+      type: "group",
+      required: true,
+      fields: [
+        {
+          name: "text",
+          label: "Text",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+      ],
+    },
+    {
+      name: "socialMediaLinks",
+      label: "Social media links",
+      type: "array",
+      defaultValue: [],
+      minRows: 1,
+      maxRows: 4,
+      required: true,
+      labels: {
+        singular: "Social media link",
+        plural: "Social media links",
+      },
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: "icon",
+          label: "Icon (SVG file)",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "url",
+          label: "Link (URL)",
+          type: "text",
+          defaultValue: "",
+          required: true,
+        },
+      ],
+    },
     ...getButtonLinkFields({
       excludePages: [
         "home",
         "blog",
-        "news",
-        "dance-styles",
-        "teachers",
+        "events",
+        "privacy-policy",
+        "cookie-policy",
+        "terms-and-conditions",
+      ],
+    }),
+    ...getButtonLinkFields({
+      fieldName: "secondButton",
+      fieldLabel: "Second button",
+      optional: true,
+      excludePages: [
+        "home",
+        "blog",
+        "events",
         "privacy-policy",
         "cookie-policy",
         "terms-and-conditions",
