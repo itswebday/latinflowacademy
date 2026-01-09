@@ -49,9 +49,7 @@ const ScrollDownIndicator: React.FC<ScrollDownIndicatorProps> = ({
       aria-label={homeT("scrollDown")}
     >
       {/* Text */}
-      <span className="text-[13px] font-montserrat-alternates font-semibold">
-        {homeT("scrollDown")}
-      </span>
+      <span className="text-[13px] font-semibold">{homeT("scrollDown")}</span>
 
       {/* Arrow */}
       <ChevronDown className="w-8 h-8 animate-bounce" />

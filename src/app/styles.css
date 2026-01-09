@@ -11,8 +11,8 @@
   --color-primary: #ec4899;
   --color-secondary: #a236db;
   --color-tertiary: #d66bcf;
-  --color-dark: #16081c;
-  --color-light: #f7f7f7;
+  --color-dark: #160b14;
+  --color-light: #3a1f2e;
 
   --height-nav-bar: 112px;
 
@@ -28,7 +28,7 @@
 
 @layer components {
   body {
-    @apply relative min-w-[375px] bg-white;
+    @apply relative min-w-[375px];
   }
 
   main {
@@ -47,38 +47,41 @@
     font-family: "Montserrat", sans-serif;
   }
 
-  .font-montserrat-alternates,
+  .font-montserrat-alternates {
+    font-family: "Montserrat Alternates", sans-serif;
+  }
+
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: "Montserrat Alternates", sans-serif;
+    @apply font-semibold leading-tight;
   }
 
   h1 {
-    @apply text-[28px] de:text-[48px] font-semibold leading-tight uppercase;
+    @apply text-[36px] de:text-[48px];
   }
 
   h2 {
-    @apply text-[28px] leading-tight uppercase;
+    @apply text-[28px];
   }
 
   h3 {
-    @apply text-[24px] leading-tight uppercase;
+    @apply text-[24px];
   }
 
   h4 {
-    @apply text-[20px] leading-tight uppercase;
+    @apply text-[20px];
   }
 
   h5 {
-    @apply text-[16px] leading-tight uppercase;
+    @apply text-[16px];
   }
 
   h6 {
-    @apply text-[14px] leading-tight uppercase;
+    @apply text-[14px];
   }
 
   .fade-in-0s {

@@ -1,53 +1,67 @@
 "use client";
 
 import React, { ReactNode } from "react";
-import {
-  FreeMode,
-  Mousewheel,
-  Navigation,
-  Pagination,
-  Scrollbar,
-} from "swiper/modules";
+import { FreeMode, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { SwiperOptions } from "swiper/types";
 import { twMerge } from "tailwind-merge";
 
 type SwiperContainerProps = {
   children: ReactNode;
   className?: string;
-  spaceBetween: number;
+  spaceBetween?: number;
+  slidesPerView?: "auto" | number;
+  freeMode?: boolean;
+  allowTouchMove?: boolean;
+  mousewheel?: boolean;
+  breakpoints?: SwiperOptions["breakpoints"];
+  slideClassName?: string;
 };
 
 const SwiperContainer: React.FC<SwiperContainerProps> = ({
   children,
   className,
-  spaceBetween,
+  spaceBetween = 16,
+  slidesPerView = "auto",
+  freeMode = true,
+  allowTouchMove = true,
+  mousewheel = true,
+  breakpoints,
+  slideClassName,
 }) => {
+  const modules = [FreeMode];
+  if (mousewheel) {
+    modules.push(Mousewheel);
+  }
+
   return (
-    <div className={twMerge("overflow-visible", className)}>
+    <div className={twMerge("w-full", className)}>
       {/* Swiper */}
       <Swiper
+        className="!overflow-visible"
+        modules={modules}
+        slidesPerView={slidesPerView}
+        spaceBetween={spaceBetween}
+        freeMode={freeMode}
+        allowTouchMove={allowTouchMove}
+        mousewheel={mousewheel ? { forceToAxis: true } : false}
+        breakpoints={breakpoints}
+        grabCursor={true}
         style={{
-          paddingBottom: "2rem",
-          overflow: "visible",
+          // Hide scrollbar
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
-        modules={[FreeMode, Mousewheel, Navigation, Pagination, Scrollbar]}
-        slidesPerView="auto"
-        freeMode={true}
-        allowTouchMove={true}
-        scrollbar={{ draggable: true }}
-        mousewheel={{ forceToAxis: true }}
       >
         {/* Slides */}
         {React.Children.map(children, (child, index) => (
           <SwiperSlide
-            style={{
-              width: "fit-content",
-              paddingLeft: `${spaceBetween * 0.5}px`,
-              paddingRight: `${spaceBetween * 0.5}px`,
-            }}
+            className={twMerge(
+              slidesPerView === "auto" && "!w-auto",
+              slideClassName,
+            )}
             key={index}
           >
-            {/* Component */}
             {child}
           </SwiperSlide>
         ))}

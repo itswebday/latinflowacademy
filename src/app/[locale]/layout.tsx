@@ -36,12 +36,21 @@ const HomeLayout = async ({
             href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet"
           />
-          <link href="/favicon.ico" rel="icon" sizes="32x32" />
+          <link
+            href="/favicon.ico"
+            rel="icon"
+            type="image/x-icon"
+            sizes="any"
+          />
           <link href="/icon.svg" rel="icon" type="image/svg+xml" />
-          <link href="/apple-touch-icon.png" rel="apple-touch-icon" />
+          <link
+            href="/apple-touch-icon.png"
+            rel="apple-touch-icon"
+            sizes="125x125"
+          />
         </head>
 
-        <body className="text-[15px] font-montserrat">
+        <body className="text-[15px] text-white font-montserrat bg-dark">
           <PageProvider initialPage="">
             <NavMenuProvider>
               <ScrollRestoration />

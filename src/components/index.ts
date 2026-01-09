@@ -2,6 +2,7 @@ export { AnimatedWrapper } from "./animations";
 export { default as BackgroundImage } from "./BackgroundImage";
 export { default as BackgroundVideo } from "./BackgroundVideo";
 export { default as ButtonLink, type ButtonLinkProps } from "./ButtonLink";
+export { default as Card } from "./Card";
 export { default as CookieNotification } from "./CookieNotification";
 export { default as HeadingWithIcon } from "./HeadingWithIcon";
 export { default as LogoLink } from "./LogoLink";

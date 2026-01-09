@@ -99,7 +99,7 @@ export const Hero: GlobalConfig = {
       ],
     }),
     ...getButtonLinkFields({
-      fieldName: "secondButton",
+      fieldName: "button2",
       fieldLabel: "Second button",
       optional: true,
       excludePages: [

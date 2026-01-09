@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { twMerge } from "tailwind-merge";
+import { AnimatedWrapper, HeadingWithIcon } from "@/components";
 import RichTextRenderer from "@/components/RichTextRenderer";
-import { HeadingWithIcon } from "@/components";
 import type { Config } from "@/payload-types";
 import type { LocaleOption, RichText } from "@/types";
 import { getCollection } from "@/utils/server";
@@ -25,40 +25,49 @@ const Events: React.FC<EventsProps> = async ({ events, eventsPosts }) => {
   });
 
   return (
-    <section className="relative flex justify-center w-full py-20">
+    <section className="relative flex justify-center w-full py-32 bg-dark">
       {/* Container */}
       <div
         className={twMerge(
-          "flex flex-col items-center gap-4",
+          "relative z-10 flex flex-col items-center gap-8",
           "w-11/12 max-w-7xl mx-auto",
+          "de:gap-12",
         )}
       >
         {/* Heading */}
-        <HeadingWithIcon icon={events.heading.icon}>
-          <h1 className="font-bold">{events.heading.text}</h1>
-        </HeadingWithIcon>
+        <AnimatedWrapper delay={0} direction="up">
+          <HeadingWithIcon icon={events.heading.icon}>
+            <h1 className="font-bold text-white text-center">
+              {events.heading.text}
+            </h1>
+          </HeadingWithIcon>
+        </AnimatedWrapper>
 
         {/* Paragraph */}
-        <p className="max-w-2xl mx-auto text-dark/70 text-center">
-          {events.paragraph.text}
-        </p>
+        <AnimatedWrapper delay={0.1} direction="up">
+          <p className="max-w-2xl mx-auto text-white/80 text-center text-[16px]">
+            {events.paragraph.text}
+          </p>
+        </AnimatedWrapper>
 
         {/* Event posts and other event posts */}
         <div
           className={twMerge(
-            "flex flex-col gap-4 w-full",
-            "de:flex-row de:gap-20",
+            "flex flex-col gap-8 w-full mt-8",
+            "de:flex-row de:gap-20 de:mt-12",
           )}
         >
           {/* Event posts */}
           <div className={twMerge("w-full", "de:w-3/5")}>
             {eventsPosts.length === 0 ? (
-              <p className="my-16 text-dark/60 text-center">
-                {eventsT("noPosts")}
-              </p>
+              <AnimatedWrapper delay={0.2} direction="up">
+                <p className="my-16 text-white/60 text-center">
+                  {eventsT("noPosts")}
+                </p>
+              </AnimatedWrapper>
             ) : (
               <EventsClient
-                className="mt-16"
+                className="mt-8"
                 eventsPosts={eventsPosts
                   .filter((post) => post.url && post.slug)
                   .map((post) => ({
@@ -72,7 +81,7 @@ const Events: React.FC<EventsProps> = async ({ events, eventsPosts }) => {
           </div>
 
           {/* Other event items */}
-          <aside className="w-full mt-16 de:w-2/5">
+          <aside className="w-full mt-8 de:w-2/5 de:mt-0">
             <EventsAside eventsPosts={allEventsPosts} />
           </aside>
         </div>

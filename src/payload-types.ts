@@ -243,7 +243,18 @@ export interface Page {
   id: number;
   title: string;
   blocks?:
-    | (CallToActionBlock | HeadingBlock | ScheduleBlock | StoryBlock | TextImageBlock | TextBlock | VisualBlock)[]
+    | (
+        | AccordionBlock
+        | CallToActionBlock
+        | CardsBlock
+        | CardsImageBlock
+        | HeadingBlock
+        | SellingPointsBlock
+        | StoryBlock
+        | TextImageBlock
+        | TextBlock
+        | VisualBlock
+      )[]
     | null;
   meta?: {
     title?: string | null;
@@ -269,10 +280,82 @@ export interface Page {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordionBlock".
+ */
+export interface AccordionBlock {
+  showHeading?: boolean | null;
+  heading?: {
+    icon?: (number | null) | Media;
+    text: string;
+    hlTexts?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  categorize?: boolean | null;
+  categories?:
+    | {
+        name: string;
+        items: {
+          summary: string;
+          details: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          };
+          id?: string | null;
+        }[];
+        id?: string | null;
+      }[]
+    | null;
+  items?:
+    | {
+        summary: string;
+        details: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  paddingTop: 'none' | 'small' | 'medium' | 'large';
+  paddingBottom: 'none' | 'small' | 'medium' | 'large';
+  applyCustomId?: boolean | null;
+  customId?: string | null;
+  hidden?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordion-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
-  image: number | Media;
+  visual?: (number | null) | Media;
   showHeading?: boolean | null;
   heading?: {
     icon?: (number | null) | Media;
@@ -322,7 +405,38 @@ export interface CallToActionBlock {
     scrollTarget?: string | null;
     newTab?: boolean | null;
   };
-  background: 'transparent' | 'white' | 'light';
+  showButton2?: boolean | null;
+  button2?: {
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
+    text: string;
+    custom?: boolean | null;
+    url?: string | null;
+    scroll?: boolean | null;
+    targetPage?: ('current' | 'home' | 'page') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    page?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    blogPost?: {
+      relationTo: 'blog-posts';
+      value: number | BlogPost;
+    } | null;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
+    } | null;
+    scrollTarget?: string | null;
+    newTab?: boolean | null;
+  };
+  showSocialMedia?: boolean | null;
+  socialMedia?: {
+    links: {
+      icon: number | Media;
+      url: string;
+      id?: string | null;
+    }[];
+  };
   paddingTop: 'none' | 'small' | 'medium' | 'large';
   paddingBottom: 'none' | 'small' | 'medium' | 'large';
   applyCustomId?: boolean | null;
@@ -463,10 +577,146 @@ export interface EventsPost {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardsBlock".
+ */
+export interface CardsBlock {
+  cards: {
+    image?: (number | null) | Media;
+    title: string;
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    leftLabel?: string | null;
+    rightLabel?: string | null;
+    showButton?: boolean | null;
+    button?: {
+      variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
+      text: string;
+      custom?: boolean | null;
+      url?: string | null;
+      scroll?: boolean | null;
+      targetPage?: ('current' | 'home' | 'page') | null;
+      urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+      page?: {
+        relationTo: 'pages';
+        value: number | Page;
+      } | null;
+      blogPost?: {
+        relationTo: 'blog-posts';
+        value: number | BlogPost;
+      } | null;
+      eventPost?: {
+        relationTo: 'events-posts';
+        value: number | EventsPost;
+      } | null;
+      scrollTarget?: string | null;
+      newTab?: boolean | null;
+    };
+    id?: string | null;
+  }[];
+  paddingTop: 'none' | 'small' | 'medium' | 'large';
+  paddingBottom: 'none' | 'small' | 'medium' | 'large';
+  applyCustomId?: boolean | null;
+  customId?: string | null;
+  hidden?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cards-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardsImageBlock".
+ */
+export interface CardsImageBlock {
+  showHeading?: boolean | null;
+  heading?: {
+    icon?: (number | null) | Media;
+    text: string;
+    hlTexts?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cards: {
+    title: string;
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    id?: string | null;
+  }[];
+  showButton?: boolean | null;
+  button?: {
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
+    text: string;
+    custom?: boolean | null;
+    url?: string | null;
+    scroll?: boolean | null;
+    targetPage?: ('current' | 'home' | 'page') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    page?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    blogPost?: {
+      relationTo: 'blog-posts';
+      value: number | BlogPost;
+    } | null;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
+    } | null;
+    scrollTarget?: string | null;
+    newTab?: boolean | null;
+  };
+  image: {
+    file: number | Media;
+    posMo: 'top' | 'bottom';
+    posDe: 'left' | 'right';
+    fit: 'contain' | 'cover';
+    width: number;
+    height?: ('small' | 'medium' | 'large') | null;
+  };
+  paddingTop: 'none' | 'small' | 'medium' | 'large';
+  paddingBottom: 'none' | 'small' | 'medium' | 'large';
+  applyCustomId?: boolean | null;
+  customId?: string | null;
+  hidden?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cards-image-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "HeadingBlock".
  */
 export interface HeadingBlock {
-  tagName: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  icon?: (number | null) | Media;
   text: string;
   hlTexts?:
     | {
@@ -474,8 +724,8 @@ export interface HeadingBlock {
         id?: string | null;
       }[]
     | null;
+  tagName: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   centered?: boolean | null;
-  background: 'transparent' | 'white' | 'light';
   paddingTop: 'none' | 'small' | 'medium' | 'large';
   paddingBottom: 'none' | 'small' | 'medium' | 'large';
   applyCustomId?: boolean | null;
@@ -487,11 +737,14 @@ export interface HeadingBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ScheduleBlock".
+ * via the `definition` "SellingPointsBlock".
  */
-export interface ScheduleBlock {
-  iframeUrl: string;
-  background: 'transparent' | 'white' | 'light';
+export interface SellingPointsBlock {
+  sellingPoints: {
+    icon: number | Media;
+    text: string;
+    id?: string | null;
+  }[];
   paddingTop: 'none' | 'small' | 'medium' | 'large';
   paddingBottom: 'none' | 'small' | 'medium' | 'large';
   applyCustomId?: boolean | null;
@@ -499,7 +752,7 @@ export interface ScheduleBlock {
   hidden?: boolean | null;
   id?: string | null;
   blockName?: string | null;
-  blockType: 'schedule-block';
+  blockType: 'selling-points-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -516,43 +769,84 @@ export interface StoryBlock {
         }[]
       | null;
   };
-  text: {
-    root: {
-      type: string;
-      children: {
-        type: any;
+  main: {
+    image: number | Media;
+    name: string;
+    title: string;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
         version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
+      };
+      [k: string]: unknown;
     };
-    [k: string]: unknown;
+    hlTexts?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
   };
-  blueTexts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  redTexts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  pictures?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  quote?: string | null;
-  background: 'transparent' | 'white' | 'light';
-  paddingTop: 'none' | 'small' | 'medium' | 'large';
-  paddingBottom: 'none' | 'small' | 'medium' | 'large';
+  a: {
+    image: number | Media;
+    name: string;
+    title: string;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    hlTexts?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  b: {
+    image: number | Media;
+    name: string;
+    title: string;
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    hlTexts?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   applyCustomId?: boolean | null;
   customId?: string | null;
   hidden?: boolean | null;
@@ -617,6 +911,30 @@ export interface TextImageBlock {
     scrollTarget?: string | null;
     newTab?: boolean | null;
   };
+  showButton2?: boolean | null;
+  button2?: {
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
+    text: string;
+    custom?: boolean | null;
+    url?: string | null;
+    scroll?: boolean | null;
+    targetPage?: ('current' | 'home' | 'page') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    page?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    blogPost?: {
+      relationTo: 'blog-posts';
+      value: number | BlogPost;
+    } | null;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
+    } | null;
+    scrollTarget?: string | null;
+    newTab?: boolean | null;
+  };
   image: {
     file: number | Media;
     posMo: 'top' | 'bottom';
@@ -625,7 +943,8 @@ export interface TextImageBlock {
     width: number;
     height?: ('small' | 'medium' | 'large') | null;
   };
-  background: 'transparent' | 'white' | 'light';
+  bgColor: 'transparent' | 'white' | 'light';
+  bgElements: 'none' | 'box';
   paddingTop: 'none' | 'small' | 'medium' | 'large';
   paddingBottom: 'none' | 'small' | 'medium' | 'large';
   applyCustomId?: boolean | null;
@@ -705,7 +1024,6 @@ export interface TextBlock {
   };
   centered?: boolean | null;
   width: 'small' | 'medium' | 'large';
-  background: 'transparent' | 'white' | 'light';
   paddingTop: 'none' | 'small' | 'medium' | 'large';
   paddingBottom: 'none' | 'small' | 'medium' | 'large';
   applyCustomId?: boolean | null;
@@ -721,6 +1039,8 @@ export interface TextBlock {
  */
 export interface VisualBlock {
   visual: number | Media;
+  height: 'small' | 'medium' | 'large';
+  opacity: number;
   showHeading?: boolean | null;
   heading?: {
     icon?: (number | null) | Media;
@@ -732,7 +1052,38 @@ export interface VisualBlock {
         }[]
       | null;
   };
-  height: 'small' | 'medium' | 'large';
+  showButton?: boolean | null;
+  button?: {
+    variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
+    text: string;
+    custom?: boolean | null;
+    url?: string | null;
+    scroll?: boolean | null;
+    targetPage?: ('current' | 'home' | 'page') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    page?: {
+      relationTo: 'pages';
+      value: number | Page;
+    } | null;
+    blogPost?: {
+      relationTo: 'blog-posts';
+      value: number | BlogPost;
+    } | null;
+    eventPost?: {
+      relationTo: 'events-posts';
+      value: number | EventsPost;
+    } | null;
+    scrollTarget?: string | null;
+    newTab?: boolean | null;
+  };
+  showSocialMedia?: boolean | null;
+  socialMedia?: {
+    links: {
+      icon: number | Media;
+      url: string;
+      id?: string | null;
+    }[];
+  };
   applyCustomId?: boolean | null;
   customId?: string | null;
   hidden?: boolean | null;
@@ -1133,9 +1484,12 @@ export interface PagesSelect<T extends boolean = true> {
   blocks?:
     | T
     | {
+        'accordion-block'?: T | AccordionBlockSelect<T>;
         'call-to-action-block'?: T | CallToActionBlockSelect<T>;
+        'cards-block'?: T | CardsBlockSelect<T>;
+        'cards-image-block'?: T | CardsImageBlockSelect<T>;
         'heading-block'?: T | HeadingBlockSelect<T>;
-        'schedule-block'?: T | ScheduleBlockSelect<T>;
+        'selling-points-block'?: T | SellingPointsBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
@@ -1158,10 +1512,57 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordionBlock_select".
+ */
+export interface AccordionBlockSelect<T extends boolean = true> {
+  showHeading?: T;
+  heading?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        hlTexts?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  categorize?: T;
+  categories?:
+    | T
+    | {
+        name?: T;
+        items?:
+          | T
+          | {
+              summary?: T;
+              details?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  items?:
+    | T
+    | {
+        summary?: T;
+        details?: T;
+        id?: T;
+      };
+  paddingTop?: T;
+  paddingBottom?: T;
+  applyCustomId?: T;
+  customId?: T;
+  hidden?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CallToActionBlock_select".
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
-  image?: T;
+  visual?: T;
   showHeading?: T;
   heading?:
     | T
@@ -1192,7 +1593,135 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
         scrollTarget?: T;
         newTab?: T;
       };
-  background?: T;
+  showButton2?: T;
+  button2?:
+    | T
+    | {
+        variant?: T;
+        text?: T;
+        custom?: T;
+        url?: T;
+        scroll?: T;
+        targetPage?: T;
+        urlType?: T;
+        page?: T;
+        blogPost?: T;
+        eventPost?: T;
+        scrollTarget?: T;
+        newTab?: T;
+      };
+  showSocialMedia?: T;
+  socialMedia?:
+    | T
+    | {
+        links?:
+          | T
+          | {
+              icon?: T;
+              url?: T;
+              id?: T;
+            };
+      };
+  paddingTop?: T;
+  paddingBottom?: T;
+  applyCustomId?: T;
+  customId?: T;
+  hidden?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardsBlock_select".
+ */
+export interface CardsBlockSelect<T extends boolean = true> {
+  cards?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        description?: T;
+        leftLabel?: T;
+        rightLabel?: T;
+        showButton?: T;
+        button?:
+          | T
+          | {
+              variant?: T;
+              text?: T;
+              custom?: T;
+              url?: T;
+              scroll?: T;
+              targetPage?: T;
+              urlType?: T;
+              page?: T;
+              blogPost?: T;
+              eventPost?: T;
+              scrollTarget?: T;
+              newTab?: T;
+            };
+        id?: T;
+      };
+  paddingTop?: T;
+  paddingBottom?: T;
+  applyCustomId?: T;
+  customId?: T;
+  hidden?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CardsImageBlock_select".
+ */
+export interface CardsImageBlockSelect<T extends boolean = true> {
+  showHeading?: T;
+  heading?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        hlTexts?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  showButton?: T;
+  button?:
+    | T
+    | {
+        variant?: T;
+        text?: T;
+        custom?: T;
+        url?: T;
+        scroll?: T;
+        targetPage?: T;
+        urlType?: T;
+        page?: T;
+        blogPost?: T;
+        eventPost?: T;
+        scrollTarget?: T;
+        newTab?: T;
+      };
+  image?:
+    | T
+    | {
+        file?: T;
+        posMo?: T;
+        posDe?: T;
+        fit?: T;
+        width?: T;
+        height?: T;
+      };
   paddingTop?: T;
   paddingBottom?: T;
   applyCustomId?: T;
@@ -1206,7 +1735,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
  * via the `definition` "HeadingBlock_select".
  */
 export interface HeadingBlockSelect<T extends boolean = true> {
-  tagName?: T;
+  icon?: T;
   text?: T;
   hlTexts?:
     | T
@@ -1214,8 +1743,8 @@ export interface HeadingBlockSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  tagName?: T;
   centered?: T;
-  background?: T;
   paddingTop?: T;
   paddingBottom?: T;
   applyCustomId?: T;
@@ -1226,11 +1755,16 @@ export interface HeadingBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ScheduleBlock_select".
+ * via the `definition` "SellingPointsBlock_select".
  */
-export interface ScheduleBlockSelect<T extends boolean = true> {
-  iframeUrl?: T;
-  background?: T;
+export interface SellingPointsBlockSelect<T extends boolean = true> {
+  sellingPoints?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        id?: T;
+      };
   paddingTop?: T;
   paddingBottom?: T;
   applyCustomId?: T;
@@ -1256,29 +1790,48 @@ export interface StoryBlockSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  text?: T;
-  blueTexts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  redTexts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  pictures?:
+  main?:
     | T
     | {
         image?: T;
-        id?: T;
+        name?: T;
+        title?: T;
+        text?: T;
+        hlTexts?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
       };
-  quote?: T;
-  background?: T;
-  paddingTop?: T;
-  paddingBottom?: T;
+  a?:
+    | T
+    | {
+        image?: T;
+        name?: T;
+        title?: T;
+        text?: T;
+        hlTexts?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  b?:
+    | T
+    | {
+        image?: T;
+        name?: T;
+        title?: T;
+        text?: T;
+        hlTexts?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
   applyCustomId?: T;
   customId?: T;
   hidden?: T;
@@ -1325,6 +1878,23 @@ export interface TextImageBlockSelect<T extends boolean = true> {
         scrollTarget?: T;
         newTab?: T;
       };
+  showButton2?: T;
+  button2?:
+    | T
+    | {
+        variant?: T;
+        text?: T;
+        custom?: T;
+        url?: T;
+        scroll?: T;
+        targetPage?: T;
+        urlType?: T;
+        page?: T;
+        blogPost?: T;
+        eventPost?: T;
+        scrollTarget?: T;
+        newTab?: T;
+      };
   image?:
     | T
     | {
@@ -1335,7 +1905,8 @@ export interface TextImageBlockSelect<T extends boolean = true> {
         width?: T;
         height?: T;
       };
-  background?: T;
+  bgColor?: T;
+  bgElements?: T;
   paddingTop?: T;
   paddingBottom?: T;
   applyCustomId?: T;
@@ -1399,7 +1970,6 @@ export interface TextBlockSelect<T extends boolean = true> {
       };
   centered?: T;
   width?: T;
-  background?: T;
   paddingTop?: T;
   paddingBottom?: T;
   applyCustomId?: T;
@@ -1414,6 +1984,8 @@ export interface TextBlockSelect<T extends boolean = true> {
  */
 export interface VisualBlockSelect<T extends boolean = true> {
   visual?: T;
+  height?: T;
+  opacity?: T;
   showHeading?: T;
   heading?:
     | T
@@ -1427,7 +1999,35 @@ export interface VisualBlockSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  height?: T;
+  showButton?: T;
+  button?:
+    | T
+    | {
+        variant?: T;
+        text?: T;
+        custom?: T;
+        url?: T;
+        scroll?: T;
+        targetPage?: T;
+        urlType?: T;
+        page?: T;
+        blogPost?: T;
+        eventPost?: T;
+        scrollTarget?: T;
+        newTab?: T;
+      };
+  showSocialMedia?: T;
+  socialMedia?:
+    | T
+    | {
+        links?:
+          | T
+          | {
+              icon?: T;
+              url?: T;
+              id?: T;
+            };
+      };
   applyCustomId?: T;
   customId?: T;
   hidden?: T;
@@ -1637,7 +2237,18 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Home {
   id: number;
   blocks?:
-    | (CallToActionBlock | HeadingBlock | ScheduleBlock | StoryBlock | TextImageBlock | TextBlock | VisualBlock)[]
+    | (
+        | AccordionBlock
+        | CallToActionBlock
+        | CardsBlock
+        | CardsImageBlock
+        | HeadingBlock
+        | SellingPointsBlock
+        | StoryBlock
+        | TextImageBlock
+        | TextBlock
+        | VisualBlock
+      )[]
     | null;
   meta?: {
     title?: string | null;
@@ -1703,8 +2314,8 @@ export interface Hero {
     scrollTarget?: string | null;
     newTab?: boolean | null;
   };
-  showSecondButton?: boolean | null;
-  secondButton?: {
+  showButton2?: boolean | null;
+  button2?: {
     variant: 'primaryButton' | 'whiteButton' | 'darkButton' | 'transparentButton';
     text: string;
     custom?: boolean | null;
@@ -2092,9 +2703,12 @@ export interface HomeSelect<T extends boolean = true> {
   blocks?:
     | T
     | {
+        'accordion-block'?: T | AccordionBlockSelect<T>;
         'call-to-action-block'?: T | CallToActionBlockSelect<T>;
+        'cards-block'?: T | CardsBlockSelect<T>;
+        'cards-image-block'?: T | CardsImageBlockSelect<T>;
         'heading-block'?: T | HeadingBlockSelect<T>;
-        'schedule-block'?: T | ScheduleBlockSelect<T>;
+        'selling-points-block'?: T | SellingPointsBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
@@ -2159,8 +2773,8 @@ export interface HeroSelect<T extends boolean = true> {
         scrollTarget?: T;
         newTab?: T;
       };
-  showSecondButton?: T;
-  secondButton?:
+  showButton2?: T;
+  button2?:
     | T
     | {
         variant?: T;

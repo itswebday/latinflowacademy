@@ -75,7 +75,7 @@ export const getBlockStyleFields = ({
 } = {}): Field[] => {
   return [
     {
-      name: "background",
+      name: "bgColor",
       label: "Background color",
       type: "select",
       options: [
@@ -94,7 +94,28 @@ export const getBlockStyleFields = ({
       ],
       defaultValue: "transparent",
       required: true,
-      admin: hiddenFields.includes("background") ? { hidden: true } : undefined,
+      // admin: hiddenFields.includes("bgColor") ? { hidden: true } : undefined,
+      admin: {
+        hidden: true,
+      },
+    },
+    {
+      name: "bgElements",
+      label: "Background elements",
+      type: "select",
+      options: [
+        {
+          label: "None",
+          value: "none",
+        },
+        {
+          label: "Box",
+          value: "box",
+        },
+      ],
+      defaultValue: "none",
+      required: true,
+      admin: hiddenFields.includes("bgElements") ? { hidden: true } : undefined,
     },
   ];
 };
@@ -898,8 +919,8 @@ export const getImageFields = ({
       name: "width",
       label: "Image width (desktop screens, % of the section width)",
       type: "number",
-      min: 0,
-      max: 100,
+      min: 25,
+      max: 75,
       defaultValue: 50,
       required: true,
       admin: hiddenFields.includes("widthDe") ? { hidden: true } : undefined,
@@ -931,6 +952,106 @@ export const getImageFields = ({
               return siblingData?.fit !== "contain";
             },
           },
+    },
+  ];
+
+  if (optional) {
+    const showFieldName = `show${
+      fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
+    }`;
+
+    return [
+      {
+        name: showFieldName,
+        label: `Show ${fieldLabel}`,
+        type: "checkbox",
+        defaultValue: false,
+        admin: hiddenFields.includes(showFieldName)
+          ? { hidden: true }
+          : undefined,
+      },
+      {
+        name: fieldName,
+        label: fieldLabel,
+        type: "group",
+        required: true,
+        admin: {
+          ...(hiddenFields.includes(fieldName)
+            ? { hidden: true }
+            : {
+                condition: (_data, siblingData) => {
+                  return siblingData?.[showFieldName] === true;
+                },
+              }),
+        },
+        fields,
+      },
+    ];
+  }
+
+  return [
+    {
+      name: fieldName,
+      label: fieldLabel,
+      type: "group",
+      required: true,
+      admin: hiddenFields.includes(fieldName) ? { hidden: true } : undefined,
+      fields,
+    },
+  ];
+};
+
+export const getSocialMediaFields = ({
+  fieldName = "socialMedia",
+  fieldLabel = "Social media links",
+  hiddenFields = [],
+  optional = false,
+  minRows = 1,
+  maxRows = 5,
+}: {
+  fieldName?: string;
+  fieldLabel?: string;
+  hiddenFields?: string[];
+  optional?: boolean;
+  minRows?: number;
+  maxRows?: number;
+} = {}): Field[] => {
+  const fields: Field[] = [
+    {
+      name: "links",
+      label: "",
+      type: "array",
+      defaultValue: [],
+      minRows,
+      maxRows,
+      required: true,
+      admin: {
+        ...(hiddenFields.includes("links")
+          ? { hidden: true, initCollapsed: true }
+          : { initCollapsed: true }),
+      },
+      labels: {
+        singular: "Link",
+        plural: "Social media links",
+      },
+      fields: [
+        {
+          name: "icon",
+          label: "Icon (SVG file)",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+          admin: hiddenFields.includes("icon") ? { hidden: true } : undefined,
+        },
+        {
+          name: "url",
+          label: "Link (URL)",
+          type: "text",
+          defaultValue: "",
+          required: true,
+          admin: hiddenFields.includes("url") ? { hidden: true } : undefined,
+        },
+      ],
     },
   ];
 

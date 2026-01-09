@@ -1,11 +1,6 @@
 import type { Block } from "payload";
 import { RichTextField } from "@/fields/RichTextField";
-import {
-  getBlockSettingsFields,
-  getBlockStyleFields,
-  getHeadingFields,
-  getPaddingFields,
-} from "@/utils";
+import { getBlockSettingsFields, getHeadingFields } from "@/utils";
 
 export const StoryBlock: Block = {
   slug: "story-block",
@@ -15,66 +10,12 @@ export const StoryBlock: Block = {
   },
   interfaceName: "StoryBlock",
   fields: [
-    ...getHeadingFields({
-      fieldName: "heading",
-      fieldLabel: "Heading",
-      hiddenFields: ["icon"],
-    }),
-    RichTextField({ name: "text", label: "Text", required: true }),
+    ...getHeadingFields({ hiddenFields: ["icon"] }),
     {
-      name: "blueTexts",
-      label: "Blue texts",
-      type: "array",
-      defaultValue: [],
-      labels: {
-        singular: "Blue text",
-        plural: "Blue texts",
-      },
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        {
-          name: "text",
-          label: "Text",
-          type: "text",
-          defaultValue: "",
-          localized: true,
-          required: true,
-        },
-      ],
-    },
-    {
-      name: "redTexts",
-      label: "Red texts",
-      type: "array",
-      defaultValue: [],
-      labels: {
-        singular: "Red text",
-        plural: "Red texts",
-      },
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        {
-          name: "text",
-          label: "Text",
-          type: "text",
-          defaultValue: "",
-          localized: true,
-          required: true,
-        },
-      ],
-    },
-    {
-      name: "pictures",
-      label: "Pictures",
-      type: "array",
-      maxRows: 3,
-      admin: {
-        initCollapsed: true,
-      },
+      name: "main",
+      label: "Main content",
+      type: "group",
+      required: true,
       fields: [
         {
           name: "image",
@@ -83,18 +24,158 @@ export const StoryBlock: Block = {
           relationTo: "media",
           required: true,
         },
+        {
+          name: "name",
+          label: "Name",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        {
+          name: "title",
+          label: "Title",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        RichTextField({ name: "text", label: "Text", required: true }),
+        {
+          name: "hlTexts",
+          label: "",
+          type: "array",
+          defaultValue: [],
+          labels: {
+            singular: "Highlighted text",
+            plural: "Highlighted texts",
+          },
+          admin: {
+            initCollapsed: true,
+          },
+          fields: [
+            {
+              name: "text",
+              label: "",
+              type: "text",
+              defaultValue: "",
+              localized: true,
+              required: true,
+            },
+          ],
+        },
       ],
     },
     {
-      name: "quote",
-      label: "Quote",
-      type: "text",
-      defaultValue: "",
-      localized: true,
-      required: false,
+      name: "a",
+      label: "Content A",
+      type: "group",
+      required: true,
+      fields: [
+        {
+          name: "image",
+          label: "Image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "name",
+          label: "Name",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        {
+          name: "title",
+          label: "Title",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        RichTextField({ name: "text", label: "Text", required: true }),
+        {
+          name: "hlTexts",
+          label: "",
+          type: "array",
+          defaultValue: [],
+          labels: {
+            singular: "Highlighted text",
+            plural: "Highlighted texts",
+          },
+          admin: {
+            initCollapsed: true,
+          },
+          fields: [
+            {
+              name: "text",
+              label: "",
+              type: "text",
+              defaultValue: "",
+              localized: true,
+              required: true,
+            },
+          ],
+        },
+      ],
     },
-    ...getBlockStyleFields(),
-    ...getPaddingFields(),
+    {
+      name: "b",
+      label: "Content B",
+      type: "group",
+      required: true,
+      fields: [
+        {
+          name: "image",
+          label: "Image",
+          type: "upload",
+          relationTo: "media",
+          required: true,
+        },
+        {
+          name: "name",
+          label: "Name",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        {
+          name: "title",
+          label: "Title",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        RichTextField({ name: "text", label: "Text", required: true }),
+        {
+          name: "hlTexts",
+          label: "",
+          type: "array",
+          defaultValue: [],
+          labels: {
+            singular: "Highlighted text",
+            plural: "Highlighted texts",
+          },
+          admin: {
+            initCollapsed: true,
+          },
+          fields: [
+            {
+              name: "text",
+              label: "",
+              type: "text",
+              defaultValue: "",
+              localized: true,
+              required: true,
+            },
+          ],
+        },
+      ],
+    },
     ...getBlockSettingsFields(),
   ],
 };

@@ -34,12 +34,33 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
   return (
     <footer
       id="footer"
-      className={twMerge(
-        "relative w-full pt-12 pb-8",
-        "sm:pt-16 sm:pb-12",
-        className,
-      )}
+      className={twMerge("relative w-full pt-52 pb-8", "sm:pb-12", className)}
     >
+      {/* Abstract top edge */}
+      <svg
+        className="absolute top-0 left-0 right-0 w-full pointer-events-none"
+        style={{ height: "160px", transform: "scaleY(-1)" }}
+        preserveAspectRatio="none"
+        viewBox="0 0 1200 160"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        {/* Single wave with opposite direction on right half */}
+        <path
+          d="M0,160 L0,40 Q300,10 600,40 Q900,70 1200,40 L1200,160 Z"
+          style={{ fill: "var(--color-dark)" }}
+        />
+        {/* Primary colored border on top */}
+        <path
+          d="M0,40 Q300,10 600,40 Q900,70 1200,40"
+          fill="none"
+          stroke="#ec4899"
+          strokeWidth="1"
+          opacity="0.5"
+        />
+      </svg>
+
       {/* Container */}
       <div
         className={twMerge(
@@ -103,7 +124,7 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
                 {/* Heading */}
                 <h6
                   className={twMerge(
-                    "font-bold font-montserrat-alternates text-center w-full opacity-80",
+                    "font-bold text-center w-full opacity-80",
                     "sm:text-left",
                   )}
                 >
@@ -351,7 +372,7 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
               {footer.openingHours && footer.openingHours.length > 0 && (
                 <div className="flex flex-col gap-3 items-start">
                   {/* Heading */}
-                  <h6 className="font-bold font-montserrat-alternates opacity-80">
+                  <h6 className="font-bold opacity-80">
                     {footerT("openingHours.heading")}
                   </h6>
 
@@ -415,7 +436,7 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
                 )}
               >
                 {/* Heading */}
-                <h6 className="font-bold font-montserrat-alternates opacity-80 text-center">
+                <h6 className="font-bold opacity-80 text-center">
                   {footerT("socialMedia.heading")}
                 </h6>
 
@@ -483,7 +504,7 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
                 )}
               >
                 {/* Heading */}
-                <h6 className="font-bold font-montserrat-alternates opacity-80 text-right">
+                <h6 className="font-bold opacity-80 text-right">
                   {footerT("openingHours.heading")}
                 </h6>
 

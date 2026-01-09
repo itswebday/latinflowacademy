@@ -2,10 +2,10 @@ import type { Block } from "payload";
 import { RichTextField } from "@/fields/RichTextField";
 import {
   getBlockSettingsFields,
-  getBlockStyleFields,
   getButtonLinkFields,
   getHeadingFields,
   getPaddingFields,
+  getSocialMediaFields,
 } from "@/utils";
 
 export const CallToActionBlock: Block = {
@@ -17,21 +17,20 @@ export const CallToActionBlock: Block = {
   interfaceName: "CallToActionBlock",
   fields: [
     {
-      name: "image",
-      label: "Image",
+      name: "visual",
+      label: "Image or video (optional)",
       type: "upload",
       relationTo: "media",
-      required: true,
     },
-    ...getHeadingFields({
-      fieldName: "heading",
-      fieldLabel: "Heading",
-      hiddenFields: ["icon"],
+    ...getHeadingFields({ optional: true }),
+    RichTextField({ required: true }),
+    ...getButtonLinkFields(),
+    ...getButtonLinkFields({
+      fieldName: "button2",
+      fieldLabel: "Second button",
       optional: true,
     }),
-    RichTextField({ name: "text", label: "Text", required: true }),
-    ...getButtonLinkFields(),
-    ...getBlockStyleFields(),
+    ...getSocialMediaFields({ optional: true }),
     ...getPaddingFields(),
     ...getBlockSettingsFields(),
   ],

@@ -86,7 +86,7 @@ const NavBar: React.FC<NavBarProps> = ({ className, links }) => {
               >
                 <span
                   className={twMerge(
-                    "relative text-[15px] font-semibold font-montserrat-alternates",
+                    "relative text-[15px] font-semibold",
                     "text-white/90 transition-all duration-300",
                     "hover:text-primary hover:drop-shadow-[0_0_8px_rgba(236,72,153,0.5)]",
                   )}

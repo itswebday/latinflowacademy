@@ -1,6 +1,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import {
+  AnimatedWrapper,
   ButtonLink,
   type ButtonLinkProps,
   HeadingWithIcon,
@@ -23,7 +24,6 @@ const Text: React.FC<TextBlock & { id?: string; globals: Globals }> = (
     button,
     centered,
     width,
-    background,
     paddingTop,
     paddingBottom,
     hidden,
@@ -36,32 +36,12 @@ const Text: React.FC<TextBlock & { id?: string; globals: Globals }> = (
     button?: unknown;
   };
   const buttonUrl = showButton ? getUrl(button as RawUrl, globals) : undefined;
-  const getMaxWidthClass = () => {
-    switch (width) {
-      case "small":
-        return "max-w-3xl";
-      case "medium":
-        return "max-w-5xl";
-      case "large":
-        return "max-w-7xl";
-      default:
-        return "max-w-5xl";
-    }
-  };
 
   // Subheading
   const subheadingElement =
     showSubheading && subheading ? (
-      <HeadingWithIcon
-        className={centered ? "justify-center" : undefined}
-        icon={subheading.icon}
-      >
-        <h5
-          className={twMerge(
-            "font-bold text-dark",
-            centered && "justify-center",
-          )}
-        >
+      <HeadingWithIcon icon={subheading.icon}>
+        <h5 className="font-bold text-center">
           {typeof subheading.text === "string" && subheading.hlTexts
             ? highlightText(subheading.text, subheading.hlTexts)
             : subheading.text}
@@ -72,55 +52,34 @@ const Text: React.FC<TextBlock & { id?: string; globals: Globals }> = (
   // Heading
   const headingElement =
     showHeading && heading ? (
-      <HeadingWithIcon
-        className={centered ? "justify-center" : undefined}
-        icon={heading.icon}
-      >
-        <h1
-          className={twMerge(
-            "font-bold text-dark",
-            centered && "justify-center",
-          )}
-        >
+      <HeadingWithIcon icon={heading.icon}>
+        <h2 className={twMerge("font-bold", centered && "text-center")}>
           {typeof heading.text === "string" && heading.hlTexts
             ? highlightText(heading.text, heading.hlTexts)
             : heading.text}
-        </h1>
+        </h2>
       </HeadingWithIcon>
     ) : null;
-
-  // Text
-  const textElement = (
-    <RichTextRenderer
-      className={twMerge("text-dark/90", centered && "text-center")}
-      richText={text.text}
-    />
-  );
 
   // Button
   const buttonElement =
     showButton && button && buttonUrl ? (
-      <div className={twMerge("w-fit", centered && "mx-auto")}>
-        <ButtonLink
-          href={buttonUrl}
-          variant={
-            (button as { variant?: string })
-              .variant as ButtonLinkProps["variant"]
-          }
-          target={(button as { newTab?: boolean }).newTab ? "_blank" : "_self"}
-        >
-          {(button as { text?: string }).text}
-        </ButtonLink>
-      </div>
+      <ButtonLink
+        href={buttonUrl}
+        variant={
+          (button as { variant?: string }).variant as ButtonLinkProps["variant"]
+        }
+        target={(button as { newTab?: boolean }).newTab ? "_blank" : "_self"}
+      >
+        {(button as { text?: string }).text}
+      </ButtonLink>
     ) : null;
 
   return (
     <section
       id={id}
       className={twMerge(
-        "w-full overflow-hidden",
-        background === "white" && "bg-white",
-        background === "light" && "bg-light",
+        "relative flex items-center justify-center w-full overflow-hidden",
         getPaddingClasses(paddingTop, paddingBottom),
         hidden && "hidden",
       )}
@@ -128,18 +87,32 @@ const Text: React.FC<TextBlock & { id?: string; globals: Globals }> = (
       {/* Container */}
       <div
         className={twMerge(
-          "flex flex-col gap-10 w-11/12 mx-auto",
-          getMaxWidthClass(),
+          "relative flex flex-col items-center gap-12 mx-auto w-5/6 max-w-5xl",
+          "de:gap-8",
         )}
       >
-        {(subheadingElement || headingElement) && (
-          <header className="flex flex-col items-center gap-2">
-            {subheadingElement}
-            {headingElement}
-          </header>
-        )}
-        {textElement}
-        {buttonElement}
+        {/* Content wrapper */}
+        <div className="relative z-10 flex flex-col gap-8 items-center">
+          {(subheadingElement || headingElement) && (
+            <AnimatedWrapper delay={0} direction="up">
+              <header className="flex flex-col items-center gap-2">
+                {subheadingElement}
+                {headingElement}
+              </header>
+            </AnimatedWrapper>
+          )}
+          <AnimatedWrapper delay={0.1} direction="up">
+            <RichTextRenderer
+              className="text-[16px] text-center"
+              richText={text.text}
+            />
+          </AnimatedWrapper>
+          {buttonElement && (
+            <AnimatedWrapper delay={0.2} direction="up">
+              {buttonElement}
+            </AnimatedWrapper>
+          )}
+        </div>
       </div>
     </section>
   );

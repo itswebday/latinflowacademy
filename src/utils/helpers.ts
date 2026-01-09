@@ -212,14 +212,24 @@ export const getUrl = (rawUrl: RawUrl, globals: Globals): string => {
     return getFromGlobal((global) => global.termsAndConditions);
   }
 
-  const pageValue =
-    rawUrl.page?.value || rawUrl.blogPost?.value || rawUrl.eventPost?.value;
-  const pageUrl =
-    typeof pageValue === "object" && pageValue !== null && "url" in pageValue
-      ? pageValue.url || ""
-      : "";
+  // Only use the field that matches the current urlType
+  let pageValue: unknown = null;
 
-  return pageUrl;
+  if (rawUrl.urlType === "page") {
+    pageValue = rawUrl.page?.value;
+  } else if (rawUrl.urlType === "blog-post") {
+    pageValue = rawUrl.blogPost?.value;
+  } else if (rawUrl.urlType === "event-post") {
+    pageValue = rawUrl.eventPost?.value;
+  }
+
+  if (pageValue && typeof pageValue === "object" && "url" in pageValue) {
+    const url = pageValue.url;
+
+    return typeof url === "string" ? url : "";
+  }
+
+  return "";
 };
 
 export const getMimeType = (media: unknown): string | null => {

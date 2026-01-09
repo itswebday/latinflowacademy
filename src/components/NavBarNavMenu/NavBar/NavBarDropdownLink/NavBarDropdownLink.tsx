@@ -68,8 +68,8 @@ const NavBarDropdownLink: React.FC<NavBarDropdownLinkProps> = ({
           {/* Text */}
           <span
             className={twMerge(
-              "text-[15px] font-semibold font-montserrat-alternates",
-              "text-white transition-colors duration-200",
+              "text-[15px] text-white font-semibold",
+              "transition-colors duration-200",
               isHovered && "text-primary",
             )}
           >
@@ -122,7 +122,7 @@ const NavBarDropdownLink: React.FC<NavBarDropdownLinkProps> = ({
                 href={subLink.href}
                 target={subLink.newTab ? "_blank" : "_self"}
               >
-                <span className="text-[14px] font-medium font-montserrat-alternates text-dark/80">
+                <span className="text-[14px] text-dark/80 font-medium">
                   {subLink.text}
                 </span>
               </NavLink>

@@ -1,147 +1,171 @@
-import React from "react";
+"use client";
+
+import Image from "next/image";
+import React, { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { BackgroundImage, HeadingWithIcon } from "@/components";
+import { AnimatedWrapper, HeadingWithIcon } from "@/components";
 import RichTextRenderer from "@/components/RichTextRenderer";
 import type { StoryBlock } from "@/payload-types";
 import type { Globals, RichText } from "@/types";
 import {
   applyHighlightsToRichText,
   getMediaUrlAndAlt,
-  getPaddingClasses,
   highlightText,
 } from "@/utils";
 
 const Story: React.FC<StoryBlock & { id?: string; globals: Globals }> = ({
   heading,
-  text,
-  blueTexts,
-  redTexts,
-  pictures,
-  quote,
-  background,
-  paddingTop,
-  paddingBottom,
+  main,
+  a,
+  b,
   hidden,
   id,
 }) => {
-  const hasHighlights = (blueTexts?.length || redTexts?.length) ?? false;
-  let processedRichText: RichText | null | undefined = text;
+  const [selectedGroup, setSelectedGroup] = useState<"a" | "b" | null>(null);
 
-  if (processedRichText && hasHighlights) {
-    if (blueTexts?.length) {
-      const result = applyHighlightsToRichText(
-        processedRichText as RichText,
-        blueTexts,
-        "font-semibold text-nowrap text-blue",
-      );
-      processedRichText =
-        typeof result === "object" && "root" in result
-          ? result
-          : processedRichText;
-    }
+  // Get the active content group
+  const activeGroup =
+    selectedGroup === "a" ? a : selectedGroup === "b" ? b : main;
 
-    if (redTexts?.length) {
-      const result = applyHighlightsToRichText(
-        processedRichText as RichText,
-        redTexts,
-        "font-semibold text-nowrap text-red",
-      );
-      processedRichText =
-        typeof result === "object" && "root" in result
-          ? result
-          : processedRichText;
-    }
+  if (!activeGroup) {
+    return null;
+  }
+
+  const { url: imageUrl, alt: imageAlt } = activeGroup.image
+    ? getMediaUrlAndAlt(activeGroup.image)
+    : { url: undefined, alt: undefined };
+
+  // Process RichText with highlights
+  let processedRichText: RichText | null | undefined =
+    activeGroup.text as RichText;
+  if (
+    processedRichText &&
+    activeGroup.hlTexts &&
+    activeGroup.hlTexts.length > 0
+  ) {
+    const result = applyHighlightsToRichText(
+      processedRichText,
+      activeGroup.hlTexts,
+      "font-semibold",
+    );
+    processedRichText =
+      typeof result === "object" && "root" in result
+        ? result
+        : processedRichText;
   }
 
   return (
     <section
       id={id}
-      className={twMerge(
-        "relative flex flex-col items-center gap-12",
-        background === "white" && "bg-white",
-        background === "light" && "bg-light",
-        getPaddingClasses(paddingTop, paddingBottom),
-        hidden && "hidden",
-      )}
+      className={twMerge("w-full overflow-hidden", hidden && "hidden")}
     >
-      {/* Header */}
-      {heading && (
-        <header className="w-11/12 max-w-3xl mx-auto">
-          <HeadingWithIcon
-            className="justify-center text-center"
-            icon={heading.icon}
-          >
-            <h1 className="font-bold text-dark justify-center text-center">
-              {typeof heading.text === "string" && heading.hlTexts
-                ? highlightText(heading.text, heading.hlTexts)
-                : heading.text}
-            </h1>
-          </HeadingWithIcon>
-        </header>
-      )}
-
       {/* Container */}
-      <div
-        className={twMerge(
-          "flex flex-col items-center gap-8 w-11/12 max-w-5xl mx-auto",
-          "text-[18px]",
-          "de:flex-row-reverse",
+      <div className="w-11/12 mx-auto">
+        {/* Header */}
+        {heading && (
+          <AnimatedWrapper delay={0} direction="up">
+            <header className="mb-12">
+              <HeadingWithIcon
+                className="justify-center text-center"
+                icon={heading.icon}
+              >
+                <h1 className="font-bold text-dark justify-center text-center">
+                  {typeof heading.text === "string" && heading.hlTexts
+                    ? highlightText(heading.text, heading.hlTexts)
+                    : heading.text}
+                </h1>
+              </HeadingWithIcon>
+            </header>
+          </AnimatedWrapper>
         )}
-      >
-        {/* Images and quote */}
-        <div
-          className={twMerge("flex flex-col items-center gap-12", "de:w-1/2")}
-        >
-          {/* Images */}
-          {pictures && pictures.length > 0 && (
-            <div className="relative w-64 h-36">
-              {pictures.map((picture, index) => {
-                const { url: imageUrl, alt: imageAlt } = picture.image
-                  ? getMediaUrlAndAlt(picture.image)
-                  : { url: undefined, alt: undefined };
 
-                if (!imageUrl) {
-                  return null;
+        {/* Toggle Buttons */}
+        {a && b && (
+          <AnimatedWrapper delay={0.1} direction="up">
+            <div className="flex items-center justify-center gap-4 mb-12">
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedGroup(selectedGroup === "a" ? null : "a")
                 }
-
-                return (
-                  <figure
-                    className={twMerge(
-                      "absolute top-0 w-36 h-36 border-primary",
-                      "rounded-full border-4 overflow-hidden",
-                      index === 0 && "left-0",
-                      index === 1 && "right-0",
-                      index === 2 &&
-                        "left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2",
-                    )}
-                    key={index}
-                  >
-                    <BackgroundImage
-                      src={imageUrl}
-                      alt={imageAlt || `Story image ${index + 1}`}
-                    />
-                  </figure>
-                );
-              })}
+                className={twMerge(
+                  "px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200",
+                  selectedGroup === "a"
+                    ? "bg-primary text-white"
+                    : "bg-light text-dark hover:bg-dark/5",
+                )}
+              >
+                {a.name || "A"}
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedGroup(selectedGroup === "b" ? null : "b")
+                }
+                className={twMerge(
+                  "px-6 py-3 rounded-full font-semibold text-sm transition-all duration-200",
+                  selectedGroup === "b"
+                    ? "bg-primary text-white"
+                    : "bg-light text-dark hover:bg-dark/5",
+                )}
+              >
+                {b.name || "B"}
+              </button>
             </div>
-          )}
+          </AnimatedWrapper>
+        )}
 
-          {/* Quote */}
-          {quote && (
-            <div className="pl-4 border-l-4 border-l-primary w-5/6">
-              <p className="text-[18px] font-bold italic">{`"${quote}"`}</p>
+        {/* Content with Image on Left, Text on Right */}
+        <AnimatedWrapper delay={0.2} direction="up">
+          <div
+            className={twMerge(
+              "flex flex-col items-center gap-8",
+              "de:flex-row de:items-start",
+            )}
+          >
+            {/* Image */}
+            {imageUrl && (
+              <figure
+                className={twMerge(
+                  "relative shrink-0 w-full aspect-video rounded-lg overflow-hidden",
+                  "de:w-1/2",
+                )}
+              >
+                <Image
+                  className="object-cover"
+                  src={imageUrl}
+                  alt={imageAlt || activeGroup.name || ""}
+                  fill={true}
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                />
+              </figure>
+            )}
+
+            {/* Content */}
+            <div className={twMerge("flex flex-col gap-6 w-full", "de:w-1/2")}>
+              {/* Name */}
+              {activeGroup.name && (
+                <p className="text-sm font-semibold text-dark/70 uppercase tracking-wide">
+                  {activeGroup.name}
+                </p>
+              )}
+
+              {/* Title */}
+              {activeGroup.title && (
+                <h2 className="text-2xl font-bold text-dark">
+                  {typeof activeGroup.title === "string" && activeGroup.hlTexts
+                    ? highlightText(activeGroup.title, activeGroup.hlTexts)
+                    : activeGroup.title}
+                </h2>
+              )}
+
+              {/* Text */}
+              {processedRichText && (
+                <RichTextRenderer richText={processedRichText} />
+              )}
             </div>
-          )}
-        </div>
-
-        {/* Content */}
-        <RichTextRenderer
-          className={twMerge(
-            "flex flex-col gap-8 w-5/6 text-[16px]",
-            "de:w-1/2",
-          )}
-          richText={processedRichText as RichText}
-        />
+          </div>
+        </AnimatedWrapper>
       </div>
     </section>
   );

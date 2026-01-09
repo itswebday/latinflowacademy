@@ -17,7 +17,7 @@ export const TextImageBlock: Block = {
   },
   interfaceName: "TextImageBlock",
   fields: [
-    ...getHeadingFields({ hiddenFields: ["icon"], optional: true }),
+    ...getHeadingFields({ optional: true }),
     {
       name: "text",
       label: "Text",
@@ -26,6 +26,11 @@ export const TextImageBlock: Block = {
       fields: [RichTextField({ required: true })],
     },
     ...getButtonLinkFields({ optional: true }),
+    ...getButtonLinkFields({
+      fieldName: "button2",
+      fieldLabel: "Second button",
+      optional: true,
+    }),
     ...getImageFields(),
     ...getBlockStyleFields(),
     ...getPaddingFields(),

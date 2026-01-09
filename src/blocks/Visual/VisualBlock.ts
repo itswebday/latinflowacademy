@@ -1,5 +1,11 @@
 import type { Block } from "payload";
-import { getBlockSettingsFields, getHeadingFields } from "@/utils";
+import {
+  getBlockSettingsFields,
+  getButtonLinkFields,
+  getHeadingFields,
+  getPaddingFields,
+  getSocialMediaFields,
+} from "@/utils";
 
 export const VisualBlock: Block = {
   slug: "visual-block",
@@ -16,12 +22,6 @@ export const VisualBlock: Block = {
       relationTo: "media",
       required: true,
     },
-    ...getHeadingFields({
-      fieldName: "heading",
-      fieldLabel: "Heading",
-      hiddenFields: ["icon"],
-      optional: true,
-    }),
     {
       name: "height",
       label: "Height",
@@ -43,6 +43,18 @@ export const VisualBlock: Block = {
       defaultValue: "medium",
       required: true,
     },
+    {
+      name: "opacity",
+      label: "Opacity",
+      type: "number",
+      min: 0,
+      max: 100,
+      defaultValue: 100,
+      required: true,
+    },
+    ...getHeadingFields({ hiddenFields: ["icon"], optional: true }),
+    ...getButtonLinkFields({ optional: true }),
+    ...getSocialMediaFields({ optional: true }),
     ...getBlockSettingsFields(),
   ],
 };

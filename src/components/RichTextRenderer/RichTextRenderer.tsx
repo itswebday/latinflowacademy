@@ -181,7 +181,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
         return (
           <Link
             className={twMerge(
-              "text-primary font-semibold",
+              "text-primary font-bold",
               "transition-opacity duration-200 hover:opacity-70",
             )}
             key={index}
@@ -207,7 +207,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
         const style: React.CSSProperties = {};
 
         if ((format & 1) !== 0) {
-          classes.push("font-semibold");
+          classes.push("font-bold");
         }
 
         if ((format & 2) !== 0) {

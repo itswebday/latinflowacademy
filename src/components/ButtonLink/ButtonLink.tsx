@@ -134,12 +134,7 @@ const ButtonLink: React.FC<ButtonLinkProps> = ({
         )}
 
       {/* Button text */}
-      <span
-        className={twMerge(
-          "z-10 relative -translate-y-[0.5px]",
-          "font-montserrat-alternates uppercase",
-        )}
-      >
+      <span className="z-10 relative -translate-y-[0.5px] uppercase">
         {children}
       </span>
 

@@ -100,7 +100,7 @@ const NavMenu: React.FC<NavMenuProps> = ({
           {/* Container */}
           <motion.div
             className={twMerge(
-              "flex-1 w-5/6 max-w-2xl py-12 mx-auto overflow-y-auto",
+              "flex-1 w-11/12 max-w-2xl px-8 py-12 mx-auto overflow-y-auto",
             )}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -155,13 +155,13 @@ const NavMenu: React.FC<NavMenuProps> = ({
                         onClick: close,
                       })}
                     >
-                      <span className="text-[16px] font-semibold font-montserrat-alternates text-white">
+                      <span className="text-[16px] text-white font-semibold">
                         {link.text}
                       </span>
                     </Link>
                   ) : (
                     <div className="px-4 py-3 opacity-60">
-                      <span className="text-[16px] font-semibold font-montserrat-alternates text-white/70">
+                      <span className="text-[16px] text-white/70 font-semibold">
                         {link.text}
                       </span>
                     </div>
@@ -198,7 +198,11 @@ const NavMenu: React.FC<NavMenuProps> = ({
                             },
                           )}
                         >
-                          <span className="text-[15px] font-medium font-montserrat-alternates text-white/80">
+                          <span
+                            className={twMerge(
+                              "text-[15px] text-white/80 font-medium",
+                            )}
+                          >
                             {sublink.text}
                           </span>
                         </Link>

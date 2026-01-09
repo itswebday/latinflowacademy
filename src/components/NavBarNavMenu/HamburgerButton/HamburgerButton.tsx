@@ -16,10 +16,11 @@ const HamburgerButton: React.FC<HamburgerButtonProps> = ({ className }) => {
     <motion.button
       className={twMerge(
         "flex flex-col justify-center items-center gap-1.5",
-        "w-12 h-12 rounded-lg",
-        "bg-white/10 border border-white/20",
-        "transition-colors duration-200",
-        "hover:bg-white/20",
+        "w-14 h-14 rounded-full",
+        "bg-transparent border-2 border-white/30",
+        "backdrop-blur-sm transition-all duration-300",
+        "hover:scale-105 hover:border-white/60 hover:bg-white/5",
+        "overflow-hidden relative",
         className,
       )}
       onClick={navMenu.toggle}

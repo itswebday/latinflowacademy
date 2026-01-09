@@ -8,6 +8,7 @@ export {
   getLinkFields,
   getMetaFields,
   getPaddingFields,
+  getSocialMediaFields,
 } from "./fields";
 export {
   applyHighlightsToRichText,

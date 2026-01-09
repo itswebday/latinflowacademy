@@ -2,7 +2,6 @@ import type { Block } from "payload";
 import { RichTextField } from "@/fields/RichTextField";
 import {
   getBlockSettingsFields,
-  getBlockStyleFields,
   getButtonLinkFields,
   getHeadingFields,
   getPaddingFields,
@@ -19,13 +18,11 @@ export const TextBlock: Block = {
     ...getHeadingFields({
       fieldName: "subheading",
       fieldLabel: "Subheading",
-      hiddenFields: ["icon"],
       optional: true,
     }),
     ...getHeadingFields({
       fieldName: "heading",
       fieldLabel: "Heading",
-      hiddenFields: ["icon"],
       optional: true,
     }),
     {
@@ -63,7 +60,6 @@ export const TextBlock: Block = {
       defaultValue: "medium",
       required: true,
     },
-    ...getBlockStyleFields(),
     ...getPaddingFields(),
     ...getBlockSettingsFields(),
   ],

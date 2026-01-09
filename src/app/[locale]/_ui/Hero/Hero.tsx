@@ -38,9 +38,9 @@ const Hero = async () => {
   });
 
   // Second button URL
-  const secondButtonUrl =
-    hero.secondButton && hero.showSecondButton
-      ? getUrl(hero.secondButton as RawUrl, {
+  const button2Url =
+    hero.button2 && hero.showButton2
+      ? getUrl(hero.button2 as RawUrl, {
           hero,
           home: null,
           blog: null,
@@ -52,7 +52,7 @@ const Hero = async () => {
       : undefined;
 
   return (
-    <section className="relative w-full pb-64 bg-dark">
+    <section className="relative w-full pb-64 -mb-88 de:-mb-64 bg-dark">
       {/* Background image with fade mask */}
       <BackgroundImage
         className={twMerge(
@@ -66,7 +66,7 @@ const Hero = async () => {
 
       {/* Abstract bottom edge */}
       <svg
-        className="absolute bottom-0 left-0 right-0 z-20 w-full pointer-events-none"
+        className="absolute bottom-0 left-0 right-0 w-full pointer-events-none"
         style={{ height: "160px" }}
         preserveAspectRatio="none"
         viewBox="0 0 1200 160"
@@ -74,22 +74,18 @@ const Hero = async () => {
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Main abstract flowing edge */}
+        {/* Single wave with opposite direction on right half */}
         <path
-          d="M0,160 L0,30 Q150,10 300,25 Q450,40 600,20 Q750,5 900,18 Q1050,35 1200,15 L1200,160 Z"
-          fill="#ffffff"
+          d="M0,160 L0,40 Q300,10 600,40 Q900,70 1200,40 L1200,160 Z"
+          style={{ fill: "var(--color-dark)" }}
         />
-        {/* Secondary flowing curve for depth */}
+        {/* Primary colored border on top */}
         <path
-          d="M0,160 L0,60 Q200,45 400,50 Q600,55 800,48 Q1000,42 1200,52 L1200,160 Z"
-          fill="#ffffff"
-          opacity="0.95"
-        />
-        {/* Accent wave */}
-        <path
-          d="M0,160 L0,90 C100,80 200,85 300,82 C400,79 500,86 600,83 C700,80 800,87 900,84 C1000,81 1100,88 1200,85 L1200,160 Z"
-          fill="#ffffff"
-          opacity="0.9"
+          d="M0,40 Q300,10 600,40 Q900,70 1200,40"
+          fill="none"
+          stroke="#ec4899"
+          strokeWidth="1"
+          opacity="0.5"
         />
       </svg>
 
@@ -107,7 +103,7 @@ const Hero = async () => {
       >
         {/* Heading */}
         <HeadingWithIcon className="w-83 mr-auto de:w-142 de:mr-0">
-          <h1>
+          <h1 className="font-bold">
             {typeof hero.heading.text === "string" && hero.heading.hlTexts
               ? highlightText(hero.heading.text, hero.heading.hlTexts)
               : hero.heading.text}
@@ -120,37 +116,39 @@ const Hero = async () => {
         </p>
 
         {/* Buttons */}
-        <AnimatedWrapper
-          className={twMerge(
-            "flex flex-col gap-4 mr-auto",
-            "de:flex-row de:mr-0",
-          )}
-          delay={0.4}
-          duration={1.5}
-          direction="up"
-        >
-          {/* First button */}
-          {buttonUrl && (
-            <ButtonLink
-              href={buttonUrl}
-              target={hero.button.newTab === true ? "_blank" : "_self"}
-              variant={hero.button.variant as ButtonLinkProps["variant"]}
-            >
-              {hero.button.text}
-            </ButtonLink>
-          )}
+        {(buttonUrl || (hero.showButton2 && hero.button2 && button2Url)) && (
+          <AnimatedWrapper
+            className={twMerge(
+              "flex flex-wrap items-start justify-start gap-4 text-[15px] w-full",
+              "mr-auto de:mr-0",
+            )}
+            delay={0.4}
+            duration={1.5}
+            direction="up"
+          >
+            {/* First button */}
+            {buttonUrl && (
+              <ButtonLink
+                href={buttonUrl}
+                target={hero.button.newTab === true ? "_blank" : "_self"}
+                variant={hero.button.variant as ButtonLinkProps["variant"]}
+              >
+                {hero.button.text}
+              </ButtonLink>
+            )}
 
-          {/* Second button */}
-          {hero.showSecondButton && hero.secondButton && secondButtonUrl && (
-            <ButtonLink
-              href={secondButtonUrl}
-              target={hero.secondButton.newTab === true ? "_blank" : "_self"}
-              variant={hero.secondButton.variant as ButtonLinkProps["variant"]}
-            >
-              {hero.secondButton.text}
-            </ButtonLink>
-          )}
-        </AnimatedWrapper>
+            {/* Second button */}
+            {hero.showButton2 && hero.button2 && button2Url && (
+              <ButtonLink
+                href={button2Url}
+                target={hero.button2.newTab === true ? "_blank" : "_self"}
+                variant={hero.button2.variant as ButtonLinkProps["variant"]}
+              >
+                {hero.button2.text}
+              </ButtonLink>
+            )}
+          </AnimatedWrapper>
+        )}
 
         {/* Social media links */}
         {hero.socialMediaLinks.length > 0 && (
@@ -172,29 +170,26 @@ const Hero = async () => {
                 <Link
                   key={index}
                   className={twMerge(
-                    "group relative flex items-center justify-center",
-                    "w-12 h-12 rounded-full",
-                    "bg-white/10 backdrop-blur-sm border border-white/20",
-                    "transition-all duration-300",
-                    "hover:scale-110 hover:bg-white/20 hover:border-white/40",
-                    "hover:shadow-lg hover:shadow-white/20",
+                    "flex items-center justify-center w-14 h-14",
+                    "text-white bg-transparent rounded-full border-2 border-white/30",
+                    "backdrop-blur-sm transition-all duration-300",
+                    "hover:scale-105 hover:border-white/60 hover:bg-white/5",
+                    "overflow-hidden relative",
                   )}
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Social media link ${index + 1}`}
                 >
-                  {/* Icon */}
                   {iconUrl ? (
-                    <span className="relative block w-6 h-6">
+                    <figure className="relative w-6 h-6 z-10">
                       <Image
-                        className="object-contain transition-opacity duration-300 group-hover:opacity-90"
+                        className="object-contain"
                         src={iconUrl}
-                        alt={iconAlt}
+                        alt={iconAlt || `Social media link ${index + 1}`}
                         fill={true}
-                        sizes="24px"
                       />
-                    </span>
+                    </figure>
                   ) : null}
                 </Link>
               );
