@@ -5,6 +5,7 @@ import CardsImage from "./CardsImage";
 import Heading from "./Heading";
 import SellingPoints from "./SellingPoints";
 import Story from "./Story";
+import Syllabus from "./Syllabus";
 import TextImage from "./TextImage";
 import Visual from "./Visual";
 import Text from "./Text";
@@ -17,6 +18,7 @@ export const blockComponents = {
   "heading-block": Heading,
   "selling-points-block": SellingPoints,
   "story-block": Story,
+  "syllabus-block": Syllabus,
   "text-image-block": TextImage,
   "visual-block": Visual,
   "text-block": Text,

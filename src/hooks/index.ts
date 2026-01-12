@@ -3,6 +3,7 @@ export {
   generateCookiePolicyUrl,
   generateEventsUrl,
   generateHomeUrl,
+  generatePricesUrl,
   generatePrivacyPolicyUrl,
   generateTermsAndConditionsUrl,
 } from "./generateGlobalUrl";
@@ -15,3 +16,4 @@ export {
   populatePublishedAtGlobalField,
 } from "./populatePublishedAtGlobal";
 export { protectRoles } from "./protectRoles";
+export { revalidatePrices } from "./revalidate";

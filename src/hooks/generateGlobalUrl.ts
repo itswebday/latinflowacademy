@@ -70,3 +70,5 @@ export const generateTermsAndConditionsUrl =
   createGenerateGlobalUrlFromMessagesHook("termsAndConditions.url");
 export const generateEventsUrl =
   createGenerateGlobalUrlFromMessagesHook("events.url");
+export const generatePricesUrl =
+  createGenerateGlobalUrlFromMessagesHook("prices.url");

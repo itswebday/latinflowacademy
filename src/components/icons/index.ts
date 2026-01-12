@@ -1,3 +1,4 @@
+export { default as CheckIcon } from "./CheckIcon";
 export { default as ChevronDown } from "./ChevronDown";
 export { default as ChevronRight } from "./ChevronRight";
 export { default as EmailIcon } from "./EmailIcon";

@@ -5,5 +5,6 @@ export { Footer } from "./Footer";
 export { Hero } from "./Hero";
 export { Home } from "./Home";
 export { Navigation } from "./Navigation";
+export { Prices } from "./Prices";
 export { PrivacyPolicy } from "./PrivacyPolicy";
 export { TermsAndConditions } from "./TermsAndConditions";

@@ -106,6 +106,7 @@ export interface Config {
     events: Event;
     navigation: Navigation;
     footer: Footer;
+    prices: Price;
     'privacy-policy': PrivacyPolicy;
     'cookie-policy': CookiePolicy;
     'terms-and-conditions': TermsAndCondition;
@@ -117,6 +118,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    prices: PricesSelect<false> | PricesSelect<true>;
     'privacy-policy': PrivacyPolicySelect<false> | PrivacyPolicySelect<true>;
     'cookie-policy': CookiePolicySelect<false> | CookiePolicySelect<true>;
     'terms-and-conditions': TermsAndConditionsSelect<false> | TermsAndConditionsSelect<true>;
@@ -251,6 +253,7 @@ export interface Page {
         | HeadingBlock
         | SellingPointsBlock
         | StoryBlock
+        | SyllabusBlock
         | TextImageBlock
         | TextBlock
         | VisualBlock
@@ -853,6 +856,31 @@ export interface StoryBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'story-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SyllabusBlock".
+ */
+export interface SyllabusBlock {
+  levels: {
+    label: string;
+    title: string;
+    subtitle: string;
+    list: {
+      text: string;
+      id?: string | null;
+    }[];
+    goal: string;
+    id?: string | null;
+  }[];
+  paddingTop: 'none' | 'small' | 'medium' | 'large';
+  paddingBottom: 'none' | 'small' | 'medium' | 'large';
+  applyCustomId?: boolean | null;
+  customId?: string | null;
+  hidden?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'syllabus-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1491,6 +1519,7 @@ export interface PagesSelect<T extends boolean = true> {
         'heading-block'?: T | HeadingBlockSelect<T>;
         'selling-points-block'?: T | SellingPointsBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
+        'syllabus-block'?: T | SyllabusBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
         'visual-block'?: T | VisualBlockSelect<T>;
@@ -1832,6 +1861,34 @@ export interface StoryBlockSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  applyCustomId?: T;
+  customId?: T;
+  hidden?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SyllabusBlock_select".
+ */
+export interface SyllabusBlockSelect<T extends boolean = true> {
+  levels?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        subtitle?: T;
+        list?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        goal?: T;
+        id?: T;
+      };
+  paddingTop?: T;
+  paddingBottom?: T;
   applyCustomId?: T;
   customId?: T;
   hidden?: T;
@@ -2245,6 +2302,7 @@ export interface Home {
         | HeadingBlock
         | SellingPointsBlock
         | StoryBlock
+        | SyllabusBlock
         | TextImageBlock
         | TextBlock
         | VisualBlock
@@ -2583,6 +2641,136 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prices".
+ */
+export interface Price {
+  id: number;
+  heading: {
+    icon?: (number | null) | Media;
+    text: string;
+    hlTexts?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  paragraph: {
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  punchCards?:
+    | {
+        title: string;
+        subtitle?: string | null;
+        price: string;
+        description: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        discount?: number | null;
+        newPrice?: string | null;
+        details: {
+          detail: string;
+          id?: string | null;
+        }[];
+        button: {
+          text: string;
+          url?: string | null;
+        };
+        style: {
+          color: 'primary' | 'blue' | 'green' | 'red' | 'orange' | 'yellow';
+          mostPopular?: boolean | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  memberships: {
+    title: string;
+    subtitle?: string | null;
+    price: string;
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    discount?: number | null;
+    newPrice?: string | null;
+    details: {
+      detail?: string | null;
+      id?: string | null;
+    }[];
+    button: {
+      text: string;
+      url?: string | null;
+    };
+    options?:
+      | {
+          price: string;
+          text: string;
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
+    style: {
+      color: 'primary' | 'blue' | 'green' | 'red' | 'orange' | 'yellow';
+      mostPopular?: boolean | null;
+    };
+    id?: string | null;
+  }[];
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  publishedAt?: string | null;
+  /**
+   * Automatically set
+   */
+  url?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "privacy-policy".
  */
 export interface PrivacyPolicy {
@@ -2710,6 +2898,7 @@ export interface HomeSelect<T extends boolean = true> {
         'heading-block'?: T | HeadingBlockSelect<T>;
         'selling-points-block'?: T | SellingPointsBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
+        'syllabus-block'?: T | SyllabusBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
         'visual-block'?: T | VisualBlockSelect<T>;
@@ -3003,6 +3192,108 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prices_select".
+ */
+export interface PricesSelect<T extends boolean = true> {
+  heading?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        hlTexts?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  paragraph?:
+    | T
+    | {
+        text?: T;
+      };
+  punchCards?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        price?: T;
+        description?: T;
+        discount?: T;
+        newPrice?: T;
+        details?:
+          | T
+          | {
+              detail?: T;
+              id?: T;
+            };
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        style?:
+          | T
+          | {
+              color?: T;
+              mostPopular?: T;
+            };
+        id?: T;
+      };
+  memberships?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        price?: T;
+        description?: T;
+        discount?: T;
+        newPrice?: T;
+        details?:
+          | T
+          | {
+              detail?: T;
+              id?: T;
+            };
+        button?:
+          | T
+          | {
+              text?: T;
+              url?: T;
+            };
+        options?:
+          | T
+          | {
+              price?: T;
+              text?: T;
+              url?: T;
+              id?: T;
+            };
+        style?:
+          | T
+          | {
+              color?: T;
+              mostPopular?: T;
+            };
+        id?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  publishedAt?: T;
+  url?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "privacy-policy_select".
  */
 export interface PrivacyPolicySelect<T extends boolean = true> {
@@ -3090,6 +3381,7 @@ export interface TaskSchedulePublish {
           | 'events'
           | 'navigation'
           | 'footer'
+          | 'prices'
           | 'privacy-policy'
           | 'cookie-policy'
           | 'terms-and-conditions'

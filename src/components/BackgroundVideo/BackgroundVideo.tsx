@@ -26,7 +26,7 @@ const BackgroundVideo: React.FC<BackgroundVideoProps> = ({
       if (video && video.paused) {
         video.play();
       }
-    }, 1000);
+    }, 200);
 
     return () => clearInterval(interval);
   }, []);

@@ -44,6 +44,15 @@
     }
   },
 
+  "prices": {
+    "title": "Prijzen",
+    "url": "/nl/prijzen",
+    "mostPopular": "MEEST POPULAIR",
+    "subscriptionModal": {
+      "subtitle": "Kies je betaalplan"
+    }
+  },
+
   "privacyPolicy": {
     "title": "Privacybeleid",
     "url": "/nl/privacybeleid"
@@ -75,5 +84,9 @@
       "crn": "KvK",
       "vat": "BTW"
     }
+  },
+
+  "syllabus": {
+    "goal": "DOEL: "
   }
 }

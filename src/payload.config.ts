@@ -41,6 +41,7 @@ import {
   Hero,
   Home,
   Navigation,
+  Prices,
   PrivacyPolicy,
   TermsAndConditions,
 } from "@/globals";
@@ -86,6 +87,7 @@ export default buildConfig({
     Events,
     Navigation,
     Footer,
+    Prices,
     PrivacyPolicy,
     CookiePolicy,
     TermsAndConditions,

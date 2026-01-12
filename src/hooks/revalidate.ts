@@ -264,6 +264,9 @@ export const revalidateTermsAndConditions = createGlobalRevalidateHook();
 // Revalidate events
 export const revalidateEvents = createGlobalRevalidateHook("events");
 
+// Revalidate prices
+export const revalidatePrices = createGlobalRevalidateHook("prices");
+
 // Revalidate navigation
 export const revalidateNavigation: GlobalAfterChangeHook = async ({
   doc,
@@ -305,8 +308,8 @@ const revalidateSitemap = () => {
   revalidateTag("sitemap", "max");
 };
 
-// Helper to get href from messages
-const getHrefFromMessages = async (
+// Helper to get url from messages
+const getUrlFromMessages = async (
   locale: string,
   messageKey: string,
 ): Promise<string> => {
@@ -357,27 +360,30 @@ const revalidateNavigationAndFooter = async () => {
 
   for (const locale of LOCALES) {
     const [
-      homeHref,
-      blogHref,
-      eventsHref,
-      privacyPolicyHref,
-      cookiePolicyHref,
-      termsAndConditionsHref,
+      homeUrl,
+      blogUrl,
+      eventsUrl,
+      pricesUrl,
+      privacyPolicyUrl,
+      cookiePolicyUrl,
+      termsAndConditionsUrl,
     ] = await Promise.all([
-      getHrefFromMessages(locale, "home.url"),
-      getHrefFromMessages(locale, "blog.url"),
-      getHrefFromMessages(locale, "events.url"),
-      getHrefFromMessages(locale, "privacyPolicy.url"),
-      getHrefFromMessages(locale, "cookiePolicy.url"),
-      getHrefFromMessages(locale, "termsAndConditions.url"),
+      getUrlFromMessages(locale, "home.url"),
+      getUrlFromMessages(locale, "blog.url"),
+      getUrlFromMessages(locale, "events.url"),
+      getUrlFromMessages(locale, "prices.url"),
+      getUrlFromMessages(locale, "privacyPolicy.url"),
+      getUrlFromMessages(locale, "cookiePolicy.url"),
+      getUrlFromMessages(locale, "termsAndConditions.url"),
     ]);
 
-    if (homeHref) pathsToRevalidate.push(homeHref);
-    if (blogHref) pathsToRevalidate.push(blogHref);
-    if (eventsHref) pathsToRevalidate.push(eventsHref);
-    if (privacyPolicyHref) pathsToRevalidate.push(privacyPolicyHref);
-    if (cookiePolicyHref) pathsToRevalidate.push(cookiePolicyHref);
-    if (termsAndConditionsHref) pathsToRevalidate.push(termsAndConditionsHref);
+    if (homeUrl) pathsToRevalidate.push(homeUrl);
+    if (blogUrl) pathsToRevalidate.push(blogUrl);
+    if (eventsUrl) pathsToRevalidate.push(eventsUrl);
+    if (pricesUrl) pathsToRevalidate.push(pricesUrl);
+    if (privacyPolicyUrl) pathsToRevalidate.push(privacyPolicyUrl);
+    if (cookiePolicyUrl) pathsToRevalidate.push(cookiePolicyUrl);
+    if (termsAndConditionsUrl) pathsToRevalidate.push(termsAndConditionsUrl);
   }
 
   pathsToRevalidate.forEach((path) => {
@@ -423,9 +429,9 @@ const revalidateNavigationAndFooter = async () => {
 
   // Fetch and revalidate all published blog posts for all locales
   for (const locale of LOCALES) {
-    const blogHref = await getHrefFromMessages(locale, "blog.url");
+    const blogUrl = await getUrlFromMessages(locale, "blog.url");
 
-    if (!blogHref) {
+    if (!blogUrl) {
       continue;
     }
 
@@ -449,7 +455,7 @@ const revalidateNavigationAndFooter = async () => {
 
     results.docs?.forEach((post) => {
       if (post.slug && typeof post.slug === "string") {
-        const blogPostPath = `${blogHref}/${post.slug}`;
+        const blogPostPath = `${blogUrl}/${post.slug}`;
         revalidatePath(blogPostPath);
       }
     });
@@ -457,9 +463,9 @@ const revalidateNavigationAndFooter = async () => {
 
   // Fetch and revalidate all published event posts for all locales
   for (const locale of LOCALES) {
-    const eventsHref = await getHrefFromMessages(locale, "events.url");
+    const eventsUrl = await getUrlFromMessages(locale, "events.url");
 
-    if (!eventsHref) {
+    if (!eventsUrl) {
       continue;
     }
 
@@ -483,7 +489,7 @@ const revalidateNavigationAndFooter = async () => {
 
     results.docs?.forEach((post) => {
       if (post.slug && typeof post.slug === "string") {
-        const eventPostPath = `${eventsHref}/${post.slug}`;
+        const eventPostPath = `${eventsUrl}/${post.slug}`;
         revalidatePath(eventPostPath);
       }
     });

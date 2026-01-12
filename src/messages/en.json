@@ -44,6 +44,15 @@
     }
   },
 
+  "prices": {
+    "title": "Prices",
+    "url": "/prices",
+    "mostPopular": "MOST POPULAR",
+    "subscriptionModal": {
+      "subtitle": "Choose your payment plan"
+    }
+  },
+
   "privacyPolicy": {
     "title": "Privacy Policy",
     "url": "/privacy-policy"
@@ -75,5 +84,9 @@
       "crn": "KvK",
       "vat": "VAT"
     }
+  },
+
+  "syllabus": {
+    "goal": "GOAL: "
   }
 }
