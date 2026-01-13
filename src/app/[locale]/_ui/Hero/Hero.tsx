@@ -1,7 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
 import { getLocale } from "next-intl/server";
 import { draftMode } from "next/headers";
+import Image from "next/image";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import {
   AnimatedWrapper,
@@ -12,7 +12,7 @@ import {
 } from "@/components";
 import type { LocaleOption, RawUrl } from "@/types";
 import { getCachedGlobal, getGlobal } from "@/utils/server";
-import { getMediaUrlAndAlt, getUrl, highlightText } from "@/utils";
+import { getMediaUrlAndAlt, getUrl, processText } from "@/utils";
 import ScrollDownIndicator from "./ScrollDownIndicator";
 
 const Hero = async () => {
@@ -52,75 +52,50 @@ const Hero = async () => {
       : undefined;
 
   return (
-    <section className="relative w-full pb-64 -mb-88 de:-mb-64 bg-dark">
+    <section
+      className={twMerge(
+        "relative w-full h-screen min-h-200 max-h-[min(1200px,240vw)]",
+      )}
+    >
       {/* Background image with fade mask */}
       <BackgroundImage
         className={twMerge(
           "opacity-60 mb-64",
-          "mask-[linear-gradient(to_bottom,transparent_0%,black_50%,transparent_100%)]",
-          "[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,transparent_100%)]",
+          "mask-[linear-gradient(to_bottom,transparent_0%,black_50%," +
+            "transparent_100%)]",
+          "[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%," +
+            "black_50%,transparent_100%)]",
         )}
         src="/assets/hero-image.webp"
         alt="Latin Flow Academy"
       />
 
-      {/* Abstract bottom edge */}
-      <svg
-        className="absolute bottom-0 left-0 right-0 w-full pointer-events-none"
-        style={{ height: "160px" }}
-        preserveAspectRatio="none"
-        viewBox="0 0 1200 160"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-      >
-        {/* Single wave with opposite direction on right half */}
-        <path
-          d="M0,160 L0,40 Q300,10 600,40 Q900,70 1200,40 L1200,160 Z"
-          style={{ fill: "var(--color-dark)" }}
-        />
-        {/* Primary colored border on top */}
-        <path
-          d="M0,40 Q300,10 600,40 Q900,70 1200,40"
-          fill="none"
-          stroke="#ec4899"
-          strokeWidth="1"
-          opacity="0.5"
-        />
-      </svg>
-
       {/* Container */}
       <AnimatedWrapper
         className={twMerge(
           "z-10 relative flex flex-col justify-end items-center gap-8",
-          "w-full max-w-400 h-screen min-h-200 max-h-[min(1200px,240vw)]",
-          "px-8 pb-64 mx-auto text-white",
-          "de:items-start de:min-h-200 de:w-11/12 de:px-0 de:pb-48",
+          "w-full h-full max-w-400 px-8 mx-auto pb-48 text-white",
+          "de:items-start de:w-11/12",
         )}
         delay={0.2}
         duration={1.5}
         direction="up"
       >
         {/* Heading */}
-        <HeadingWithIcon className="w-83 mr-auto de:w-142 de:mr-0">
-          <h1 className="font-bold">
-            {typeof hero.heading.text === "string" && hero.heading.hlTexts
-              ? highlightText(hero.heading.text, hero.heading.hlTexts)
-              : hero.heading.text}
-          </h1>
+        <HeadingWithIcon className="w-full">
+          <h1 className="font-bold">{processText(hero.heading.text)}</h1>
         </HeadingWithIcon>
 
         {/* Paragraph */}
-        <p className="max-w-160 text-white mr-auto de:mr-0">
-          {hero.paragraph.text}
+        <p className="max-w-120 text-white mr-auto de:mr-0">
+          {processText(hero.paragraph.text)}
         </p>
 
         {/* Buttons */}
         {(buttonUrl || (hero.showButton2 && hero.button2 && button2Url)) && (
           <AnimatedWrapper
             className={twMerge(
-              "flex flex-wrap items-start justify-start gap-4 text-[15px] w-full",
-              "mr-auto de:mr-0",
+              "flex flex-wrap items-start justify-start gap-4 w-full",
             )}
             delay={0.4}
             duration={1.5}
@@ -129,9 +104,9 @@ const Hero = async () => {
             {/* First button */}
             {buttonUrl && (
               <ButtonLink
+                variant={hero.button.variant as ButtonLinkProps["variant"]}
                 href={buttonUrl}
                 target={hero.button.newTab === true ? "_blank" : "_self"}
-                variant={hero.button.variant as ButtonLinkProps["variant"]}
               >
                 {hero.button.text}
               </ButtonLink>
@@ -140,9 +115,9 @@ const Hero = async () => {
             {/* Second button */}
             {hero.showButton2 && hero.button2 && button2Url && (
               <ButtonLink
+                variant={hero.button2.variant as ButtonLinkProps["variant"]}
                 href={button2Url}
                 target={hero.button2.newTab === true ? "_blank" : "_self"}
-                variant={hero.button2.variant as ButtonLinkProps["variant"]}
               >
                 {hero.button2.text}
               </ButtonLink>
@@ -200,7 +175,7 @@ const Hero = async () => {
         {/* Scroll down indicator */}
         <AnimatedWrapper
           className={twMerge(
-            "absolute bottom-32 left-1/2 -translate-x-1/2",
+            "absolute bottom-20 left-1/2 -translate-x-1/2",
             "de:bottom-16",
           )}
           delay={0.8}

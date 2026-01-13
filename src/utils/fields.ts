@@ -246,34 +246,11 @@ export const getHeadingFields = ({
     {
       name: "text",
       label: "Text",
-      type: "text",
+      type: "textarea",
       defaultValue: "",
       localized: true,
       required: true,
       admin: hiddenFields.includes("text") ? { hidden: true } : undefined,
-    },
-    {
-      name: "hlTexts",
-      label: "",
-      type: "array",
-      defaultValue: [],
-      labels: {
-        singular: "Highlighted text",
-        plural: "Highlighted texts",
-      },
-      admin: hiddenFields.includes("hlTexts")
-        ? { hidden: true, initCollapsed: true }
-        : { initCollapsed: true },
-      fields: [
-        {
-          name: "text",
-          label: "",
-          type: "text",
-          defaultValue: "",
-          localized: true,
-          required: true,
-        },
-      ],
     },
   ];
 

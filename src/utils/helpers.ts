@@ -268,286 +268,234 @@ const extractTextFromRichText = (richText: RichText): string => {
   return richText.root.children.map(extractFromNode).join(" ");
 };
 
-export const highlightText = (
+export const processText = (
   text: string | RichText,
-  highlightedTexts?: Array<{ text?: string | null }> | null,
   highlightClassName?: string,
-): React.ReactNode[] => {
-  const textString =
-    typeof text === "string" ? text : extractTextFromRichText(text);
-
-  if (!highlightedTexts || highlightedTexts.length === 0) {
-    return [textString];
-  }
-
-  const parts: React.ReactNode[] = [];
-  const sortedHighlights = highlightedTexts
-    .map((h) => h.text)
-    .filter((t): t is string => !!t)
-    .sort((a, b) => b.length - a.length);
-  const matches: Array<{ start: number; end: number; text: string }> = [];
-
-  sortedHighlights.forEach((highlight) => {
-    let searchIndex = 0;
-
-    while (searchIndex < textString.length) {
-      const index = textString
-        .toLowerCase()
-        .indexOf(highlight.toLowerCase(), searchIndex);
-
-      if (index === -1) {
-        break;
-      }
-
-      const overlaps = matches.some(
-        (m) => !(index >= m.end || index + highlight.length <= m.start),
-      );
-
-      if (!overlaps) {
-        matches.push({
-          start: index,
-          end: index + highlight.length,
-          text: textString.substring(index, index + highlight.length),
-        });
-      }
-
-      searchIndex = index + 1;
-    }
-  });
-
-  let lastIndex = 0;
-
-  matches.sort((a, b) => a.start - b.start);
-  matches.forEach((match) => {
-    if (match.start > lastIndex) {
-      parts.push(textString.substring(lastIndex, match.start));
-    }
-
-    parts.push(
-      React.createElement(
-        "span",
-        {
-          className: twMerge(
-            "bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent",
-            highlightClassName,
-          ),
-          key: `highlight-${match.start}`,
-        },
-        match.text,
-      ),
-    );
-
-    lastIndex = match.end;
-  });
-
-  if (lastIndex < textString.length) {
-    parts.push(textString.substring(lastIndex));
-  }
-
-  return parts.length > 0 ? parts : [textString];
-};
-
-export const applyHighlightsToRichText = (
-  text: string | RichText,
-  highlightedTexts?: Array<{ text?: string | null }> | null,
-  highlightClassName?: string,
-): React.ReactNode[] | RichText => {
-  if (!highlightedTexts?.length || !highlightClassName) {
-    if (typeof text === "string") {
-      return [text];
-    }
-    return text;
-  }
-
-  const highlights = highlightedTexts
-    .map((ht) => ht.text)
-    .filter((t): t is string => !!t);
+): React.ReactNode => {
+  const highlightMarker = "==";
 
   if (typeof text === "string") {
-    const textString = text;
+    // Process string for highlight markers (==text==) and line breaks
     const parts: React.ReactNode[] = [];
-    const sortedHighlights = highlights.sort((a, b) => b.length - a.length);
-    const matches: Array<{ start: number; end: number; text: string }> = [];
+    let keyCounter = 0;
 
-    sortedHighlights.forEach((highlight) => {
-      let searchIndex = 0;
+    const processTextSegment = (segment: string): React.ReactNode[] => {
+      const segmentParts: React.ReactNode[] = [];
+      let segmentLastIndex = 0;
 
-      while (searchIndex < textString.length) {
-        const index = textString
-          .toLowerCase()
-          .indexOf(highlight.toLowerCase(), searchIndex);
+      while (segmentLastIndex < segment.length) {
+        const startIndex = segment.indexOf(highlightMarker, segmentLastIndex);
 
-        if (index === -1) {
+        // No more markers, add the rest of the text
+        if (startIndex === -1) {
+          if (segmentLastIndex < segment.length) {
+            segmentParts.push(segment.substring(segmentLastIndex));
+          }
+
           break;
         }
 
-        const overlaps = matches.some(
-          (m) => !(index >= m.end || index + highlight.length <= m.start),
+        // Add text before the marker
+        if (startIndex > segmentLastIndex) {
+          segmentParts.push(segment.substring(segmentLastIndex, startIndex));
+        }
+
+        // Find the closing marker
+        const endIndex = segment.indexOf(
+          highlightMarker,
+          startIndex + highlightMarker.length,
         );
 
-        if (!overlaps) {
-          matches.push({
-            start: index,
-            end: index + highlight.length,
-            text: textString.substring(index, index + highlight.length),
-          });
+        // No closing marker found
+        if (endIndex === -1) {
+          segmentParts.push(segment.substring(startIndex));
+
+          break;
         }
 
-        searchIndex = index + 1;
+        // Extract the highlighted text
+        const highlightedText = segment.substring(
+          startIndex + highlightMarker.length,
+          endIndex,
+        );
+
+        // Add highlighted span
+        segmentParts.push(
+          React.createElement(
+            "span",
+            {
+              className: twMerge(
+                "bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent",
+                highlightClassName,
+              ),
+              key: `highlight-${keyCounter++}`,
+            },
+            highlightedText,
+          ),
+        );
+
+        segmentLastIndex = endIndex + highlightMarker.length;
+      }
+
+      return segmentParts;
+    };
+
+    // Split by line breaks and process each segment
+    const lines = text.split("\n");
+
+    lines.forEach((line, lineIndex) => {
+      // Process highlights in this line
+      const lineParts = processTextSegment(line);
+
+      // Add line parts
+      parts.push(...lineParts);
+
+      // Add line break (except after the last line)
+      if (lineIndex < lines.length - 1) {
+        parts.push(React.createElement("br", { key: `br-${keyCounter++}` }));
       }
     });
 
-    if (matches.length === 0) {
-      return [textString];
-    }
-
-    let lastIndex = 0;
-
-    matches.sort((a, b) => a.start - b.start);
-    matches.forEach((match) => {
-      if (match.start > lastIndex) {
-        parts.push(textString.substring(lastIndex, match.start));
-      }
-
-      parts.push(
-        React.createElement(
-          "span",
-          {
-            className: highlightClassName,
-            key: `highlight-${match.start}`,
-          },
-          match.text,
-        ),
-      );
-
-      lastIndex = match.end;
-    });
-
-    if (lastIndex < textString.length) {
-      parts.push(textString.substring(lastIndex));
-    }
-
-    return parts.length > 0 ? parts : [textString];
+    return parts.length === 0 ? text : parts.length === 1 ? parts[0] : parts;
   }
 
-  // If input is RichText, process it
-  const richText = text;
+  // If it's RichText, process it to find and highlight text nodes
+  if (!text?.root?.children) {
+    return "";
+  }
 
-  const processNode = (node: unknown): unknown | unknown[] => {
-    if (
-      typeof node === "object" &&
-      node !== null &&
-      "type" in node &&
-      node.type === "text" &&
-      "text" in node &&
-      typeof node.text === "string"
-    ) {
-      const textNode = node as {
-        type: "text";
-        text: string;
-        [key: string]: unknown;
-      };
-      const text = textNode.text;
-      const matches: Array<{
-        start: number;
-        end: number;
-      }> = [];
+  let keyCounter = 0;
 
-      highlights.forEach((highlight) => {
-        let searchIndex = 0;
-        while (searchIndex < text.length) {
-          const index = text
-            .toLowerCase()
-            .indexOf(highlight.toLowerCase(), searchIndex);
-          if (index === -1) {
-            break;
+  const processNode = (
+    node: BlockNode,
+  ): React.ReactNode | React.ReactNode[] => {
+    // Check if this is a text node that should be highlighted
+    if (node.type === "text") {
+      const textContent = node.text || "";
+
+      // Process text for highlights and line breaks
+      const processTextContent = (content: string): React.ReactNode[] => {
+        const contentParts: React.ReactNode[] = [];
+        let contentLastIndex = 0;
+
+        // First, split by line breaks
+        const lines = content.split("\n");
+
+        lines.forEach((line, lineIndex) => {
+          // Process highlights in this line
+          let lineLastIndex = 0;
+
+          while (lineLastIndex < line.length) {
+            const startIndex = line.indexOf(highlightMarker, lineLastIndex);
+
+            if (startIndex === -1) {
+              if (lineLastIndex < line.length) {
+                contentParts.push(line.substring(lineLastIndex));
+              }
+              break;
+            }
+
+            if (startIndex > lineLastIndex) {
+              contentParts.push(line.substring(lineLastIndex, startIndex));
+            }
+
+            const endIndex = line.indexOf(
+              highlightMarker,
+              startIndex + highlightMarker.length,
+            );
+
+            if (endIndex === -1) {
+              contentParts.push(line.substring(startIndex));
+              break;
+            }
+
+            const highlightedText = line.substring(
+              startIndex + highlightMarker.length,
+              endIndex,
+            );
+
+            contentParts.push(
+              React.createElement(
+                "span",
+                {
+                  className: twMerge(
+                    "bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent",
+                    highlightClassName,
+                  ),
+                  key: `highlight-${keyCounter++}`,
+                },
+                highlightedText,
+              ),
+            );
+
+            lineLastIndex = endIndex + highlightMarker.length;
           }
 
-          const overlaps = matches.some(
-            (m) => !(index >= m.end || index + highlight.length <= m.start),
-          );
-
-          if (!overlaps) {
-            matches.push({
-              start: index,
-              end: index + highlight.length,
-            });
+          // Add line break (except after the last line)
+          if (lineIndex < lines.length - 1) {
+            contentParts.push(
+              React.createElement("br", { key: `br-${keyCounter++}` }),
+            );
           }
-
-          searchIndex = index + 1;
-        }
-      });
-
-      if (matches.length === 0) {
-        return node;
-      }
-
-      matches.sort((a, b) => a.start - b.start);
-
-      const parts: Array<{
-        type: "text";
-        text: string;
-        className?: string;
-        [key: string]: unknown;
-      }> = [];
-      let lastIndex = 0;
-
-      matches.forEach((match) => {
-        if (match.start > lastIndex) {
-          parts.push({
-            ...textNode,
-            text: text.substring(lastIndex, match.start),
-          });
-        }
-
-        parts.push({
-          ...textNode,
-          text: text.substring(match.start, match.end),
-          className: highlightClassName,
         });
-        lastIndex = match.end;
-      });
 
-      if (lastIndex < text.length) {
-        parts.push({
-          ...textNode,
-          text: text.substring(lastIndex),
-        });
-      }
-
-      return parts;
-    }
-
-    if (
-      typeof node === "object" &&
-      node !== null &&
-      "children" in node &&
-      Array.isArray(node.children)
-    ) {
-      const processedChildren = node.children
-        .map(processNode)
-        .flat()
-        .filter((child): child is unknown => child !== null);
-
-      return {
-        ...node,
-        children: processedChildren,
+        return contentParts;
       };
+
+      // Check if the text contains highlight markers or line breaks
+      if (textContent.includes(highlightMarker) || textContent.includes("\n")) {
+        const parts = processTextContent(textContent);
+        return parts.length === 1 ? parts[0] : parts;
+      }
+
+      // Also check for className property that might indicate highlighting
+      const nodeClassName =
+        "className" in node && typeof node.className === "string"
+          ? node.className
+          : undefined;
+
+      if (
+        nodeClassName &&
+        (nodeClassName.includes("highlight") ||
+          nodeClassName.includes("gradient"))
+      ) {
+        const key = `highlight-${keyCounter++}`;
+        return React.createElement(
+          "span",
+          {
+            className: twMerge(
+              "bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent",
+              highlightClassName,
+            ),
+            key,
+          },
+          textContent,
+        );
+      }
+
+      return textContent;
     }
 
-    return node;
+    // For nodes with children, recursively process them
+    if ("children" in node && Array.isArray(node.children)) {
+      return node.children.map((child) => processNode(child));
+    }
+
+    return null;
   };
 
-  const processedChildren = richText.root.children
-    .map(processNode)
+  const processedChildren = text.root.children
+    .map((child) => processNode(child))
     .flat()
-    .filter((child): child is unknown => child !== null);
+    .filter((node): node is React.ReactNode => node !== null);
 
-  return {
-    ...richText,
-    root: {
-      ...richText.root,
-      children: processedChildren as typeof richText.root.children,
-    },
-  };
+  if (processedChildren.length === 0) {
+    return "";
+  }
+
+  if (processedChildren.length === 1) {
+    return processedChildren[0];
+  }
+
+  return processedChildren;
 };

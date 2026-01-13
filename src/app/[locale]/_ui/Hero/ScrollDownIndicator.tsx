@@ -37,9 +37,9 @@ const ScrollDownIndicator: React.FC<ScrollDownIndicatorProps> = ({
         className,
       )}
       ref={indicatorRef}
-      onClick={handleClick}
       role="button"
       tabIndex={0}
+      onClick={handleClick}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();

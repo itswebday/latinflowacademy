@@ -9,7 +9,7 @@ import {
 import RichTextRenderer from "@/components/RichTextRenderer";
 import type { TextBlock } from "@/payload-types";
 import type { Globals, RawUrl } from "@/types";
-import { getPaddingClasses, getUrl, highlightText } from "@/utils";
+import { getPaddingClasses, getUrl, processText } from "@/utils";
 
 const Text: React.FC<TextBlock & { id?: string; globals: Globals }> = (
   props,
@@ -42,9 +42,7 @@ const Text: React.FC<TextBlock & { id?: string; globals: Globals }> = (
     showSubheading && subheading ? (
       <HeadingWithIcon icon={subheading.icon}>
         <h5 className="font-bold text-center">
-          {typeof subheading.text === "string" && subheading.hlTexts
-            ? highlightText(subheading.text, subheading.hlTexts)
-            : subheading.text}
+          {processText(subheading.text)}
         </h5>
       </HeadingWithIcon>
     ) : null;
@@ -54,9 +52,7 @@ const Text: React.FC<TextBlock & { id?: string; globals: Globals }> = (
     showHeading && heading ? (
       <HeadingWithIcon icon={heading.icon}>
         <h2 className={twMerge("font-bold", centered && "text-center")}>
-          {typeof heading.text === "string" && heading.hlTexts
-            ? highlightText(heading.text, heading.hlTexts)
-            : heading.text}
+          {processText(heading.text)}
         </h2>
       </HeadingWithIcon>
     ) : null;

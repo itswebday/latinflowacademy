@@ -5,7 +5,7 @@ import RichTextRenderer from "@/components/RichTextRenderer";
 import AccordionClient from "./AccordionClient";
 import type { AccordionBlock } from "@/payload-types";
 import type { Globals, RichText } from "@/types";
-import { getPaddingClasses, highlightText } from "@/utils";
+import { getPaddingClasses, processText } from "@/utils";
 
 const Accordion: React.FC<
   AccordionBlock & { id?: string; globals: Globals }
@@ -28,8 +28,8 @@ const Accordion: React.FC<
         icon={heading.icon}
       >
         <h2 className="font-bold text-dark">
-          {typeof heading.text === "string" && heading.hlTexts
-            ? highlightText(heading.text, heading.hlTexts)
+          {typeof heading.text === "string"
+            ? processText(heading.text)
             : heading.text}
         </h2>
       </HeadingWithIcon>

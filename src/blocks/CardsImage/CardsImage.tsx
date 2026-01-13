@@ -15,7 +15,7 @@ import {
   getMediaUrlAndAlt,
   getPaddingClasses,
   getUrl,
-  highlightText,
+  processText,
 } from "@/utils";
 
 const CardsImage: React.FC<
@@ -81,8 +81,8 @@ const CardsImage: React.FC<
             <AnimatedWrapper delay={0} direction="up">
               <HeadingWithIcon icon={heading.icon}>
                 <h3 className="font-bold">
-                  {typeof heading.text === "string" && heading.hlTexts
-                    ? highlightText(heading.text, heading.hlTexts)
+                  {typeof heading.text === "string"
+                    ? processText(heading.text)
                     : heading.text}
                 </h3>
               </HeadingWithIcon>

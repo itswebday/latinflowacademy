@@ -3,12 +3,11 @@ import { twMerge } from "tailwind-merge";
 import { AnimatedWrapper, HeadingWithIcon } from "@/components";
 import type { HeadingBlock } from "@/payload-types";
 import type { Globals } from "@/types";
-import { getPaddingClasses, highlightText } from "@/utils";
+import { getPaddingClasses, processText } from "@/utils";
 
 const Heading: React.FC<HeadingBlock & { id?: string; globals: Globals }> = ({
   icon,
   text,
-  hlTexts,
   tagName,
   centered,
   paddingTop,
@@ -42,9 +41,7 @@ const Heading: React.FC<HeadingBlock & { id?: string; globals: Globals }> = ({
                     centered && "justify-center text-center",
                   ),
                 },
-                typeof text === "string" && hlTexts
-                  ? highlightText(text, hlTexts)
-                  : text,
+                processText(text),
               )}
             </HeadingWithIcon>
           </AnimatedWrapper>

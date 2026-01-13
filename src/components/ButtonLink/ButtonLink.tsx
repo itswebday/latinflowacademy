@@ -134,9 +134,7 @@ const ButtonLink: React.FC<ButtonLinkProps> = ({
         )}
 
       {/* Button text */}
-      <span className="z-10 relative -translate-y-[0.5px] uppercase">
-        {children}
-      </span>
+      <span className="z-10 relative uppercase">{children}</span>
 
       {/* Arrow with animation */}
       {variant && (
@@ -147,7 +145,7 @@ const ButtonLink: React.FC<ButtonLinkProps> = ({
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <ChevronRight className="relative w-5 h-5 -translate-y-[0.5px]" />
+          <ChevronRight className="relative w-5 h-5" />
         </motion.span>
       )}
     </Link>

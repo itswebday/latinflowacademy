@@ -11,13 +11,12 @@ export {
   getSocialMediaFields,
 } from "./fields";
 export {
-  applyHighlightsToRichText,
   createLinkClickHandler,
   getGlobalUrl,
   getMediaUrlAndAlt,
   getMimeType,
   getUrl,
-  highlightText,
+  processText,
   scrollToTop,
 } from "./helpers";
 export { request } from "./requests";

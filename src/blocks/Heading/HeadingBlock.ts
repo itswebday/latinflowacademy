@@ -25,29 +25,6 @@ export const HeadingBlock: Block = {
       required: true,
     },
     {
-      name: "hlTexts",
-      label: "",
-      type: "array",
-      defaultValue: [],
-      labels: {
-        singular: "Highlighted text",
-        plural: "Highlighted texts",
-      },
-      admin: {
-        initCollapsed: true,
-      },
-      fields: [
-        {
-          name: "text",
-          label: "",
-          type: "text",
-          defaultValue: "",
-          localized: true,
-          required: true,
-        },
-      ],
-    },
-    {
       name: "tagName",
       label: "Heading size",
       type: "select",

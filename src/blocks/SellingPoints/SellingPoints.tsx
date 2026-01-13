@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { AnimatedWrapper } from "@/components";
 import type { SellingPointsBlock } from "@/payload-types";
 import type { Globals } from "@/types";
-import { getMediaUrlAndAlt, getPaddingClasses } from "@/utils";
+import { getMediaUrlAndAlt, getPaddingClasses, processText } from "@/utils";
 
 const SellingPoints: React.FC<
   SellingPointsBlock & { id?: string; globals: Globals }
@@ -17,13 +17,13 @@ const SellingPoints: React.FC<
     <section
       id={id}
       className={twMerge(
-        "w-full overflow-hidden",
+        "relative w-full overflow-hidden",
         getPaddingClasses(paddingTop, paddingBottom),
         hidden && "hidden",
       )}
     >
       {/* Container */}
-      <div className="w-5/6 mx-auto">
+      <div className="relative z-10 w-5/6 mx-auto">
         {/* Grid */}
         <div className="flex flex-col gap-4 de:flex-row de:justify-center de:gap-6">
           {sellingPoints.map((point, index) => {
@@ -69,10 +69,10 @@ const SellingPoints: React.FC<
                     <span
                       className={twMerge(
                         "relative z-10 font-semibold text-white",
-                        "de:text-center w-36",
+                        "de:text-center",
                       )}
                     >
-                      {point.text}
+                      {processText(point.text)}
                     </span>
                   )}
 
@@ -90,6 +90,24 @@ const SellingPoints: React.FC<
           })}
         </div>
       </div>
+
+      {/* Wavy line */}
+      <svg
+        className="z-0 absolute bottom-0 left-0 right-0 w-full h-full pointer-events-none"
+        preserveAspectRatio="none"
+        viewBox="0 0 1200 160"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M0,80 Q300,50 600,80 Q900,110 1200,80"
+          fill="none"
+          stroke="#ec4899"
+          strokeWidth="1"
+          opacity="0.5"
+        />
+      </svg>
     </section>
   );
 };

@@ -49,7 +49,7 @@ export const Hero: GlobalConfig = {
         {
           name: "text",
           label: "Text",
-          type: "text",
+          type: "textarea",
           defaultValue: "",
           localized: true,
           required: true,

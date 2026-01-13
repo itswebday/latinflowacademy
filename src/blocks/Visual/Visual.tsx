@@ -12,7 +12,7 @@ import {
 } from "@/components";
 import type { VisualBlock } from "@/payload-types";
 import type { Globals, RawUrl } from "@/types";
-import { getMediaUrlAndAlt, getMimeType, getUrl, highlightText } from "@/utils";
+import { getMediaUrlAndAlt, getMimeType, getUrl, processText } from "@/utils";
 
 const Visual: React.FC<VisualBlock & { id?: string; globals: Globals }> = ({
   visual,
@@ -84,9 +84,7 @@ const Visual: React.FC<VisualBlock & { id?: string; globals: Globals }> = ({
                   visualUrl ? "text-white" : "text-dark",
                 )}
               >
-                {typeof heading.text === "string" && heading.hlTexts
-                  ? highlightText(heading.text, heading.hlTexts)
-                  : heading.text}
+                {processText(heading.text)}
               </h1>
             </HeadingWithIcon>
           </AnimatedWrapper>

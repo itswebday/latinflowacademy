@@ -12,6 +12,38 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
   className,
   richText,
 }) => {
+  const getTextAlignClass = (format?: string | number): string | undefined => {
+    if (!format) {
+      return undefined;
+    }
+
+    const formatString = typeof format === "string" ? format : String(format);
+
+    if (formatString.includes("text-align-left") || formatString === "left") {
+      return "text-left";
+    }
+
+    if (
+      formatString.includes("text-align-center") ||
+      formatString === "center"
+    ) {
+      return "text-center";
+    }
+
+    if (formatString.includes("text-align-right") || formatString === "right") {
+      return "text-right";
+    }
+
+    if (
+      formatString.includes("text-align-justify") ||
+      formatString === "justify"
+    ) {
+      return "text-justify";
+    }
+
+    return undefined;
+  };
+
   const renderBlockNode = async (
     blockNode: BlockNode,
     index: number,
@@ -38,6 +70,11 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
           style.paddingLeft = `${indent * 1.5}rem`;
         }
 
+        const textAlignClass = getTextAlignClass(blockNode.format);
+        if (textAlignClass) {
+          classes.push(textAlignClass);
+        }
+
         const children = await Promise.all(
           blockNode.children.map((child, i) => renderBlockNode(child, i)),
         );
@@ -45,7 +82,7 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
         return React.createElement(
           tagName,
           {
-            className: classes.join(" "),
+            className: classes.length > 0 ? classes.join(" ") : undefined,
             style: Object.keys(style).length > 0 ? style : undefined,
             key: index,
           },
@@ -69,13 +106,18 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
           style.paddingLeft = `${indent * 1.5}rem`;
         }
 
+        const textAlignClass = getTextAlignClass(blockNode.format);
+        if (textAlignClass) {
+          classes.push(textAlignClass);
+        }
+
         const children = await Promise.all(
           blockNode.children.map((child, i) => renderBlockNode(child, i)),
         );
 
         return (
           <p
-            className={classes.join(" ")}
+            className={classes.length > 0 ? classes.join(" ") : undefined}
             style={Object.keys(style).length > 0 ? style : undefined}
             key={index}
           >
@@ -88,16 +130,35 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
         const listType = blockNode.listType || blockNode.format;
         const isOrdered = listType === "number" || listType === "ordered";
 
+        const classes: string[] = ["pl-6"];
+        const textAlignClass = getTextAlignClass(blockNode.format);
+        if (textAlignClass) {
+          classes.push(textAlignClass);
+        }
+
         const children = await Promise.all(
           blockNode.children.map((child, i) => renderBlockNode(child, i)),
         );
 
         return isOrdered ? (
-          <ol className="list-decimal pl-6" key={index} start={blockNode.start}>
+          <ol
+            className={twMerge(
+              "list-decimal",
+              classes.length > 1 ? classes.join(" ") : undefined,
+            )}
+            key={index}
+            start={blockNode.start}
+          >
             {children}
           </ol>
         ) : (
-          <ul className="list-disc pl-6" key={index}>
+          <ul
+            className={twMerge(
+              "list-disc",
+              classes.length > 1 ? classes.join(" ") : undefined,
+            )}
+            key={index}
+          >
             {children}
           </ul>
         );
@@ -119,13 +180,18 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
           style.paddingLeft = `${indent * 1.5}rem`;
         }
 
+        const textAlignClass = getTextAlignClass(blockNode.format);
+        if (textAlignClass) {
+          classes.push(textAlignClass);
+        }
+
         const children = await Promise.all(
           blockNode.children.map((child, i) => renderBlockNode(child, i)),
         );
 
         return (
           <li
-            className={classes.join(" ")}
+            className={classes.length > 0 ? classes.join(" ") : undefined}
             style={Object.keys(style).length > 0 ? style : undefined}
             key={index}
           >
@@ -142,15 +208,30 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
           return <br key={index} />;
         }
 
+        const classes: string[] = [
+          "pl-4",
+          "my-4",
+          "italic",
+          "border-l-4",
+          "border-primary/30",
+        ];
+        const textAlignClass = getTextAlignClass(
+          "format" in blockNode &&
+            (typeof blockNode.format === "string" ||
+              typeof blockNode.format === "number")
+            ? blockNode.format
+            : undefined,
+        );
+        if (textAlignClass) {
+          classes.push(textAlignClass);
+        }
+
         const quoteChildren = await Promise.all(
           blockNode.children.map((child, i) => renderBlockNode(child, i)),
         );
 
         return (
-          <blockquote
-            className={twMerge("pl-4 my-4 italic border-l-4 border-primary/30")}
-            key={index}
-          >
+          <blockquote className={twMerge(...classes)} key={index}>
             {quoteChildren}
           </blockquote>
         );
@@ -200,6 +281,47 @@ const RichTextRenderer: React.FC<RichTextRendererProps> = async ({
 
       case "horizontalrule":
         return <hr className="my-2 border-black/20" key={index} />;
+
+      case "code": {
+        if (
+          !Array.isArray(blockNode.children) ||
+          blockNode.children.length === 0
+        ) {
+          return <br key={index} />;
+        }
+
+        const classes: string[] = [
+          "font-mono",
+          "text-[14px]",
+          "px-1.5",
+          "py-0.5",
+          "bg-primary-lightpurple/5",
+          "text-dark",
+          "rounded-md",
+          "border",
+          "border-primary/20",
+        ];
+        const textAlignClass = getTextAlignClass(
+          "format" in blockNode &&
+            (typeof blockNode.format === "string" ||
+              typeof blockNode.format === "number")
+            ? blockNode.format
+            : undefined,
+        );
+        if (textAlignClass) {
+          classes.push(textAlignClass);
+        }
+
+        const codeChildren = await Promise.all(
+          blockNode.children.map((child, i) => renderBlockNode(child, i)),
+        );
+
+        return (
+          <code className={twMerge(...classes)} key={index}>
+            {codeChildren}
+          </code>
+        );
+      }
 
       case "text": {
         const format = blockNode.format || 0;

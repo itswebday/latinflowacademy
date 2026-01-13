@@ -18,7 +18,7 @@ import {
   getMimeType,
   getPaddingClasses,
   getUrl,
-  highlightText,
+  processText,
 } from "@/utils";
 
 const CallToAction: React.FC<
@@ -104,8 +104,8 @@ const CallToAction: React.FC<
                     visualUrl ? "text-right" : "text-center",
                   )}
                 >
-                  {typeof heading.text === "string" && heading.hlTexts
-                    ? highlightText(heading.text, heading.hlTexts)
+                  {typeof heading.text === "string"
+                    ? processText(heading.text)
                     : heading.text}
                 </h2>
               </HeadingWithIcon>

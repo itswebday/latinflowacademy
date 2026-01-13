@@ -7,11 +7,7 @@ import { AnimatedWrapper, HeadingWithIcon } from "@/components";
 import RichTextRenderer from "@/components/RichTextRenderer";
 import type { StoryBlock } from "@/payload-types";
 import type { Globals, RichText } from "@/types";
-import {
-  applyHighlightsToRichText,
-  getMediaUrlAndAlt,
-  highlightText,
-} from "@/utils";
+import { getMediaUrlAndAlt, processText } from "@/utils";
 
 const Story: React.FC<StoryBlock & { id?: string; globals: Globals }> = ({
   heading,
@@ -35,25 +31,6 @@ const Story: React.FC<StoryBlock & { id?: string; globals: Globals }> = ({
     ? getMediaUrlAndAlt(activeGroup.image)
     : { url: undefined, alt: undefined };
 
-  // Process RichText with highlights
-  let processedRichText: RichText | null | undefined =
-    activeGroup.text as RichText;
-  if (
-    processedRichText &&
-    activeGroup.hlTexts &&
-    activeGroup.hlTexts.length > 0
-  ) {
-    const result = applyHighlightsToRichText(
-      processedRichText,
-      activeGroup.hlTexts,
-      "font-semibold",
-    );
-    processedRichText =
-      typeof result === "object" && "root" in result
-        ? result
-        : processedRichText;
-  }
-
   return (
     <section
       id={id}
@@ -70,8 +47,8 @@ const Story: React.FC<StoryBlock & { id?: string; globals: Globals }> = ({
                 icon={heading.icon}
               >
                 <h1 className="font-bold text-dark justify-center text-center">
-                  {typeof heading.text === "string" && heading.hlTexts
-                    ? highlightText(heading.text, heading.hlTexts)
+                  {typeof heading.text === "string"
+                    ? processText(heading.text)
                     : heading.text}
                 </h1>
               </HeadingWithIcon>
@@ -153,15 +130,15 @@ const Story: React.FC<StoryBlock & { id?: string; globals: Globals }> = ({
               {/* Title */}
               {activeGroup.title && (
                 <h2 className="text-2xl font-bold text-dark">
-                  {typeof activeGroup.title === "string" && activeGroup.hlTexts
-                    ? highlightText(activeGroup.title, activeGroup.hlTexts)
+                  {typeof activeGroup.title === "string"
+                    ? processText(activeGroup.title)
                     : activeGroup.title}
                 </h2>
               )}
 
               {/* Text */}
-              {processedRichText && (
-                <RichTextRenderer richText={processedRichText} />
+              {activeGroup.text && (
+                <RichTextRenderer richText={activeGroup.text as RichText} />
               )}
             </div>
           </div>

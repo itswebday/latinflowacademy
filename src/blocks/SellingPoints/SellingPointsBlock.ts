@@ -29,7 +29,7 @@ export const SellingPointsBlock: Block = {
         {
           name: "text",
           label: "Text",
-          type: "text",
+          type: "textarea",
           defaultValue: "",
           localized: true,
           required: true,

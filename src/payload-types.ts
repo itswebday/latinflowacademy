@@ -290,12 +290,6 @@ export interface AccordionBlock {
   heading?: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   categorize?: boolean | null;
   categories?:
@@ -363,12 +357,6 @@ export interface CallToActionBlock {
   heading?: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   text: {
     root: {
@@ -647,12 +635,6 @@ export interface CardsImageBlock {
   heading?: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   cards: {
     title: string;
@@ -721,12 +703,6 @@ export interface CardsImageBlock {
 export interface HeadingBlock {
   icon?: (number | null) | Media;
   text: string;
-  hlTexts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
   tagName: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   centered?: boolean | null;
   paddingTop: 'none' | 'small' | 'medium' | 'large';
@@ -765,12 +741,6 @@ export interface StoryBlock {
   heading: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   main: {
     image: number | Media;
@@ -791,12 +761,6 @@ export interface StoryBlock {
       };
       [k: string]: unknown;
     };
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   a: {
     image: number | Media;
@@ -817,12 +781,6 @@ export interface StoryBlock {
       };
       [k: string]: unknown;
     };
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   b: {
     image: number | Media;
@@ -843,12 +801,6 @@ export interface StoryBlock {
       };
       [k: string]: unknown;
     };
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   applyCustomId?: boolean | null;
   customId?: string | null;
@@ -891,12 +843,6 @@ export interface TextImageBlock {
   heading?: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   text: {
     text: {
@@ -991,23 +937,11 @@ export interface TextBlock {
   subheading?: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   showHeading?: boolean | null;
   heading?: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   text: {
     text: {
@@ -1073,12 +1007,6 @@ export interface VisualBlock {
   heading?: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   showButton?: boolean | null;
   button?: {
@@ -1550,12 +1478,6 @@ export interface AccordionBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   categorize?: T;
   categories?:
@@ -1598,12 +1520,6 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   text?: T;
   button?:
@@ -1710,12 +1626,6 @@ export interface CardsImageBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   cards?:
     | T
@@ -1766,12 +1676,6 @@ export interface CardsImageBlockSelect<T extends boolean = true> {
 export interface HeadingBlockSelect<T extends boolean = true> {
   icon?: T;
   text?: T;
-  hlTexts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
   tagName?: T;
   centered?: T;
   paddingTop?: T;
@@ -1812,12 +1716,6 @@ export interface StoryBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   main?:
     | T
@@ -1826,12 +1724,6 @@ export interface StoryBlockSelect<T extends boolean = true> {
         name?: T;
         title?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   a?:
     | T
@@ -1840,12 +1732,6 @@ export interface StoryBlockSelect<T extends boolean = true> {
         name?: T;
         title?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   b?:
     | T
@@ -1854,12 +1740,6 @@ export interface StoryBlockSelect<T extends boolean = true> {
         name?: T;
         title?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   applyCustomId?: T;
   customId?: T;
@@ -1906,12 +1786,6 @@ export interface TextImageBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   text?:
     | T
@@ -1983,12 +1857,6 @@ export interface TextBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   showHeading?: T;
   heading?:
@@ -1996,12 +1864,6 @@ export interface TextBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   text?:
     | T
@@ -2049,12 +1911,6 @@ export interface VisualBlockSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   showButton?: T;
   button?:
@@ -2334,12 +2190,6 @@ export interface Hero {
   heading: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   paragraph: {
     text: string;
@@ -2409,12 +2259,6 @@ export interface Blog {
   heading: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   paragraph: {
     text: string;
@@ -2445,12 +2289,6 @@ export interface Event {
   heading: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   paragraph: {
     text: string;
@@ -2648,12 +2486,6 @@ export interface Price {
   heading: {
     icon?: (number | null) | Media;
     text: string;
-    hlTexts?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   paragraph: {
     text: {
@@ -2927,12 +2759,6 @@ export interface HeroSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   paragraph?:
     | T
@@ -2994,12 +2820,6 @@ export interface BlogSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   paragraph?:
     | T
@@ -3030,12 +2850,6 @@ export interface EventsSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   paragraph?:
     | T
@@ -3200,12 +3014,6 @@ export interface PricesSelect<T extends boolean = true> {
     | {
         icon?: T;
         text?: T;
-        hlTexts?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
       };
   paragraph?:
     | T
