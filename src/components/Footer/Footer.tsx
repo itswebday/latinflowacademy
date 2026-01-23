@@ -34,26 +34,19 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
   return (
     <footer
       id="footer"
-      className={twMerge("relative w-full pt-52 pb-8", "sm:pb-12", className)}
+      className={twMerge("relative w-full pt-80 pb-8", "sm:pb-12", className)}
     >
-      {/* Abstract top edge */}
+      {/* Wavy line */}
       <svg
-        className="absolute top-0 left-0 right-0 w-full pointer-events-none"
-        style={{ height: "160px", transform: "scaleY(-1)" }}
+        className="z-0 absolute top-0 left-0 right-0 w-full h-100 pointer-events-none"
         preserveAspectRatio="none"
         viewBox="0 0 1200 160"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        {/* Single wave with opposite direction on right half */}
         <path
-          d="M0,160 L0,40 Q300,10 600,40 Q900,70 1200,40 L1200,160 Z"
-          style={{ fill: "var(--color-dark)" }}
-        />
-        {/* Primary colored border on top */}
-        <path
-          d="M0,40 Q300,10 600,40 Q900,70 1200,40"
+          d="M0,80 Q300,50 600,80 Q900,110 1200,80"
           fill="none"
           stroke="#ec4899"
           strokeWidth="1"

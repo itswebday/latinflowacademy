@@ -1,11 +1,11 @@
-import { PageWrapper, PreviewListener } from "@/components";
-import { LOCALES } from "@/constants";
-import type { LocaleOption, RichText } from "@/types";
-import { getCachedGlobal, getGlobal, getMetadata } from "@/utils/server";
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import { PageWrapper, PreviewListener } from "@/components";
+import { LOCALES } from "@/constants";
+import type { LocaleOption, RichText } from "@/types";
+import { getCachedGlobal, getGlobal, getMetadata } from "@/utils/server";
 import { PrivacyPolicy } from "./_ui";
 
 const PrivacyPolicyPage = async () => {

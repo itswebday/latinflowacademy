@@ -1,12 +1,12 @@
+import type { Metadata } from "next";
+import { getLocale, getTranslations } from "next-intl/server";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { PageWrapper, PreviewListener } from "@/components";
 import { LOCALES } from "@/constants";
 import type { LocaleOption, RichText } from "@/types";
 import { getCachedGlobal, getGlobal } from "@/utils/server";
 import { getMetadata } from "@/utils/metadata";
-import type { Metadata } from "next";
-import { getLocale, getTranslations } from "next-intl/server";
-import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
 import { TermsAndConditions } from "./_ui";
 
 const TermsAndConditionsPage = async () => {

@@ -2187,6 +2187,10 @@ export interface Home {
  */
 export interface Hero {
   id: number;
+  background: {
+    vimeoEmbedCode: string;
+    firstFrame: number | Media;
+  };
   heading: {
     icon?: (number | null) | Media;
     text: string;
@@ -2754,6 +2758,12 @@ export interface HomeSelect<T extends boolean = true> {
  * via the `definition` "hero_select".
  */
 export interface HeroSelect<T extends boolean = true> {
+  background?:
+    | T
+    | {
+        vimeoEmbedCode?: T;
+        firstFrame?: T;
+      };
   heading?:
     | T
     | {

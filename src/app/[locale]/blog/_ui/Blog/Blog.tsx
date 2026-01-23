@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { twMerge } from "tailwind-merge";
 import { HeadingWithIcon } from "@/components";
 import type { Config } from "@/payload-types";
+import { processText } from "@/utils";
 import BlogClient from "./BlogClient";
 
 type BlogProps = {
@@ -23,12 +24,12 @@ const Blog: React.FC<BlogProps> = async ({ blog, blogPosts }) => {
       >
         {/* Heading */}
         <HeadingWithIcon icon={blog.heading.icon}>
-          <h1 className="font-bold">{blog.heading.text}</h1>
+          <h1 className="font-bold">{processText(blog.heading.text)}</h1>
         </HeadingWithIcon>
 
         {/* Paragraph */}
         <p className="max-w-2xl mx-auto text-dark/70 text-center">
-          {blog.paragraph.text}
+          {processText(blog.paragraph.text)}
         </p>
 
         {/* Blog posts */}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import { getTranslations } from "next-intl/server";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { blockComponents } from "@/blocks";
 import { PageWrapper, PreviewListener } from "@/components";

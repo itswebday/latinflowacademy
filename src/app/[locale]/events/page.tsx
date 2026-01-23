@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { draftMode } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
+import { draftMode } from "next/headers";
 import { PageWrapper, PreviewListener } from "@/components";
 import { LOCALES } from "@/constants";
 import type { LocaleOption } from "@/types";

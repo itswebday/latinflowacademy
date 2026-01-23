@@ -1,16 +1,16 @@
-import { PageWrapper, PreviewListener } from "@/components";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+import { unstable_cache } from "next/cache";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import { blockComponents } from "@/blocks";
+import { PageWrapper, PreviewListener } from "@/components";
 import { DEFAULT_LOCALE, LOCALES } from "@/constants";
 import type { Page } from "@/payload-types";
 import type { LocaleOption } from "@/types";
 import { getMetadata } from "@/utils/metadata";
-import { getCachedGlobals, getGlobals } from "@/utils/server";
-import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import { draftMode } from "next/headers";
-import { notFound } from "next/navigation";
 import { getCachedPayload } from "@/utils/payload";
-import { unstable_cache } from "next/cache";
+import { getCachedGlobals, getGlobals } from "@/utils/server";
 
 type PageProps = {
   params: Promise<{
