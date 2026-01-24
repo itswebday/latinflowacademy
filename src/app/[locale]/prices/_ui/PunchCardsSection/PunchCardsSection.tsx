@@ -31,7 +31,7 @@ const PunchCardsSection: React.FC<PunchCardsSectionProps> = async ({
   );
 
   return (
-    <div className="w-full mt-16">
+    <div className="w-full">
       {/* Punch Cards Grid */}
       <div
         className={twMerge(

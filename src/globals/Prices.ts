@@ -1,5 +1,6 @@
 import type { GlobalConfig } from "payload";
 import { authenticatedOrPublished, developer } from "@/access";
+import { blockConfigs } from "@/blocks/config";
 import { RichTextField } from "@/fields";
 import { generatePricesUrl, populatePublishedAtGlobalField } from "@/hooks";
 import { revalidatePrices } from "@/hooks/revalidate";
@@ -27,7 +28,7 @@ export const Prices: GlobalConfig = {
       type: "tabs",
       tabs: [
         {
-          label: "Content",
+          label: "Heading",
           fields: [
             ...getHeadingFields({
               hiddenFields: ["icon"],
@@ -50,6 +51,11 @@ export const Prices: GlobalConfig = {
         {
           label: "Punch cards",
           fields: [
+            ...getHeadingFields({
+              fieldName: "punchCardsHeading",
+              fieldLabel: "Punch cards heading",
+              hiddenFields: ["icon"],
+            }),
             {
               name: "punchCards",
               label: "Punch cards",
@@ -206,6 +212,11 @@ export const Prices: GlobalConfig = {
         {
           label: "Memberships",
           fields: [
+            ...getHeadingFields({
+              fieldName: "membershipsHeading",
+              fieldLabel: "Memberships heading",
+              hiddenFields: ["icon"],
+            }),
             {
               name: "memberships",
               label: "Memberships",
@@ -398,6 +409,18 @@ export const Prices: GlobalConfig = {
                   ],
                 },
               ],
+            },
+          ],
+        },
+        {
+          label: "Content",
+          fields: [
+            {
+              name: "blocks",
+              label: "Blocks",
+              type: "blocks",
+              blocks: blockConfigs,
+              defaultValue: [],
             },
           ],
         },

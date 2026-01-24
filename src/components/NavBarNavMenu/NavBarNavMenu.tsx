@@ -66,7 +66,7 @@ const NavBarNavMenu: React.FC<NavBarNavMenuProps> = async ({ className }) => {
       {/* Container */}
       <div
         className={twMerge(
-          "flex justify-between items-center gap-4",
+          "relative flex justify-between items-center gap-4",
           "w-full max-w-400 h-full mx-auto",
         )}
       >

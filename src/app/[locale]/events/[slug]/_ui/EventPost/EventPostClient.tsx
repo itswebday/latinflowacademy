@@ -25,29 +25,49 @@ const EventPostClient: React.FC<EventPostClientProps> = ({
   return (
     <article
       className={twMerge(
-        "relative flex flex-col gap-8 p-8",
-        "bg-white/5 backdrop-blur-sm rounded-3xl",
-        "border border-white/10",
-        "transition-all duration-300",
-        "hover:bg-white/10 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/20",
+        "group relative flex flex-col gap-8 overflow-hidden rounded-4xl",
+        "bg-linear-to-br from-dark via-dark/95 to-dark/90",
+        "border backdrop-blur-sm",
+        "shadow-xl transition-all duration-300 ease-out",
+        "hover:shadow-2xl hover:border-primary/30",
+        "border-white/10",
         className,
       )}
     >
-      {/* Decorative gradient overlay */}
+      {/* Gradient overlay */}
       <div
-        className="absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-300 hover:opacity-100 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(162, 54, 219, 0.1) 100%)",
-        }}
+        className={twMerge(
+          "absolute inset-0 rounded-4xl",
+          "bg-linear-to-br from-primary/10 via-transparent to-secondary/10",
+          "transition-opacity duration-300 ease-out",
+          "group-hover:opacity-100",
+        )}
+      />
+
+      {/* Decorative corner accent */}
+      <div
+        className={twMerge(
+          "absolute bottom-0 right-0 w-32 h-32",
+          "bg-linear-to-tr from-primary/15 to-transparent",
+          "rounded-tl-full",
+          "transition-all duration-300 ease-out",
+          "group-hover:w-36 group-hover:h-36 group-hover:from-primary/20",
+        )}
+        aria-hidden="true"
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col gap-8">
+      <div className="relative z-10 flex flex-col gap-8 pl-10 pt-14 pr-8 pb-12">
         {/* Title */}
         <AnimatedWrapper delay={0} direction="up">
           <header>
-            <h1 className="font-bold text-white text-[36px] de:text-[48px]">
+            <h1
+              className={twMerge(
+                "font-bold text-white",
+                "text-[36px] de:text-[48px]",
+                "leading-tight",
+              )}
+            >
               {eventPost.title}
             </h1>
           </header>

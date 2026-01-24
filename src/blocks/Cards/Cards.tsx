@@ -23,6 +23,24 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
     return null;
   }
 
+  const getButtonStyles = (
+    color: "primary" | "blue" | "green" | "red" | "orange" | "yellow",
+  ) => {
+    const colorMap = {
+      primary:
+        "text-white bg-linear-to-r from-primary to-secondary shadow-primary/30 hover:shadow-primary/40",
+      blue: "text-white bg-linear-to-r from-blue to-blue/80 shadow-blue/30 hover:shadow-blue/40",
+      green:
+        "text-white bg-linear-to-r from-green to-green/80 shadow-green/30 hover:shadow-green/40",
+      red: "text-white bg-linear-to-r from-red to-red/80 shadow-red/30 hover:shadow-red/40",
+      orange:
+        "text-white bg-linear-to-r from-orange to-orange/80 shadow-orange/30 hover:shadow-orange/40",
+      yellow:
+        "text-white bg-linear-to-r from-yellow to-yellow/80 shadow-yellow/30 hover:shadow-yellow/40",
+    };
+    return colorMap[color] || colorMap.primary;
+  };
+
   return (
     <section
       id={id}
@@ -60,6 +78,15 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
                   leftLabel={card.leftLabel}
                   rightLabel={card.rightLabel}
                   className="h-full"
+                  color={
+                    (card.style?.color as
+                      | "primary"
+                      | "blue"
+                      | "green"
+                      | "red"
+                      | "orange"
+                      | "yellow") || "primary"
+                  }
                 >
                   {card.showButton && card.button && buttonUrl && (
                     <div className="mt-4">
@@ -74,6 +101,17 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
                             ? "_blank"
                             : "_self"
                         }
+                        className={twMerge(
+                          getButtonStyles(
+                            (card.style?.color as
+                              | "primary"
+                              | "blue"
+                              | "green"
+                              | "red"
+                              | "orange"
+                              | "yellow") || "primary",
+                          ),
+                        )}
                       >
                         {(card.button as { text?: string }).text}
                       </ButtonLink>

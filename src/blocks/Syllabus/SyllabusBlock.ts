@@ -75,6 +75,47 @@ export const SyllabusBlock: Block = {
           localized: true,
           required: true,
         },
+        {
+          name: "style",
+          label: "Style",
+          type: "group",
+          required: true,
+          fields: [
+            {
+              name: "color",
+              label: "Color",
+              type: "select",
+              defaultValue: "primary",
+              required: true,
+              options: [
+                {
+                  label: "Primary",
+                  value: "primary",
+                },
+                {
+                  label: "Blue",
+                  value: "blue",
+                },
+                {
+                  label: "Green",
+                  value: "green",
+                },
+                {
+                  label: "Red",
+                  value: "red",
+                },
+                {
+                  label: "Orange",
+                  value: "orange",
+                },
+                {
+                  label: "Yellow",
+                  value: "yellow",
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     ...getPaddingFields(),

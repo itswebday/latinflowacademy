@@ -40,12 +40,12 @@ const EventPost = async ({ eventPost, allEventsPosts }: EventPostProps) => {
   );
 
   return (
-    <section className="relative flex justify-center w-full py-32 bg-dark">
+    <section className="relative flex justify-center w-full pt-40 pb-20 bg-dark">
       {/* Container */}
       <div
         className={twMerge(
-          "relative z-10 flex flex-col gap-12 w-11/12 max-w-7xl mx-auto",
-          "de:flex-row de:items-start de:gap-20",
+          "relative z-10 flex flex-col gap-12 w-11/12 max-w-400 mx-auto",
+          "de:flex-row de:items-start de:gap-6",
         )}
       >
         {/* Event post */}

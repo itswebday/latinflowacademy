@@ -615,6 +615,9 @@ export interface CardsBlock {
       scrollTarget?: string | null;
       newTab?: boolean | null;
     };
+    style: {
+      color: 'primary' | 'blue' | 'green' | 'red' | 'orange' | 'yellow';
+    };
     id?: string | null;
   }[];
   paddingTop: 'none' | 'small' | 'medium' | 'large';
@@ -823,6 +826,9 @@ export interface SyllabusBlock {
       id?: string | null;
     }[];
     goal: string;
+    style: {
+      color: 'primary' | 'blue' | 'green' | 'red' | 'orange' | 'yellow';
+    };
     id?: string | null;
   }[];
   paddingTop: 'none' | 'small' | 'medium' | 'large';
@@ -1605,6 +1611,11 @@ export interface CardsBlockSelect<T extends boolean = true> {
               scrollTarget?: T;
               newTab?: T;
             };
+        style?:
+          | T
+          | {
+              color?: T;
+            };
         id?: T;
       };
   paddingTop?: T;
@@ -1765,6 +1776,11 @@ export interface SyllabusBlockSelect<T extends boolean = true> {
               id?: T;
             };
         goal?: T;
+        style?:
+          | T
+          | {
+              color?: T;
+            };
         id?: T;
       };
   paddingTop?: T;
@@ -2508,6 +2524,10 @@ export interface Price {
       [k: string]: unknown;
     };
   };
+  punchCardsHeading: {
+    icon?: (number | null) | Media;
+    text: string;
+  };
   punchCards?:
     | {
         title: string;
@@ -2545,6 +2565,10 @@ export interface Price {
         id?: string | null;
       }[]
     | null;
+  membershipsHeading: {
+    icon?: (number | null) | Media;
+    text: string;
+  };
   memberships: {
     title: string;
     subtitle?: string | null;
@@ -2588,6 +2612,21 @@ export interface Price {
     };
     id?: string | null;
   }[];
+  blocks?:
+    | (
+        | AccordionBlock
+        | CallToActionBlock
+        | CardsBlock
+        | CardsImageBlock
+        | HeadingBlock
+        | SellingPointsBlock
+        | StoryBlock
+        | SyllabusBlock
+        | TextImageBlock
+        | TextBlock
+        | VisualBlock
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -3030,6 +3069,12 @@ export interface PricesSelect<T extends boolean = true> {
     | {
         text?: T;
       };
+  punchCardsHeading?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+      };
   punchCards?:
     | T
     | {
@@ -3058,6 +3103,12 @@ export interface PricesSelect<T extends boolean = true> {
               mostPopular?: T;
             };
         id?: T;
+      };
+  membershipsHeading?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
       };
   memberships?:
     | T
@@ -3095,6 +3146,21 @@ export interface PricesSelect<T extends boolean = true> {
               mostPopular?: T;
             };
         id?: T;
+      };
+  blocks?:
+    | T
+    | {
+        'accordion-block'?: T | AccordionBlockSelect<T>;
+        'call-to-action-block'?: T | CallToActionBlockSelect<T>;
+        'cards-block'?: T | CardsBlockSelect<T>;
+        'cards-image-block'?: T | CardsImageBlockSelect<T>;
+        'heading-block'?: T | HeadingBlockSelect<T>;
+        'selling-points-block'?: T | SellingPointsBlockSelect<T>;
+        'story-block'?: T | StoryBlockSelect<T>;
+        'syllabus-block'?: T | SyllabusBlockSelect<T>;
+        'text-image-block'?: T | TextImageBlockSelect<T>;
+        'text-block'?: T | TextBlockSelect<T>;
+        'visual-block'?: T | VisualBlockSelect<T>;
       };
   meta?:
     | T

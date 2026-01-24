@@ -32,7 +32,7 @@ const MembershipsSection: React.FC<MembershipsSectionProps> = async ({
   );
 
   return (
-    <div className="w-full mt-12">
+    <div className="w-full">
       {/* Memberships Grid */}
       <div
         className={twMerge(
