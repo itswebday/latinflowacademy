@@ -116,6 +116,28 @@ export const Navigation: GlobalConfig = {
           },
         },
         {
+          name: "showOnPricesPage",
+          label: "Show on prices page",
+          type: "checkbox",
+          defaultValue: true,
+          admin: {
+            condition: (_, siblingData) => {
+              return siblingData?.showOnEveryPage === false;
+            },
+          },
+        },
+        {
+          name: "showOnSchedulePage",
+          label: "Show on schedule page",
+          type: "checkbox",
+          defaultValue: true,
+          admin: {
+            condition: (_, siblingData) => {
+              return siblingData?.showOnEveryPage === false;
+            },
+          },
+        },
+        {
           name: "showOnLegalPages",
           label: "Show on legal pages",
           type: "checkbox",

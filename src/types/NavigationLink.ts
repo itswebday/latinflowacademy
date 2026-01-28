@@ -13,6 +13,8 @@ export type NavigationLink = {
   showOnHomePage: boolean;
   showOnBlogPage: boolean;
   showOnEventsPage: boolean;
+  showOnPricesPage: boolean;
+  showOnSchedulePage: boolean;
   showOnLegalPages: boolean;
   pageSlugs: string[];
 };

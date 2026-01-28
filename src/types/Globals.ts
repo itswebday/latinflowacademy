@@ -3,6 +3,8 @@ export type Globals = {
   home: unknown;
   blog: unknown;
   events: unknown;
+  prices: unknown;
+  schedule: unknown;
   privacyPolicy: unknown;
   cookiePolicy: unknown;
   termsAndConditions: unknown;

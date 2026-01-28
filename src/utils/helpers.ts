@@ -200,6 +200,14 @@ export const getUrl = (rawUrl: RawUrl, globals: Globals): string => {
     return getFromGlobal((global) => global.events);
   }
 
+  if (rawUrl.urlType === "prices") {
+    return getFromGlobal((global) => global.prices);
+  }
+
+  if (rawUrl.urlType === "schedule") {
+    return getFromGlobal((global) => global.schedule);
+  }
+
   if (rawUrl.urlType === "privacy-policy") {
     return getFromGlobal((global) => global.privacyPolicy);
   }

@@ -41,6 +41,8 @@ const NavBarNavMenu: React.FC<NavBarNavMenuProps> = async ({ className }) => {
     showOnHomePage: link.showOnHomePage || false,
     showOnBlogPage: link.showOnBlogPage || false,
     showOnEventsPage: link.showOnEventsPage || false,
+    showOnPricesPage: link.showOnPricesPage || false,
+    showOnSchedulePage: link.showOnSchedulePage || false,
     showOnLegalPages: link.showOnLegalPages || false,
     pageSlugs: (link.pages || []).map((page) => {
       if (typeof page === "object" && page !== null && "slug" in page) {

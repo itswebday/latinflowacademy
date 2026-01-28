@@ -11,6 +11,8 @@ export type RawUrl = {
     | "blog-post"
     | "events"
     | "event-post"
+    | "prices"
+    | "schedule"
     | "privacy-policy"
     | "cookie-policy"
     | "terms-and-conditions";

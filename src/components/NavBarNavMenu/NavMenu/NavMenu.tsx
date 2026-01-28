@@ -57,6 +57,16 @@ const NavMenu: React.FC<NavMenuProps> = ({
       return true;
     }
 
+    // Show on prices page
+    if (currentPage === "prices" && link.showOnPricesPage) {
+      return true;
+    }
+
+    // Show on schedule page
+    if (currentPage === "schedule" && link.showOnSchedulePage) {
+      return true;
+    }
+
     // Show on legal pages
     if (
       (currentPage === "privacy-policy" ||

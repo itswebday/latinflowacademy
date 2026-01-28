@@ -382,7 +382,7 @@ export interface CallToActionBlock {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -406,7 +406,7 @@ export interface CallToActionBlock {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -531,7 +531,7 @@ export interface EventsPost {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -601,7 +601,7 @@ export interface CardsBlock {
       url?: string | null;
       scroll?: boolean | null;
       targetPage?: ('current' | 'home' | 'page') | null;
-      urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+      urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
       page?: {
         relationTo: 'pages';
         value: number | Page;
@@ -668,7 +668,7 @@ export interface CardsImageBlock {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -881,7 +881,7 @@ export interface TextImageBlock {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -905,7 +905,7 @@ export interface TextImageBlock {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -980,7 +980,7 @@ export interface TextBlock {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -1028,7 +1028,7 @@ export interface VisualBlock {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -1118,6 +1118,8 @@ export interface Form {
                 | 'blog-post'
                 | 'events'
                 | 'event-post'
+                | 'prices'
+                | 'schedule'
                 | 'privacy-policy'
                 | 'cookie-policy'
                 | 'terms-and-conditions'
@@ -2354,7 +2356,9 @@ export interface Navigation {
         url?: string | null;
         scroll?: boolean | null;
         targetPage?: ('current' | 'home' | 'page') | null;
-        urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+        urlType?:
+          | ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule')
+          | null;
         page?: {
           relationTo: 'pages';
           value: number | Page;
@@ -2378,7 +2382,9 @@ export interface Navigation {
               url?: string | null;
               scroll?: boolean | null;
               targetPage?: ('current' | 'home' | 'page') | null;
-              urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+              urlType?:
+                | ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule')
+                | null;
               page?: {
                 relationTo: 'pages';
                 value: number | Page;
@@ -2400,6 +2406,8 @@ export interface Navigation {
         showOnHomePage?: boolean | null;
         showOnBlogPage?: boolean | null;
         showOnEventsPage?: boolean | null;
+        showOnPricesPage?: boolean | null;
+        showOnSchedulePage?: boolean | null;
         showOnLegalPages?: boolean | null;
         pages?: (number | Page)[] | null;
         id?: string | null;
@@ -2413,7 +2421,7 @@ export interface Navigation {
     url?: string | null;
     scroll?: boolean | null;
     targetPage?: ('current' | 'home' | 'page') | null;
-    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post') | null;
+    urlType?: ('' | 'home' | 'page' | 'blog' | 'blog-post' | 'events' | 'event-post' | 'prices' | 'schedule') | null;
     page?: {
       relationTo: 'pages';
       value: number | Page;
@@ -2478,6 +2486,8 @@ export interface Footer {
           | 'blog-post'
           | 'events'
           | 'event-post'
+          | 'prices'
+          | 'schedule'
           | 'privacy-policy'
           | 'cookie-policy'
           | 'terms-and-conditions'
@@ -3016,6 +3026,8 @@ export interface NavigationSelect<T extends boolean = true> {
         showOnHomePage?: T;
         showOnBlogPage?: T;
         showOnEventsPage?: T;
+        showOnPricesPage?: T;
+        showOnSchedulePage?: T;
         showOnLegalPages?: T;
         pages?: T;
         id?: T;

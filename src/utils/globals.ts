@@ -25,6 +25,8 @@ export const getGlobal = async <GlobalType extends Global>(
         "footer",
         "blog",
         "events",
+        "prices",
+        "schedule",
         "privacy-policy",
         "cookie-policy",
         "terms-and-conditions",
@@ -50,20 +52,32 @@ export const getCachedGlobal = <GlobalType extends Global>(
 };
 
 export const getGlobals = async (locale: LocaleOption, draft?: boolean) => {
-  const [home, blog, events, privacyPolicy, cookiePolicy, termsAndConditions] =
-    await Promise.all([
-      getGlobal("home", locale, draft),
-      getGlobal("blog", locale, draft),
-      getGlobal("events", locale, draft),
-      getGlobal("privacy-policy", locale, draft),
-      getGlobal("cookie-policy", locale, draft),
-      getGlobal("terms-and-conditions", locale, draft),
-    ]);
+  const [
+    home,
+    blog,
+    events,
+    prices,
+    schedule,
+    privacyPolicy,
+    cookiePolicy,
+    termsAndConditions,
+  ] = await Promise.all([
+    getGlobal("home", locale, draft),
+    getGlobal("blog", locale, draft),
+    getGlobal("events", locale, draft),
+    getGlobal("prices", locale, draft),
+    getGlobal("schedule", locale, draft),
+    getGlobal("privacy-policy", locale, draft),
+    getGlobal("cookie-policy", locale, draft),
+    getGlobal("terms-and-conditions", locale, draft),
+  ]);
 
   return {
     home,
     blog,
     events,
+    prices,
+    schedule,
     privacyPolicy,
     cookiePolicy,
     termsAndConditions,
@@ -76,6 +90,8 @@ export const getCachedGlobals = (locale: LocaleOption) => {
       `global_home_${locale}`,
       `global_blog_${locale}`,
       `global_events_${locale}`,
+      `global_prices_${locale}`,
+      `global_schedule_${locale}`,
       `global_privacy-policy_${locale}`,
       `global_cookie-policy_${locale}`,
       `global_terms-and-conditions_${locale}`,

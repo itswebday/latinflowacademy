@@ -442,6 +442,8 @@ export const getLinkFields = ({
     { label: "Blog post", value: "blog-post" },
     { label: "Events overview", value: "events" },
     { label: "Event post", value: "event-post" },
+    { label: "Prices", value: "prices" },
+    { label: "Schedule", value: "schedule" },
     { label: "Privacy policy", value: "privacy-policy" },
     { label: "Cookie policy", value: "cookie-policy" },
     { label: "Terms and conditions", value: "terms-and-conditions" },
