@@ -53,6 +53,11 @@
     }
   },
 
+  "schedule": {
+    "title": "Rooster",
+    "url": "/nl/rooster"
+  },
+
   "privacyPolicy": {
     "title": "Privacybeleid",
     "url": "/nl/privacybeleid"

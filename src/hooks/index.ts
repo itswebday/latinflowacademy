@@ -5,6 +5,7 @@ export {
   generateHomeUrl,
   generatePricesUrl,
   generatePrivacyPolicyUrl,
+  generateScheduleUrl,
   generateTermsAndConditionsUrl,
 } from "./generateGlobalUrl";
 export { generateBlogPostUrl } from "./generateBlogPostUrl";
@@ -16,4 +17,4 @@ export {
   populatePublishedAtGlobalField,
 } from "./populatePublishedAtGlobal";
 export { protectRoles } from "./protectRoles";
-export { revalidatePrices } from "./revalidate";
+export { revalidatePrices, revalidateSchedule } from "./revalidate";

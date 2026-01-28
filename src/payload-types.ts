@@ -107,6 +107,7 @@ export interface Config {
     navigation: Navigation;
     footer: Footer;
     prices: Price;
+    schedule: Schedule;
     'privacy-policy': PrivacyPolicy;
     'cookie-policy': CookiePolicy;
     'terms-and-conditions': TermsAndCondition;
@@ -119,6 +120,7 @@ export interface Config {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     prices: PricesSelect<false> | PricesSelect<true>;
+    schedule: ScheduleSelect<false> | ScheduleSelect<true>;
     'privacy-policy': PrivacyPolicySelect<false> | PrivacyPolicySelect<true>;
     'cookie-policy': CookiePolicySelect<false> | CookiePolicySelect<true>;
     'terms-and-conditions': TermsAndConditionsSelect<false> | TermsAndConditionsSelect<true>;
@@ -767,7 +769,8 @@ export interface StoryBlock {
   };
   a: {
     image: number | Media;
-    name: string;
+    firstName: string;
+    lastName: string;
     title: string;
     text: {
       root: {
@@ -787,7 +790,8 @@ export interface StoryBlock {
   };
   b: {
     image: number | Media;
-    name: string;
+    firstName: string;
+    lastName: string;
     title: string;
     text: {
       root: {
@@ -805,6 +809,8 @@ export interface StoryBlock {
       [k: string]: unknown;
     };
   };
+  paddingTop: 'none' | 'small' | 'medium' | 'large';
+  paddingBottom: 'none' | 'small' | 'medium' | 'large';
   applyCustomId?: boolean | null;
   customId?: string | null;
   hidden?: boolean | null;
@@ -1740,7 +1746,8 @@ export interface StoryBlockSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
-        name?: T;
+        firstName?: T;
+        lastName?: T;
         title?: T;
         text?: T;
       };
@@ -1748,10 +1755,13 @@ export interface StoryBlockSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
-        name?: T;
+        firstName?: T;
+        lastName?: T;
         title?: T;
         text?: T;
       };
+  paddingTop?: T;
+  paddingBottom?: T;
   applyCustomId?: T;
   customId?: T;
   hidden?: T;
@@ -2646,6 +2656,51 @@ export interface Price {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedule".
+ */
+export interface Schedule {
+  id: number;
+  heading: {
+    icon?: (number | null) | Media;
+    text: string;
+  };
+  paragraph: {
+    text: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  embedCode?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  publishedAt?: string | null;
+  /**
+   * Automatically set
+   */
+  url?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "privacy-policy".
  */
 export interface PrivacyPolicy {
@@ -3178,6 +3233,37 @@ export interface PricesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedule_select".
+ */
+export interface ScheduleSelect<T extends boolean = true> {
+  heading?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+      };
+  paragraph?:
+    | T
+    | {
+        text?: T;
+      };
+  embedCode?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  publishedAt?: T;
+  url?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "privacy-policy_select".
  */
 export interface PrivacyPolicySelect<T extends boolean = true> {
@@ -3266,6 +3352,7 @@ export interface TaskSchedulePublish {
           | 'navigation'
           | 'footer'
           | 'prices'
+          | 'schedule'
           | 'privacy-policy'
           | 'cookie-policy'
           | 'terms-and-conditions'

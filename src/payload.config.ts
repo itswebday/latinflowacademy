@@ -43,6 +43,7 @@ import {
   Navigation,
   Prices,
   PrivacyPolicy,
+  Schedule,
   TermsAndConditions,
 } from "@/globals";
 import { getLinkFields } from "@/utils";
@@ -88,6 +89,7 @@ export default buildConfig({
     Navigation,
     Footer,
     Prices,
+    Schedule,
     PrivacyPolicy,
     CookiePolicy,
     TermsAndConditions,

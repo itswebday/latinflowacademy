@@ -7,7 +7,7 @@ type CookiePolicyProps = {
 
 const CookiePolicy = ({ content }: CookiePolicyProps) => {
   return (
-    <section className="w-11/12 max-w-7xl py-12 mx-auto de:py-20">
+    <section className="w-11/12 max-w-7xl py-32 mx-auto">
       <RichTextRenderer richText={content} />
     </section>
   );

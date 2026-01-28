@@ -72,3 +72,5 @@ export const generateEventsUrl =
   createGenerateGlobalUrlFromMessagesHook("events.url");
 export const generatePricesUrl =
   createGenerateGlobalUrlFromMessagesHook("prices.url");
+export const generateScheduleUrl =
+  createGenerateGlobalUrlFromMessagesHook("schedule.url");

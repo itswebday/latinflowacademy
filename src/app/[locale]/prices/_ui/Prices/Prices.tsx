@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { AnimatedWrapper, HeadingWithIcon } from "@/components";
+import { HeadingWithIcon } from "@/components";
 import RichTextRenderer from "@/components/RichTextRenderer";
 import { processText } from "@/utils";
 import type { Config } from "@/payload-types";
@@ -22,58 +22,54 @@ const Prices: React.FC<PricesProps> = async ({ prices }) => {
         )}
       >
         {/* Heading */}
-        <AnimatedWrapper delay={0} direction="up">
-          <div className="relative w-full pb-4">
-            <HeadingWithIcon
-              icon={prices.heading.icon}
-              className="justify-center text-center"
-            >
-              <h1
-                className={twMerge(
-                  "relative font-bold text-center",
-                  "text-[48px] de:text-[64px]",
-                  "leading-tight tracking-tight",
-                  "bg-linear-to-r from-primary via-secondary to-primary",
-                  "bg-clip-text text-transparent",
-                  "bg-size-[200%_auto]",
-                  "animate-[gradient_3s_ease_infinite]",
-                  "drop-shadow-[0_0_30px_rgba(236,72,153,0.4)]",
-                  "drop-shadow-[0_0_60px_rgba(162,54,219,0.3)]",
-                )}
-              >
-                {processText(prices.heading.text)}
-              </h1>
-            </HeadingWithIcon>
-
-            {/* Stripe below */}
-            <div
+        <div className="relative w-full pb-4">
+          <HeadingWithIcon
+            icon={prices.heading.icon}
+            className="justify-center text-center"
+          >
+            <h1
               className={twMerge(
-                "absolute bottom-0 left-1/2 -translate-x-1/2",
-                "w-32 h-1 rounded-full",
-                "bg-linear-to-r from-transparent via-primary to-transparent",
-                "opacity-60",
+                "relative font-bold text-center",
+                "text-[48px] de:text-[64px]",
+                "leading-tight tracking-tight",
+                "bg-linear-to-r from-primary via-secondary to-primary",
+                "bg-clip-text text-transparent",
+                "bg-size-[200%_auto]",
+                "animate-[gradient_3s_ease_infinite]",
+                "drop-shadow-[0_0_30px_rgba(236,72,153,0.4)]",
+                "drop-shadow-[0_0_60px_rgba(162,54,219,0.3)]",
               )}
-              aria-hidden="true"
-            />
-          </div>
-        </AnimatedWrapper>
+            >
+              {processText(prices.heading.text)}
+            </h1>
+          </HeadingWithIcon>
 
-        {/* Paragraph */}
-        <AnimatedWrapper delay={0.1} direction="up">
+          {/* Stripe below */}
           <div
             className={twMerge(
-              "max-w-3xl mx-auto text-center",
-              "text-white/90",
-              "leading-relaxed tracking-wide",
-              "px-4 mb-12",
+              "absolute bottom-0 left-1/2 -translate-x-1/2",
+              "w-32 h-1 rounded-full",
+              "bg-linear-to-r from-transparent via-primary to-transparent",
+              "opacity-60",
             )}
-          >
-            <RichTextRenderer richText={prices.paragraph.text} />
-          </div>
-        </AnimatedWrapper>
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Paragraph */}
+        <div
+          className={twMerge(
+            "max-w-3xl mx-auto text-center",
+            "text-white/90",
+            "leading-relaxed tracking-wide",
+            "px-4 mb-12",
+          )}
+        >
+          <RichTextRenderer richText={prices.paragraph.text} />
+        </div>
 
         {/* Tabs */}
-        <AnimatedWrapper delay={0.2} direction="up" className="w-full">
+        <div className="w-full">
           <PricesTabs
             tabs={[
               ...((
@@ -154,7 +150,7 @@ const Prices: React.FC<PricesProps> = async ({ prices }) => {
                   : undefined
             }
           />
-        </AnimatedWrapper>
+        </div>
       </div>
     </section>
   );

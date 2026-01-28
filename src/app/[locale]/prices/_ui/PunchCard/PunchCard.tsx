@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
-import { AnimatedWrapper, Button, ButtonLink, Modal } from "@/components";
+import { Button, ButtonLink, Modal } from "@/components";
 import { CheckIcon } from "@/components/icons";
 import type { Config } from "@/payload-types";
 import type { ReactNode } from "react";
@@ -132,11 +132,7 @@ const PunchCard: React.FC<PunchCardProps> = ({
   };
 
   return (
-    <AnimatedWrapper
-      delay={0.3 + index * 0.1}
-      direction="up"
-      className="h-full"
-    >
+    <div className="h-full">
       <div
         className={twMerge(
           "group relative flex flex-col items-start rounded-4xl overflow-hidden",
@@ -419,7 +415,7 @@ const PunchCard: React.FC<PunchCardProps> = ({
           </div>
         </div>
       </div>
-    </AnimatedWrapper>
+    </div>
   );
 };
 

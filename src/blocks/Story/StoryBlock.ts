@@ -1,6 +1,10 @@
 import type { Block } from "payload";
 import { RichTextField } from "@/fields/RichTextField";
-import { getBlockSettingsFields, getHeadingFields } from "@/utils";
+import {
+  getBlockSettingsFields,
+  getHeadingFields,
+  getPaddingFields,
+} from "@/utils";
 
 export const StoryBlock: Block = {
   slug: "story-block",
@@ -57,8 +61,16 @@ export const StoryBlock: Block = {
           required: true,
         },
         {
-          name: "name",
-          label: "Name",
+          name: "firstName",
+          label: "First Name",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        {
+          name: "lastName",
+          label: "Last Name",
           type: "text",
           defaultValue: "",
           localized: true,
@@ -89,8 +101,16 @@ export const StoryBlock: Block = {
           required: true,
         },
         {
-          name: "name",
-          label: "Name",
+          name: "firstName",
+          label: "First Name",
+          type: "text",
+          defaultValue: "",
+          localized: true,
+          required: true,
+        },
+        {
+          name: "lastName",
+          label: "Last Name",
           type: "text",
           defaultValue: "",
           localized: true,
@@ -107,6 +127,7 @@ export const StoryBlock: Block = {
         RichTextField({ name: "text", label: "Text", required: true }),
       ],
     },
+    ...getPaddingFields(),
     ...getBlockSettingsFields(),
   ],
 };

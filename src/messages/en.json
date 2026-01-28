@@ -53,6 +53,11 @@
     }
   },
 
+  "schedule": {
+    "title": "Schedule",
+    "url": "/schedule"
+  },
+
   "privacyPolicy": {
     "title": "Privacy Policy",
     "url": "/privacy-policy"

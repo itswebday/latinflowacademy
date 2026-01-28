@@ -1,5 +1,4 @@
 import { twMerge } from "tailwind-merge";
-import { AnimatedWrapper } from "@/components";
 import type { Config } from "@/payload-types";
 import PriceCard from "../PriceCard/PriceCard";
 import PriceCardDescription from "../PriceCard/PriceCardDescription";
@@ -42,12 +41,7 @@ const MembershipsSection: React.FC<MembershipsSectionProps> = async ({
       >
         {membershipsWithDescriptions.map(
           ({ membership, description, index }) => (
-            <AnimatedWrapper
-              key={index}
-              delay={0.2 + index * 0.1}
-              direction="up"
-              className="h-full"
-            >
+            <div key={index} className="h-full">
               <PriceCard
                 title={membership.title || ""}
                 subtitle={membership.subtitle || undefined}
@@ -67,7 +61,7 @@ const MembershipsSection: React.FC<MembershipsSectionProps> = async ({
                   mostPopular: membership.style?.mostPopular ?? false,
                 }}
               />
-            </AnimatedWrapper>
+            </div>
           ),
         )}
       </div>

@@ -7,4 +7,5 @@ export { Home } from "./Home";
 export { Navigation } from "./Navigation";
 export { Prices } from "./Prices";
 export { PrivacyPolicy } from "./PrivacyPolicy";
+export { Schedule } from "./Schedule";
 export { TermsAndConditions } from "./TermsAndConditions";

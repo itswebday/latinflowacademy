@@ -138,7 +138,7 @@ const Hero = async () => {
   return (
     <section
       className={twMerge(
-        "relative w-full h-screen min-h-[800px] max-h-[min(1200px,240vw)]",
+        "relative w-full h-screen min-h-[800px] max-h-[min(1200px,240vw)] px-8",
       )}
     >
       {/* Background image and video container */}
@@ -238,7 +238,7 @@ const Hero = async () => {
         {/* Social media links */}
         {hero.socialMediaLinks.length > 0 && (
           <AnimatedWrapper
-            className="absolute right-8 top-28 flex gap-4"
+            className="absolute right-0 top-28 flex gap-4"
             delay={0.6}
             duration={1.5}
             direction="left"

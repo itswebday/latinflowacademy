@@ -267,6 +267,9 @@ export const revalidateEvents = createGlobalRevalidateHook("events");
 // Revalidate prices
 export const revalidatePrices = createGlobalRevalidateHook("prices");
 
+// Revalidate schedule
+export const revalidateSchedule = createGlobalRevalidateHook("schedule");
+
 // Revalidate navigation
 export const revalidateNavigation: GlobalAfterChangeHook = async ({
   doc,

@@ -393,7 +393,7 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
               {footer.legalLinks.length > 0 && (
                 <div
                   className={twMerge(
-                    "flex flex-col gap-3 items-end self-end",
+                    "flex flex-col gap-3 items-end self-end text-right",
                     "sm:absolute sm:bottom-0 sm:right-0",
                   )}
                 >
