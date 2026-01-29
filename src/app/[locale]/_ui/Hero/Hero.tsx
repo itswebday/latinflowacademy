@@ -158,14 +158,15 @@ const Hero = async () => {
           <BackgroundImage src={firstFrameUrl} alt={firstFrameAlt} />
         )}
 
-        {/* Background Vimeo video */}
+        {/* Background Vimeo video (cover: fill hero in both dimensions) */}
         {vimeoData && (
           <div className="z-1 absolute inset-0 overflow-hidden">
             <iframe
-              className={twMerge(
-                "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-                "w-[180vh] min-w-[calc(800px*1.8)] h-full",
-              )}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full border-0"
+              style={{
+                width: "max(100%, 177.78vh)",
+                height: "max(100%, 56.25vw)",
+              }}
               allow={vimeoData.allow}
               referrerPolicy={
                 vimeoData.referrerPolicy as "strict-origin-when-cross-origin"
