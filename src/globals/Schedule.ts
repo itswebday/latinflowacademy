@@ -1,5 +1,5 @@
 import type { GlobalConfig } from "payload";
-import { authenticatedOrPublished, developer } from "@/access";
+import { admin, authenticatedOrPublished } from "@/access";
 import { RichTextField } from "@/fields";
 import { generateScheduleUrl, populatePublishedAtGlobalField } from "@/hooks";
 import { revalidateSchedule } from "@/hooks/revalidate";
@@ -11,7 +11,7 @@ export const Schedule: GlobalConfig = {
   label: "Schedule",
   access: {
     read: authenticatedOrPublished,
-    update: developer,
+    update: admin,
   },
   admin: {
     group: "Content",

@@ -1,5 +1,5 @@
 import type { GlobalConfig } from "payload";
-import { authenticatedOrPublished, developer } from "@/access";
+import { admin, authenticatedOrPublished } from "@/access";
 import { blockConfigs } from "@/blocks/config";
 import { RichTextField } from "@/fields";
 import { generatePricesUrl, populatePublishedAtGlobalField } from "@/hooks";
@@ -12,7 +12,7 @@ export const Prices: GlobalConfig = {
   label: "Prices",
   access: {
     read: authenticatedOrPublished,
-    update: developer,
+    update: admin,
   },
   admin: {
     group: "Content",
