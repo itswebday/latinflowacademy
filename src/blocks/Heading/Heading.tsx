@@ -37,7 +37,7 @@ const Heading: React.FC<HeadingBlock & { id?: string; globals: Globals }> = ({
                 tagName,
                 {
                   className: twMerge(
-                    "font-bold text-dark",
+                    "font-bold",
                     centered && "justify-center text-center",
                   ),
                 },
