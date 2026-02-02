@@ -52,8 +52,8 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
     >
       {/* Container */}
       <div className="w-11/12 max-w-7xl mx-auto">
-        {/* Grid - flex so fewer items center */}
-        <div className="flex flex-wrap justify-center gap-6 de:gap-12">
+        {/* Grid - flex so fewer items center; items-stretch for equal row height */}
+        <div className="flex flex-wrap justify-center items-stretch gap-6 de:gap-12">
           {cards.map((card, index) => {
             const { url: imageUrl, alt: imageAlt } = card.image
               ? getMediaUrlAndAlt(card.image)
@@ -69,8 +69,8 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
                 delay={index * 0.1}
                 direction="up"
                 className={twMerge(
-                  "w-full de:w-[calc(50%-1.5rem)] xl:w-[320px]",
-                  "h-full shrink-0",
+                  "w-full de:w-[calc(50%-1.5rem)] xl:w-[355px]",
+                  "flex flex-col shrink-0 min-h-0",
                 )}
               >
                 <Card
@@ -80,7 +80,7 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
                   description={<RichTextRenderer richText={card.description} />}
                   leftLabel={card.leftLabel}
                   rightLabel={card.rightLabel}
-                  className="h-full"
+                  className="h-full min-h-0 flex-1"
                   color={
                     (card.style?.color as
                       | "primary"

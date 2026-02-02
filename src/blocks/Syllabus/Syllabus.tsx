@@ -28,8 +28,8 @@ const Syllabus: React.FC<SyllabusBlock & { id?: string }> = async ({
     >
       {/* Container */}
       <div className="w-11/12 max-w-7xl mx-auto">
-        {/* Grid - flex so fewer items center */}
-        <div className="flex flex-wrap justify-center gap-8 de:gap-16">
+        {/* Grid - flex so fewer items center; items-stretch for equal row height */}
+        <div className="flex flex-wrap justify-center items-stretch gap-8 de:gap-12">
           {levels.map((level, index) => {
             const patternVariation = index % 4;
             const color =
@@ -278,8 +278,8 @@ const Syllabus: React.FC<SyllabusBlock & { id?: string }> = async ({
                 delay={index * 0.1}
                 direction="up"
                 className={twMerge(
-                  "w-full de:w-[calc(50%-2rem)] xl:w-[340px]",
-                  "h-full shrink-0 relative",
+                  "w-full de:w-[calc(50%-1.5rem)] xl:w-[355px]",
+                  "flex flex-col shrink-0 min-h-0 relative",
                 )}
               >
                 <div
@@ -290,7 +290,7 @@ const Syllabus: React.FC<SyllabusBlock & { id?: string }> = async ({
                     getBorderColor(),
                     "shadow-lg",
                     getShadowColor(),
-                    "h-full overflow-visible",
+                    "h-full min-h-0 flex-1 overflow-visible",
                   )}
                 >
                   {/* Label positioned on top-left corner */}
@@ -324,252 +324,258 @@ const Syllabus: React.FC<SyllabusBlock & { id?: string }> = async ({
                     </AnimatedWrapper>
                   )}
 
-                  {/* Gradient overlay - varies by level */}
-                  <div
-                    className={twMerge(
-                      "absolute inset-0 rounded-4xl opacity-100",
-                      getGradientOverlay(),
-                    )}
-                  />
+                  {/* Clip wrapper - keeps decorative circles inside rounded corners; in-flow so card gets height from content */}
+                  <div className="relative flex flex-1 flex-col min-h-0 min-w-0 overflow-hidden rounded-4xl">
+                    {/* Gradient overlay - varies by level */}
+                    <div
+                      className={twMerge(
+                        "absolute inset-0 rounded-4xl opacity-100",
+                        getGradientOverlay(),
+                      )}
+                    />
 
-                  {/* Background pattern - varies by level */}
-                  <div
-                    className={twMerge(
-                      "absolute inset-0 rounded-4xl opacity-10",
-                      getBackgroundPattern(),
-                    )}
-                  />
+                    {/* Background pattern - varies by level */}
+                    <div
+                      className={twMerge(
+                        "absolute inset-0 rounded-4xl opacity-10",
+                        getBackgroundPattern(),
+                      )}
+                    />
 
-                  {/* Content wrapper */}
-                  <div className="flex flex-col items-start gap-8 px-8 pt-14 pb-10 w-full flex-1">
-                    {/* Title */}
-                    {level.title && (
+                    {/* Content wrapper */}
+                    <div className="relative z-10 flex flex-col items-start gap-8 px-8 pt-14 pb-10 w-full flex-1">
+                      {/* Title */}
+                      {level.title && (
+                        <AnimatedWrapper
+                          delay={index * 0.1 + 0.2}
+                          direction="right"
+                          className="relative z-10 w-full"
+                        >
+                          <h3
+                            className={twMerge(
+                              "text-[24px] font-bold text-white leading-tight",
+                            )}
+                          >
+                            {level.title}
+                          </h3>
+                        </AnimatedWrapper>
+                      )}
+
+                      {/* Subtitle */}
                       <AnimatedWrapper
-                        delay={index * 0.1 + 0.2}
+                        delay={index * 0.1 + 0.3}
                         direction="right"
                         className="relative z-10 w-full"
                       >
-                        <h3
+                        <p className={twMerge("text-white/60 leading-relaxed")}>
+                          {level.subtitle}
+                        </p>
+                      </AnimatedWrapper>
+
+                      {/* List */}
+                      {level.list && level.list.length > 0 && (
+                        <ul
                           className={twMerge(
-                            "text-[24px] font-bold text-white leading-tight",
+                            "relative z-10 flex flex-col gap-5 w-full",
+                            "list-none",
                           )}
                         >
-                          {level.title}
-                        </h3>
-                      </AnimatedWrapper>
-                    )}
+                          {level.list.map((item, itemIndex) => {
+                            if (!item.text) {
+                              return null;
+                            }
 
-                    {/* Subtitle */}
-                    <AnimatedWrapper
-                      delay={index * 0.1 + 0.3}
-                      direction="right"
-                      className="relative z-10 w-full"
-                    >
-                      <p className={twMerge("text-white/60 leading-relaxed")}>
-                        {level.subtitle}
-                      </p>
-                    </AnimatedWrapper>
-
-                    {/* List */}
-                    {level.list && level.list.length > 0 && (
-                      <ul
-                        className={twMerge(
-                          "relative z-10 flex flex-col gap-5 w-full",
-                          "list-none",
-                        )}
-                      >
-                        {level.list.map((item, itemIndex) => {
-                          if (!item.text) {
-                            return null;
-                          }
-
-                          return (
-                            <AnimatedWrapper
-                              key={itemIndex}
-                              delay={index * 0.1 + 0.4 + itemIndex * 0.05}
-                              direction="right"
-                              className="w-full"
-                            >
-                              <li
-                                className={twMerge(
-                                  "flex items-center gap-4",
-                                  "text-white/90 leading-relaxed",
-                                )}
+                            return (
+                              <AnimatedWrapper
+                                key={itemIndex}
+                                delay={index * 0.1 + 0.4 + itemIndex * 0.05}
+                                direction="right"
+                                className="w-full"
                               >
-                                {/* Bullet point */}
-                                <div
+                                <li
                                   className={twMerge(
-                                    "shrink-0 w-3 h-3 rounded-full",
-                                    getBulletColor(),
+                                    "flex items-center gap-4",
+                                    "text-white/90 leading-relaxed",
                                   )}
-                                />
-                                <span>{item.text}</span>
-                              </li>
-                            </AnimatedWrapper>
-                          );
-                        })}
-                      </ul>
-                    )}
+                                >
+                                  {/* Bullet point */}
+                                  <div
+                                    className={twMerge(
+                                      "shrink-0 w-3 h-3 rounded-full",
+                                      getBulletColor(),
+                                    )}
+                                  />
+                                  <span>{item.text}</span>
+                                </li>
+                              </AnimatedWrapper>
+                            );
+                          })}
+                        </ul>
+                      )}
 
-                    {/* Goal - pushed to bottom */}
-                    <AnimatedWrapper
-                      delay={
-                        index * 0.1 + 0.5 + (level.list?.length || 0) * 0.05
-                      }
-                      direction="up"
-                      className="relative z-10 w-full mt-auto"
-                    >
-                      <div
-                        className={twMerge(
-                          "relative w-full pt-8",
-                          "border-t-2",
-                          getGoalBorderColor(),
-                        )}
+                      {/* Goal - pushed to bottom */}
+                      <AnimatedWrapper
+                        delay={
+                          index * 0.1 + 0.5 + (level.list?.length || 0) * 0.05
+                        }
+                        direction="up"
+                        className="relative z-10 w-full mt-auto"
                       >
                         <div
                           className={twMerge(
-                            "absolute left-0 top-0 w-8 h-0.5",
-                            getGoalAccentColor(),
-                            "opacity-0",
-                          )}
-                        />
-                        <p
-                          className={twMerge(
-                            "text-white/80 text-[16px] leading-relaxed italic",
+                            "relative w-full pt-8",
+                            "border-t-2",
+                            getGoalBorderColor(),
                           )}
                         >
-                          <span
-                            className={twMerge("font-bold", getGoalTextColor())}
+                          <div
+                            className={twMerge(
+                              "absolute left-0 top-0 w-8 h-0.5",
+                              getGoalAccentColor(),
+                              "opacity-0",
+                            )}
+                          />
+                          <p
+                            className={twMerge(
+                              "text-white/80 text-[16px] leading-relaxed italic",
+                            )}
                           >
-                            {syllabusT("goal")}
-                          </span>
-                          {level.goal}
-                        </p>
-                      </div>
-                    </AnimatedWrapper>
+                            <span
+                              className={twMerge(
+                                "font-bold",
+                                getGoalTextColor(),
+                              )}
+                            >
+                              {syllabusT("goal")}
+                            </span>
+                            {level.goal}
+                          </p>
+                        </div>
+                      </AnimatedWrapper>
+                    </div>
+
+                    {/* Decorative accents - varies by level */}
+                    {patternVariation === 0 && (
+                      <>
+                        {/* Bottom right */}
+                        <div
+                          className={twMerge(
+                            "absolute bottom-0 right-0 w-48 h-48",
+                            "bg-linear-to-tr",
+                            getDecorativeAccentColor("10"),
+                            "to-transparent",
+                            "rounded-tl-full",
+                          )}
+                        />
+                        {/* Top right */}
+                        <div
+                          className={twMerge(
+                            "absolute top-0 right-0 w-32 h-32",
+                            "bg-linear-to-bl",
+                            getDecorativeAccentColor("10"),
+                            "to-transparent",
+                            "rounded-bl-full",
+                          )}
+                        />
+                      </>
+                    )}
+
+                    {patternVariation === 1 && (
+                      <>
+                        {/* Top left */}
+                        <div
+                          className={twMerge(
+                            "absolute top-0 left-0 w-56 h-56",
+                            "bg-linear-to-br",
+                            getDecorativeAccentColor("10"),
+                            "to-transparent",
+                            "rounded-br-full",
+                          )}
+                        />
+                        {/* Bottom left */}
+                        <div
+                          className={twMerge(
+                            "absolute bottom-0 left-0 w-40 h-40",
+                            "bg-linear-to-tr",
+                            getDecorativeAccentColor("10"),
+                            "to-transparent",
+                            "rounded-tr-full",
+                          )}
+                        />
+                      </>
+                    )}
+
+                    {patternVariation === 2 && (
+                      <>
+                        {/* Top center */}
+                        <div
+                          className={twMerge(
+                            "absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40",
+                            "bg-linear-to-b",
+                            getDecorativeAccentColor("10"),
+                            getDecorativeViaColor(),
+                            "to-transparent",
+                            "rounded-b-full",
+                          )}
+                        />
+                        {/* Bottom corners */}
+                        <div
+                          className={twMerge(
+                            "absolute bottom-0 left-0 w-36 h-36",
+                            "bg-linear-to-tr",
+                            getDecorativeAccentColor("8"),
+                            "to-transparent",
+                            "rounded-tr-full",
+                          )}
+                        />
+                        <div
+                          className={twMerge(
+                            "absolute bottom-0 right-0 w-36 h-36",
+                            "bg-linear-to-tl",
+                            getDecorativeAccentColor("8"),
+                            "to-transparent",
+                            "rounded-tl-full",
+                          )}
+                        />
+                      </>
+                    )}
+
+                    {patternVariation === 3 && (
+                      <>
+                        {/* Left side */}
+                        <div
+                          className={twMerge(
+                            "absolute left-0 top-1/2 -translate-y-1/2 w-40 h-80",
+                            "bg-linear-to-r",
+                            getDecorativeAccentColor("10"),
+                            getDecorativeViaColor(),
+                            "to-transparent",
+                            "rounded-r-full",
+                          )}
+                        />
+                        {/* Right side */}
+                        <div
+                          className={twMerge(
+                            "absolute right-0 top-1/4 w-32 h-64",
+                            "bg-linear-to-l",
+                            getDecorativeAccentColor("10"),
+                            "to-transparent",
+                            "rounded-l-full",
+                          )}
+                        />
+                        {/* Bottom center */}
+                        <div
+                          className={twMerge(
+                            "absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-32",
+                            "bg-linear-to-t",
+                            getDecorativeAccentColor("8"),
+                            "to-transparent",
+                            "rounded-t-full",
+                          )}
+                        />
+                      </>
+                    )}
                   </div>
-
-                  {/* Decorative accents - varies by level */}
-                  {patternVariation === 0 && (
-                    <>
-                      {/* Bottom right */}
-                      <div
-                        className={twMerge(
-                          "absolute bottom-0 right-0 w-48 h-48",
-                          "bg-linear-to-tr",
-                          getDecorativeAccentColor("10"),
-                          "to-transparent",
-                          "rounded-tl-full",
-                        )}
-                      />
-                      {/* Top right */}
-                      <div
-                        className={twMerge(
-                          "absolute top-0 right-0 w-32 h-32",
-                          "bg-linear-to-bl",
-                          getDecorativeAccentColor("10"),
-                          "to-transparent",
-                          "rounded-bl-full",
-                        )}
-                      />
-                    </>
-                  )}
-
-                  {patternVariation === 1 && (
-                    <>
-                      {/* Top left */}
-                      <div
-                        className={twMerge(
-                          "absolute top-0 left-0 w-56 h-56",
-                          "bg-linear-to-br",
-                          getDecorativeAccentColor("10"),
-                          "to-transparent",
-                          "rounded-br-full",
-                        )}
-                      />
-                      {/* Bottom left */}
-                      <div
-                        className={twMerge(
-                          "absolute bottom-0 left-0 w-40 h-40",
-                          "bg-linear-to-tr",
-                          getDecorativeAccentColor("10"),
-                          "to-transparent",
-                          "rounded-tr-full",
-                        )}
-                      />
-                    </>
-                  )}
-
-                  {patternVariation === 2 && (
-                    <>
-                      {/* Top center */}
-                      <div
-                        className={twMerge(
-                          "absolute top-0 left-1/2 -translate-x-1/2 w-80 h-40",
-                          "bg-linear-to-b",
-                          getDecorativeAccentColor("10"),
-                          getDecorativeViaColor(),
-                          "to-transparent",
-                          "rounded-b-full",
-                        )}
-                      />
-                      {/* Bottom corners */}
-                      <div
-                        className={twMerge(
-                          "absolute bottom-0 left-0 w-36 h-36",
-                          "bg-linear-to-tr",
-                          getDecorativeAccentColor("8"),
-                          "to-transparent",
-                          "rounded-tr-full",
-                        )}
-                      />
-                      <div
-                        className={twMerge(
-                          "absolute bottom-0 right-0 w-36 h-36",
-                          "bg-linear-to-tl",
-                          getDecorativeAccentColor("8"),
-                          "to-transparent",
-                          "rounded-tl-full",
-                        )}
-                      />
-                    </>
-                  )}
-
-                  {patternVariation === 3 && (
-                    <>
-                      {/* Left side */}
-                      <div
-                        className={twMerge(
-                          "absolute left-0 top-1/2 -translate-y-1/2 w-40 h-80",
-                          "bg-linear-to-r",
-                          getDecorativeAccentColor("10"),
-                          getDecorativeViaColor(),
-                          "to-transparent",
-                          "rounded-r-full",
-                        )}
-                      />
-                      {/* Right side */}
-                      <div
-                        className={twMerge(
-                          "absolute right-0 top-1/4 w-32 h-64",
-                          "bg-linear-to-l",
-                          getDecorativeAccentColor("10"),
-                          "to-transparent",
-                          "rounded-l-full",
-                        )}
-                      />
-                      {/* Bottom center */}
-                      <div
-                        className={twMerge(
-                          "absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-32",
-                          "bg-linear-to-t",
-                          getDecorativeAccentColor("8"),
-                          "to-transparent",
-                          "rounded-t-full",
-                        )}
-                      />
-                    </>
-                  )}
                 </div>
               </AnimatedWrapper>
             );

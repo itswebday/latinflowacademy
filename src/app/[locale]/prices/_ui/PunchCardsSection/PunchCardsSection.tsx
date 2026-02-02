@@ -32,14 +32,14 @@ const PunchCardsSection: React.FC<PunchCardsSectionProps> = async ({
 
   return (
     <div className="w-full">
-      {/* Punch Cards Grid - flex so fewer items center */}
-      <div className="flex flex-wrap justify-center gap-8 de:gap-12">
+      {/* Punch Cards Grid - flex so fewer items center; items-stretch for equal row height */}
+      <div className="flex flex-wrap justify-center items-stretch gap-8 de:gap-12">
         {punchCardsWithDescriptions.map(({ punchCard, description, index }) => (
           <div
             key={index}
             className={twMerge(
-              "w-full de:w-[calc(50%-1.5rem)] xl:w-[320px]",
-              "shrink-0",
+              "w-full de:w-[calc(50%-1.5rem)] xl:w-[355px]",
+              "flex flex-col shrink-0 min-h-0",
             )}
           >
             <PunchCard
