@@ -68,7 +68,7 @@ const Schedule: React.FC<ScheduleProps> = async ({ schedule }) => {
         {/* Embed Code */}
         {schedule.embedCode && (
           <div
-            className={twMerge("w-full max-w-6xl mx-auto", "px-4")}
+            className="w-full h-[90vh] rounded-2xl overflow-hidden"
             dangerouslySetInnerHTML={{ __html: schedule.embedCode }}
           />
         )}
