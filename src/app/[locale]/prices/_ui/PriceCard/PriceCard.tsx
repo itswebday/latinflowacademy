@@ -11,9 +11,9 @@ import type { ReactNode } from "react";
 
 type PriceCardProps = {
   title: string;
-  subtitle?: string;
-  price: string;
   description: ReactNode;
+  priceLabel?: string;
+  price: string;
   discount?: number;
   newPrice?: string;
   details: { detail: string }[];
@@ -27,9 +27,9 @@ type PriceCardProps = {
 
 const PriceCard: React.FC<PriceCardProps> = ({
   title,
-  subtitle,
-  price,
   description,
+  priceLabel,
+  price,
   discount,
   newPrice,
   details,
@@ -298,19 +298,29 @@ const PriceCard: React.FC<PriceCardProps> = ({
           {title}
         </h3>
 
-        {/* Subtitle */}
-        {subtitle && (
+        {/* Description */}
+        <div
+          className={twMerge(
+            "text-white/70 text-[16px] leading-relaxed",
+            "transition-colors duration-300 mt-2 mb-1",
+          )}
+        >
+          {description}
+        </div>
+
+        {/* Price label (optional) */}
+        {priceLabel && (
           <p
             className={twMerge(
-              "text-white/70 text-[16px] leading-relaxed mb-2",
+              "text-white/70 text-[16px] leading-relaxed -mb-5",
             )}
           >
-            {subtitle}
+            {priceLabel}
           </p>
         )}
 
         {/* Price */}
-        <div className="flex items-baseline gap-3 mb-1">
+        <div className="flex items-baseline gap-3">
           {newPrice &&
           discount !== undefined &&
           discount !== null &&
@@ -344,16 +354,6 @@ const PriceCard: React.FC<PriceCardProps> = ({
               {price}
             </span>
           )}
-        </div>
-
-        {/* Description */}
-        <div
-          className={twMerge(
-            "text-white/70 text-[16px] leading-relaxed",
-            "transition-colors duration-300",
-          )}
-        >
-          {description}
         </div>
 
         {/* Details */}

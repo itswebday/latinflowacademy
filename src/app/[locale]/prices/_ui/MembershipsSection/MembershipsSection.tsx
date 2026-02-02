@@ -32,19 +32,20 @@ const MembershipsSection: React.FC<MembershipsSectionProps> = async ({
 
   return (
     <div className="w-full">
-      {/* Memberships Grid */}
-      <div
-        className={twMerge(
-          "grid grid-cols-1 de:grid-cols-2 xl:grid-cols-3 gap-8 de:gap-12 items-stretch",
-          "w-full",
-        )}
-      >
+      {/* Memberships Grid - flex so fewer items center */}
+      <div className="flex flex-wrap justify-center gap-8 de:gap-12">
         {membershipsWithDescriptions.map(
           ({ membership, description, index }) => (
-            <div key={index} className="h-full">
+            <div
+              key={index}
+              className={twMerge(
+                "w-full de:w-[calc(50%-1.5rem)] xl:w-[320px]",
+                "h-full shrink-0",
+              )}
+            >
               <PriceCard
                 title={membership.title || ""}
-                subtitle={membership.subtitle || undefined}
+                priceLabel={membership.priceLabel ?? undefined}
                 price={membership.price || ""}
                 description={description}
                 discount={membership.discount ?? undefined}

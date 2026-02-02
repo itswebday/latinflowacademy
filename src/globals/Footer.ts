@@ -48,7 +48,7 @@ export const Footer: GlobalConfig = {
     {
       name: "Paragraph",
       label: "Paragraph",
-      type: "text",
+      type: "textarea",
       defaultValue: "",
       localized: true,
     },

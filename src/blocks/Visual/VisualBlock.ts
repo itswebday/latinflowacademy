@@ -17,10 +17,16 @@ export const VisualBlock: Block = {
   fields: [
     {
       name: "visual",
-      label: "Video or image",
+      label: "Image",
       type: "upload",
       relationTo: "media",
       required: true,
+    },
+    {
+      name: "visualMobile",
+      label: "Image for mobile (optional)",
+      type: "upload",
+      relationTo: "media",
     },
     {
       name: "height",

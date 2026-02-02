@@ -25,6 +25,7 @@ const CallToAction: React.FC<
   CallToActionBlock & { id?: string; globals: Globals }
 > = ({
   visual,
+  visualMobile,
   showHeading,
   heading,
   text,
@@ -42,8 +43,15 @@ const CallToAction: React.FC<
   const { url: visualUrl, alt: visualAlt } = visual
     ? getMediaUrlAndAlt(visual)
     : { url: "", alt: "" };
+  const { url: visualMobileUrl, alt: visualMobileAlt } = visualMobile
+    ? getMediaUrlAndAlt(visualMobile)
+    : { url: "", alt: "" };
   const mimeType = getMimeType(visual);
+  const mimeTypeMobile = getMimeType(visualMobile);
   const isVideo = mimeType?.startsWith("video/") ?? false;
+  const isVideoMobile = mimeTypeMobile?.startsWith("video/") ?? false;
+  const mobileUrl = visualMobileUrl || visualUrl;
+  const mobileAlt = visualMobileUrl ? visualMobileAlt : visualAlt;
   const buttonUrl = getUrl(button as RawUrl, globals);
   const button2Url =
     showButton2 && button2 ? getUrl(button2 as RawUrl, globals) : undefined;
@@ -67,19 +75,36 @@ const CallToAction: React.FC<
           "de:gap-8",
         )}
       >
-        {/* Background video or image */}
-        {visualUrl &&
-          (isVideo ? (
-            <BackgroundVideo
-              alt={visualAlt}
-              src={visualUrl}
-              type={mimeType ?? "video/webm"}
-            />
-          ) : (
-            <BackgroundImage alt={visualAlt} src={visualUrl} />
-          ))}
-        {/* Dark overlay - stronger on the right */}
+        {/* Background video or image - mobile (visualMobile or visual) */}
+        {mobileUrl && (
+          <div className="de:hidden absolute inset-0">
+            {isVideoMobile ? (
+              <BackgroundVideo
+                alt={mobileAlt}
+                src={mobileUrl}
+                type={mimeTypeMobile ?? "video/webm"}
+              />
+            ) : (
+              <BackgroundImage alt={mobileAlt} src={mobileUrl} />
+            )}
+          </div>
+        )}
+        {/* Background video or image - desktop (visual only) */}
         {visualUrl && (
+          <div className="hidden de:block absolute inset-0">
+            {isVideo ? (
+              <BackgroundVideo
+                alt={visualAlt}
+                src={visualUrl}
+                type={mimeType ?? "video/webm"}
+              />
+            ) : (
+              <BackgroundImage alt={visualAlt} src={visualUrl} />
+            )}
+          </div>
+        )}
+        {/* Dark overlay - stronger on the right */}
+        {(visualUrl || mobileUrl) && (
           <div
             className="absolute inset-0 z-0 bg-linear-to-r from-transparent to-dark/80"
             aria-hidden="true"
@@ -90,7 +115,7 @@ const CallToAction: React.FC<
           className={twMerge(
             "relative z-10 flex flex-col gap-8",
             visualUrl
-              ? "max-w-200 min-h-90 de:min-h-120 justify-center items-end px-12 py-16 de:px-32 ml-auto"
+              ? "max-w-200 min-h-90 xs:min-h-120 md:min-h-150 xl:min-h-180  justify-center items-end px-12 py-16 de:px-32 ml-auto"
               : "items-center",
           )}
         >

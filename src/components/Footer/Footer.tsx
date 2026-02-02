@@ -9,7 +9,7 @@ import { LogoLink } from "@/components";
 import { EmailIcon, WhatsAppIcon } from "@/components/icons";
 import type { Footer as FooterGlobal } from "@/payload-types";
 import type { LocaleOption, RawUrl } from "@/types";
-import { getMediaUrlAndAlt, getUrl } from "@/utils";
+import { getMediaUrlAndAlt, getUrl, processText } from "@/utils";
 import { getCachedGlobal, getCachedGlobals, getGlobal } from "@/utils/server";
 import FooterLink from "./FooterLink";
 
@@ -100,7 +100,7 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
                     "sm:text-left",
                   )}
                 >
-                  {footer.Paragraph}
+                  {processText(footer.Paragraph)}
                 </p>
               )}
             </div>

@@ -16,6 +16,7 @@ import { getMediaUrlAndAlt, getMimeType, getUrl, processText } from "@/utils";
 
 const Visual: React.FC<VisualBlock & { id?: string; globals: Globals }> = ({
   visual,
+  visualMobile,
   height,
   opacity,
   showHeading,
@@ -31,8 +32,15 @@ const Visual: React.FC<VisualBlock & { id?: string; globals: Globals }> = ({
   const { url: visualUrl, alt: visualAlt } = visual
     ? getMediaUrlAndAlt(visual)
     : { url: "", alt: "" };
+  const { url: visualMobileUrl, alt: visualMobileAlt } = visualMobile
+    ? getMediaUrlAndAlt(visualMobile)
+    : { url: "", alt: "" };
   const mimeType = getMimeType(visual);
+  const mimeTypeMobile = getMimeType(visualMobile);
   const isVideo = mimeType?.startsWith("video/") ?? false;
+  const isVideoMobile = mimeTypeMobile?.startsWith("video/") ?? false;
+  const mobileUrl = visualMobileUrl || visualUrl;
+  const mobileAlt = visualMobileUrl ? visualMobileAlt : visualAlt;
   const buttonUrl = showButton ? getUrl(button as RawUrl, globals) : undefined;
   const opacityValue = opacity !== undefined ? opacity / 100 : 1;
 
@@ -58,9 +66,33 @@ const Visual: React.FC<VisualBlock & { id?: string; globals: Globals }> = ({
         hidden && "hidden",
       )}
     >
-      {/* Background video or image */}
+      {/* Background video or image - mobile (visualMobile or visual) */}
+      {mobileUrl && (
+        <div
+          className="de:hidden absolute inset-0"
+          style={{ opacity: opacityValue }}
+        >
+          {isVideoMobile ? (
+            <BackgroundVideo
+              alt={mobileAlt}
+              src={mobileUrl}
+              type={mimeTypeMobile ?? "video/webm"}
+            />
+          ) : (
+            <BackgroundImage
+              className="object-top"
+              alt={mobileAlt}
+              src={mobileUrl}
+            />
+          )}
+        </div>
+      )}
+      {/* Background video or image - desktop (visual only) */}
       {visualUrl && (
-        <div className="absolute inset-0" style={{ opacity: opacityValue }}>
+        <div
+          className="hidden de:block absolute inset-0"
+          style={{ opacity: opacityValue }}
+        >
           {isVideo ? (
             <BackgroundVideo
               alt={visualAlt}
@@ -68,7 +100,11 @@ const Visual: React.FC<VisualBlock & { id?: string; globals: Globals }> = ({
               type={mimeType ?? "video/webm"}
             />
           ) : (
-            <BackgroundImage alt={visualAlt} src={visualUrl} />
+            <BackgroundImage
+              className="object-top"
+              alt={visualAlt}
+              src={visualUrl}
+            />
           )}
         </div>
       )}

@@ -73,9 +73,14 @@ export const Prices: GlobalConfig = {
                   localized: true,
                   required: true,
                 },
+                RichTextField({
+                  name: "description",
+                  label: "Description",
+                  required: true,
+                }),
                 {
-                  name: "subtitle",
-                  label: "Subtitle (optional)",
+                  name: "priceLabel",
+                  label: "Price label (optional)",
                   type: "text",
                   defaultValue: "",
                   localized: true,
@@ -88,11 +93,6 @@ export const Prices: GlobalConfig = {
                   localized: true,
                   required: true,
                 },
-                RichTextField({
-                  name: "description",
-                  label: "Description",
-                  required: true,
-                }),
                 {
                   name: "discount",
                   label: "Discount (€)",
@@ -235,9 +235,14 @@ export const Prices: GlobalConfig = {
                   defaultValue: "",
                   required: true,
                 },
+                RichTextField({
+                  name: "description",
+                  label: "Description",
+                  required: true,
+                }),
                 {
-                  name: "subtitle",
-                  label: "Subtitle (optional)",
+                  name: "priceLabel",
+                  label: "Price label (optional)",
                   type: "text",
                   defaultValue: "",
                   localized: true,
@@ -250,11 +255,6 @@ export const Prices: GlobalConfig = {
                   localized: true,
                   required: true,
                 },
-                RichTextField({
-                  name: "description",
-                  label: "Description",
-                  required: true,
-                }),
                 {
                   name: "discount",
                   label: "Discount (%)",

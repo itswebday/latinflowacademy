@@ -28,8 +28,8 @@ const Syllabus: React.FC<SyllabusBlock & { id?: string }> = async ({
     >
       {/* Container */}
       <div className="w-11/12 max-w-7xl mx-auto">
-        {/* Grid */}
-        <div className="grid grid-cols-1 de:grid-cols-2 xl:grid-cols-3 gap-8 de:gap-16 items-stretch">
+        {/* Grid - flex so fewer items center */}
+        <div className="flex flex-wrap justify-center gap-8 de:gap-16">
           {levels.map((level, index) => {
             const patternVariation = index % 4;
             const color =
@@ -277,7 +277,10 @@ const Syllabus: React.FC<SyllabusBlock & { id?: string }> = async ({
                 key={index}
                 delay={index * 0.1}
                 direction="up"
-                className="h-full relative"
+                className={twMerge(
+                  "w-full de:w-[calc(50%-2rem)] xl:w-[340px]",
+                  "h-full shrink-0 relative",
+                )}
               >
                 <div
                   className={twMerge(

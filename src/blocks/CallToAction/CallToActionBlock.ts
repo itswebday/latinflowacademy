@@ -18,7 +18,13 @@ export const CallToActionBlock: Block = {
   fields: [
     {
       name: "visual",
-      label: "Image or video (optional)",
+      label: "Image (optional)",
+      type: "upload",
+      relationTo: "media",
+    },
+    {
+      name: "visualMobile",
+      label: "Image for mobile (optional)",
       type: "upload",
       relationTo: "media",
     },

@@ -52,8 +52,8 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
     >
       {/* Container */}
       <div className="w-11/12 max-w-7xl mx-auto">
-        {/* Grid */}
-        <div className="grid grid-cols-1 de:grid-cols-2 xl:grid-cols-3 gap-6 de:gap-12 items-stretch">
+        {/* Grid - flex so fewer items center */}
+        <div className="flex flex-wrap justify-center gap-6 de:gap-12">
           {cards.map((card, index) => {
             const { url: imageUrl, alt: imageAlt } = card.image
               ? getMediaUrlAndAlt(card.image)
@@ -68,7 +68,10 @@ const Cards: React.FC<CardsBlock & { id?: string; globals: Globals }> = ({
                 key={index}
                 delay={index * 0.1}
                 direction="up"
-                className="h-full"
+                className={twMerge(
+                  "w-full de:w-[calc(50%-1.5rem)] xl:w-[320px]",
+                  "h-full shrink-0",
+                )}
               >
                 <Card
                   imageUrl={imageUrl}

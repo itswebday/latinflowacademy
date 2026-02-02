@@ -14,12 +14,12 @@ const baseConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "latinflowacademy.com",
+        hostname: "latinflowacademy.nl",
         pathname: "/api/media/file/**",
       },
       {
         protocol: "https",
-        hostname: "www.latinflowacademy.com",
+        hostname: "www.latinflowacademy.nl",
         pathname: "/api/media/file/**",
       },
       {
@@ -84,10 +84,10 @@ const baseConfig = {
         has: [
           {
             type: "host",
-            value: "latinflowacademy.com",
+            value: "latinflowacademy.nl",
           },
         ],
-        destination: "https://www.latinflowacademy.com/:path*",
+        destination: "https://www.latinflowacademy.nl/:path*",
         permanent: true,
       },
     ];

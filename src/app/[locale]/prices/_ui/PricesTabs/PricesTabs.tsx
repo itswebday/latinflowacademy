@@ -49,7 +49,7 @@ const PricesTabs: React.FC<PricesTabsProps> = ({ tabs, defaultTab }) => {
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
                 className={twMerge(
-                  "group relative flex items-center gap-3",
+                  "w-120 group relative flex justify-center items-center gap-3",
                   "px-6 py-4 xs:px-8 xs:py-5 de:px-10 de:py-6",
                   "rounded-2xl xs:rounded-3xl",
                   "transition-all duration-500 ease-out",

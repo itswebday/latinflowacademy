@@ -355,6 +355,7 @@ export interface AccordionBlock {
  */
 export interface CallToActionBlock {
   visual?: (number | null) | Media;
+  visualMobile?: (number | null) | Media;
   showHeading?: boolean | null;
   heading?: {
     icon?: (number | null) | Media;
@@ -1013,6 +1014,7 @@ export interface TextBlock {
  */
 export interface VisualBlock {
   visual: number | Media;
+  visualMobile?: (number | null) | Media;
   height: 'small' | 'medium' | 'large';
   opacity: number;
   showHeading?: boolean | null;
@@ -1528,6 +1530,7 @@ export interface AccordionBlockSelect<T extends boolean = true> {
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
   visual?: T;
+  visualMobile?: T;
   showHeading?: T;
   heading?:
     | T
@@ -1931,6 +1934,7 @@ export interface TextBlockSelect<T extends boolean = true> {
  */
 export interface VisualBlockSelect<T extends boolean = true> {
   visual?: T;
+  visualMobile?: T;
   height?: T;
   opacity?: T;
   showHeading?: T;
@@ -2551,8 +2555,6 @@ export interface Price {
   punchCards?:
     | {
         title: string;
-        subtitle?: string | null;
-        price: string;
         description: {
           root: {
             type: string;
@@ -2568,6 +2570,8 @@ export interface Price {
           };
           [k: string]: unknown;
         };
+        priceLabel?: string | null;
+        price: string;
         discount?: number | null;
         newPrice?: string | null;
         details: {
@@ -2591,8 +2595,6 @@ export interface Price {
   };
   memberships: {
     title: string;
-    subtitle?: string | null;
-    price: string;
     description: {
       root: {
         type: string;
@@ -2608,6 +2610,8 @@ export interface Price {
       };
       [k: string]: unknown;
     };
+    priceLabel?: string | null;
+    price: string;
     discount?: number | null;
     newPrice?: string | null;
     details: {
@@ -3146,9 +3150,9 @@ export interface PricesSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        subtitle?: T;
-        price?: T;
         description?: T;
+        priceLabel?: T;
+        price?: T;
         discount?: T;
         newPrice?: T;
         details?:
@@ -3181,9 +3185,9 @@ export interface PricesSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        subtitle?: T;
-        price?: T;
         description?: T;
+        priceLabel?: T;
+        price?: T;
         discount?: T;
         newPrice?: T;
         details?:

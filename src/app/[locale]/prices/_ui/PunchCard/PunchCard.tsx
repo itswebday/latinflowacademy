@@ -300,23 +300,34 @@ const PunchCard: React.FC<PunchCardProps> = ({
             {punchCard.title}
           </h3>
 
-          {/* Subtitle */}
-          {punchCard.subtitle && (
+          {/* Description */}
+          <div
+            className={twMerge(
+              "text-white/70 text-[16px] leading-relaxed",
+              "transition-colors duration-300 mt-2 mb-1",
+            )}
+          >
+            {description}
+          </div>
+
+          {/* Price label (optional) */}
+          {punchCard.priceLabel && (
             <p
               className={twMerge(
-                "text-white/70 text-[16px] leading-relaxed mb-2",
+                "text-white/70 text-[16px] leading-relaxed -mb-5",
               )}
             >
-              {punchCard.subtitle}
+              {punchCard.priceLabel}
             </p>
           )}
 
           {/* Price */}
           <div className="flex items-baseline gap-3 mb-1">
-            {punchCard.discount !== undefined &&
-              punchCard.discount !== null &&
-              punchCard.discount > 0 &&
-              punchCard.price && (
+            {punchCard.newPrice &&
+            punchCard.discount !== undefined &&
+            punchCard.discount !== null &&
+            punchCard.discount > 0 ? (
+              <>
                 <span
                   className={twMerge(
                     "text-[20px] font-semibold line-through text-white/40",
@@ -324,32 +335,29 @@ const PunchCard: React.FC<PunchCardProps> = ({
                 >
                   {punchCard.price}
                 </span>
-              )}
-            <span
-              className={twMerge(
-                "text-[32px] de:text-[36px] font-bold",
-                getPriceGradient(),
-                punchCard.style?.color !== "primary" &&
-                  "bg-clip-text text-transparent",
-              )}
-            >
-              {punchCard.discount !== undefined &&
-              punchCard.discount !== null &&
-              punchCard.discount > 0 &&
-              punchCard.newPrice
-                ? punchCard.newPrice
-                : punchCard.price}
-            </span>
-          </div>
-
-          {/* Description */}
-          <div
-            className={twMerge(
-              "text-white/70 text-[16px] leading-relaxed",
-              "transition-colors duration-300",
+                <span
+                  className={twMerge(
+                    "text-[32px] de:text-[36px] font-bold",
+                    getPriceGradient(),
+                    punchCard.style?.color !== "primary" &&
+                      "bg-clip-text text-transparent",
+                  )}
+                >
+                  {punchCard.newPrice}
+                </span>
+              </>
+            ) : (
+              <span
+                className={twMerge(
+                  "text-[32px] de:text-[36px] font-bold",
+                  getPriceGradient(),
+                  punchCard.style?.color !== "primary" &&
+                    "bg-clip-text text-transparent",
+                )}
+              >
+                {punchCard.price}
+              </span>
             )}
-          >
-            {description}
           </div>
 
           {/* Details */}
