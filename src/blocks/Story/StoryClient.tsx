@@ -229,19 +229,13 @@ const StoryClient: React.FC<StoryClientProps> = ({ main, a, b }) => {
               {activeGroup.imageUrl && (
                 <figure
                   className={twMerge(
-                    "relative shrink-0 w-72 aspect-9/16 rounded-3xl overflow-hidden",
+                    "relative shrink-0 w-72 aspect-square rounded-full overflow-hidden",
                     "transition-all duration-300 ease-out",
                     "de:w-1/3 de:pr-[20%]",
                   )}
                 >
                   <Image
-                    className="object-contain transition-transform duration-500 hover:scale-105"
-                    style={{
-                      maskImage:
-                        "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)",
-                      WebkitMaskImage:
-                        "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)",
-                    }}
+                    className="object-cover object-top transition-transform duration-500 hover:scale-105"
                     src={activeGroup.imageUrl}
                     alt={
                       activeGroup.imageAlt ||

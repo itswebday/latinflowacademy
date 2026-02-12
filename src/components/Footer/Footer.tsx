@@ -6,7 +6,7 @@ import { draftMode } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
 import { twMerge } from "tailwind-merge";
 import { LogoLink } from "@/components";
-import { EmailIcon, WhatsAppIcon } from "@/components/icons";
+import { EmailIcon, LocationIcon, WhatsAppIcon } from "@/components/icons";
 import type { Footer as FooterGlobal } from "@/payload-types";
 import type { LocaleOption, RawUrl } from "@/types";
 import { getMediaUrlAndAlt, getUrl, processText } from "@/utils";
@@ -321,13 +321,31 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
 
               {/* Address */}
               {footer.address.line1 && (
-                <div className="flex items-center gap-3 xl:gap-4">
-                  {/* Text */}
-                  <FooterLink
-                    className="flex flex-col gap-0.5 justify-start"
-                    href={footer.address.url}
-                    target="_blank"
+                <FooterLink
+                  className="flex items-center gap-3 xl:gap-4"
+                  href={footer.address.url}
+                  target="_blank"
+                >
+                  {/* Icon */}
+                  <figure
+                    aria-hidden
+                    className={twMerge(
+                      "relative p-3 rounded-full shrink-0",
+                      "bg-linear-to-br from-primary to-secondary",
+                      "shadow-lg shadow-primary/40",
+                      "border-2 border-primary/30",
+                      "de:p-4",
+                    )}
                   >
+                    <LocationIcon
+                      className={twMerge(
+                        "relative z-10 w-6 h-6 shrink-0 text-white",
+                        "de:w-7 de:h-7",
+                      )}
+                    />
+                  </figure>
+                  {/* Text */}
+                  <div className="flex flex-col gap-0.5 justify-start">
                     {footer.address.line1 && (
                       <span className="w-full whitespace-nowrap opacity-80 font-montserrat text-[15px]">
                         {footer.address.line1}
@@ -339,8 +357,8 @@ const Footer: React.FC<FooterProps> = async ({ className }) => {
                         {footer.address.line3 && <>, {footer.address.line3}</>}
                       </span>
                     )}
-                  </FooterLink>
-                </div>
+                  </div>
+                </FooterLink>
               )}
             </div>
           </div>
