@@ -1,3 +1,4 @@
+import Script from "next/script";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import {
@@ -26,6 +27,19 @@ const HomeLayout = async ({
     <NextIntlClientProvider>
       <html lang={locale} suppressHydrationWarning>
         <head>
+          <Script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=AW-18059067445"
+            strategy="afterInteractive"
+          />
+          <Script id="gtag-init" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-18059067445');
+            `}
+          </Script>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"
