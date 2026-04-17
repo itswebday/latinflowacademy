@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { ButtonLink } from "@/components";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { twMerge } from "tailwind-merge";
 
 type SubscriptionModalProps = {
@@ -58,8 +59,9 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
+  if (typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Dark overlay */}
       <div
@@ -149,7 +151,8 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
           })}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
