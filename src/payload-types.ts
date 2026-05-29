@@ -256,6 +256,7 @@ export interface Page {
         | SellingPointsBlock
         | StoryBlock
         | SyllabusBlock
+        | TeachersBlock
         | TextImageBlock
         | TextBlock
         | VisualBlock
@@ -846,6 +847,55 @@ export interface SyllabusBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'syllabus-block';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeachersBlock".
+ */
+export interface TeachersBlock {
+  showHeading?: boolean | null;
+  heading?: {
+    icon?: (number | null) | Media;
+    text: string;
+  };
+  teachers: {
+    photo: number | Media;
+    name: string;
+    role?: string | null;
+    bio: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * Tags shown as chips under the role, e.g. Salsa, Bachata, Kizomba.
+     */
+    styles?:
+      | {
+          tag: string;
+          id?: string | null;
+        }[]
+      | null;
+    id?: string | null;
+  }[];
+  paddingTop: 'none' | 'small' | 'medium' | 'large';
+  paddingBottom: 'none' | 'small' | 'medium' | 'large';
+  applyCustomId?: boolean | null;
+  customId?: string | null;
+  hidden?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'teachers-block';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1464,6 +1514,7 @@ export interface PagesSelect<T extends boolean = true> {
         'selling-points-block'?: T | SellingPointsBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
         'syllabus-block'?: T | SyllabusBlockSelect<T>;
+        'teachers-block'?: T | TeachersBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
         'visual-block'?: T | VisualBlockSelect<T>;
@@ -1795,6 +1846,41 @@ export interface SyllabusBlockSelect<T extends boolean = true> {
           | T
           | {
               color?: T;
+            };
+        id?: T;
+      };
+  paddingTop?: T;
+  paddingBottom?: T;
+  applyCustomId?: T;
+  customId?: T;
+  hidden?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeachersBlock_select".
+ */
+export interface TeachersBlockSelect<T extends boolean = true> {
+  showHeading?: T;
+  heading?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+      };
+  teachers?:
+    | T
+    | {
+        photo?: T;
+        name?: T;
+        role?: T;
+        bio?: T;
+        styles?:
+          | T
+          | {
+              tag?: T;
+              id?: T;
             };
         id?: T;
       };
@@ -2191,6 +2277,7 @@ export interface Home {
         | SellingPointsBlock
         | StoryBlock
         | SyllabusBlock
+        | TeachersBlock
         | TextImageBlock
         | TextBlock
         | VisualBlock
@@ -2646,6 +2733,7 @@ export interface Price {
         | SellingPointsBlock
         | StoryBlock
         | SyllabusBlock
+        | TeachersBlock
         | TextImageBlock
         | TextBlock
         | VisualBlock
@@ -2843,6 +2931,7 @@ export interface HomeSelect<T extends boolean = true> {
         'selling-points-block'?: T | SellingPointsBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
         'syllabus-block'?: T | SyllabusBlockSelect<T>;
+        'teachers-block'?: T | TeachersBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
         'visual-block'?: T | VisualBlockSelect<T>;
@@ -3229,6 +3318,7 @@ export interface PricesSelect<T extends boolean = true> {
         'selling-points-block'?: T | SellingPointsBlockSelect<T>;
         'story-block'?: T | StoryBlockSelect<T>;
         'syllabus-block'?: T | SyllabusBlockSelect<T>;
+        'teachers-block'?: T | TeachersBlockSelect<T>;
         'text-image-block'?: T | TextImageBlockSelect<T>;
         'text-block'?: T | TextBlockSelect<T>;
         'visual-block'?: T | VisualBlockSelect<T>;

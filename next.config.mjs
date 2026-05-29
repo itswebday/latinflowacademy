@@ -59,6 +59,14 @@ const baseConfig = {
   async rewrites() {
     return [
       {
+        source: "/nl/prijzen",
+        destination: "/nl/prices",
+      },
+      {
+        source: "/nl/rooster",
+        destination: "/nl/schedule",
+      },
+      {
         source: "/nl/evenementen",
         destination: "/nl/events",
       },

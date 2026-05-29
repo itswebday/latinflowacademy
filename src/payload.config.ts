@@ -139,6 +139,11 @@ export default buildConfig({
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
   db: vercelPostgresAdapter({
+    // Disable dev-mode schema auto-push. The FK constraint identifiers for
+    // blocks like call_to_action.visualMobile exceed Postgres's 63-byte name
+    // limit and get truncated, so Drizzle's push never converges and crashes
+    // on boot. Schema changes go through `payload migrate` instead.
+    push: false,
     pool: {
       connectionString: process.env.POSTGRES_URL || "",
     },

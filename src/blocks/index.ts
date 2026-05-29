@@ -6,6 +6,7 @@ import Heading from "./Heading";
 import SellingPoints from "./SellingPoints";
 import Story from "./Story";
 import Syllabus from "./Syllabus";
+import Teachers from "./Teachers";
 import TextImage from "./TextImage";
 import Visual from "./Visual";
 import Text from "./Text";
@@ -19,6 +20,7 @@ export const blockComponents = {
   "selling-points-block": SellingPoints,
   "story-block": Story,
   "syllabus-block": Syllabus,
+  "teachers-block": Teachers,
   "text-image-block": TextImage,
   "visual-block": Visual,
   "text-block": Text,

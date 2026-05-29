@@ -8,24 +8,28 @@ type CardProps = {
   imageUrl?: string;
   imageAlt?: string;
   title?: React.ReactNode;
+  subtitle?: React.ReactNode;
   description?: React.ReactNode;
   leftLabel?: React.ReactNode;
   rightLabel?: React.ReactNode;
   className?: string;
   children?: React.ReactNode;
   color?: "primary" | "blue" | "green" | "red" | "orange" | "yellow";
+  imageShape?: "banner" | "circle";
 };
 
 const Card: React.FC<CardProps> = ({
   imageUrl,
   imageAlt,
   title,
+  subtitle,
   description,
   leftLabel,
   rightLabel,
   className,
   children,
   color = "primary",
+  imageShape = "banner",
 }) => {
   const getColorClasses = () => {
     const colorMap = {
@@ -78,6 +82,18 @@ const Card: React.FC<CardProps> = ({
       red: "group-hover:text-red",
       orange: "group-hover:text-orange",
       yellow: "group-hover:text-yellow",
+    };
+    return colorMap[color] || colorMap.primary;
+  };
+
+  const getSubtitleColor = () => {
+    const colorMap = {
+      primary: "text-primary/80",
+      blue: "text-blue/80",
+      green: "text-green/80",
+      red: "text-red/80",
+      orange: "text-orange/80",
+      yellow: "text-yellow/80",
     };
     return colorMap[color] || colorMap.primary;
   };
@@ -161,8 +177,28 @@ const Card: React.FC<CardProps> = ({
         )}
       />
 
+      {/* Circular avatar (e.g. teacher headshots) */}
+      {imageUrl && imageShape === "circle" && (
+        <div className="relative z-10 flex w-full justify-center pt-10">
+          <figure
+            className={twMerge(
+              "relative w-36 h-36 rounded-full overflow-hidden border-4",
+              getBorderColor(),
+            )}
+          >
+            <Image
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              src={imageUrl}
+              alt={imageAlt || ""}
+              fill={true}
+              sizes="144px"
+            />
+          </figure>
+        </div>
+      )}
+
       {/* Image at the top with fixed height */}
-      {imageUrl && (
+      {imageUrl && imageShape === "banner" && (
         <div className="relative z-10 w-full h-48 overflow-hidden">
           {/* Image overlay gradient */}
           <div className="absolute inset-0 z-10 bg-linear-to-b from-transparent via-transparent to-dark/40 pointer-events-none" />
@@ -179,17 +215,36 @@ const Card: React.FC<CardProps> = ({
 
       {/* Content wrapper */}
       <div className="flex flex-col items-start gap-5 px-10 py-8 w-full flex-1">
-        {/* Title */}
-        {title && (
-          <h3
+        {/* Title (+ optional subtitle) */}
+        {(title || subtitle) && (
+          <div
             className={twMerge(
-              "relative z-10 text-xl font-bold text-white leading-tight",
-              "transition-colors duration-300",
-              getTitleHoverColor(),
+              "relative z-10 flex flex-col gap-1",
+              imageShape === "circle" && "w-full items-center text-center",
             )}
           >
-            {title}
-          </h3>
+            {title && (
+              <h3
+                className={twMerge(
+                  "text-xl font-bold text-white leading-tight",
+                  "transition-colors duration-300",
+                  getTitleHoverColor(),
+                )}
+              >
+                {title}
+              </h3>
+            )}
+            {subtitle && (
+              <p
+                className={twMerge(
+                  "text-sm font-medium leading-snug",
+                  getSubtitleColor(),
+                )}
+              >
+                {subtitle}
+              </p>
+            )}
+          </div>
         )}
 
         {/* Description */}
