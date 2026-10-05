@@ -1,0 +1,10 @@
+// Assets-only Worker serving the hero background video (see docs/hero-video.md)
+{
+  "name": "latinflowacademy-media",
+  "compatibility_date": "2026-05-01",
+  "assets": {
+    "directory": "./public",
+  },
+  "workers_dev": true,
+  "preview_urls": false,
+}

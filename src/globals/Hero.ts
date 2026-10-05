@@ -37,28 +37,6 @@ export const Hero: GlobalConfig = {
     },
   },
   fields: [
-    {
-      name: "background",
-      label: "Background",
-      type: "group",
-      required: true,
-      fields: [
-        {
-          name: "vimeoEmbedCode",
-          label: "Vimeo embed code",
-          type: "textarea",
-          defaultValue: "",
-          required: true,
-        },
-        {
-          name: "firstFrame",
-          label: "First frame (fallback image on the background)",
-          type: "upload",
-          relationTo: "media",
-          required: true,
-        },
-      ],
-    },
     ...getHeadingFields({
       hiddenFields: ["icon"],
     }),

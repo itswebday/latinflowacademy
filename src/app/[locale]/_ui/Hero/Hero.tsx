@@ -1,19 +1,19 @@
 import { getLocale } from "next-intl/server";
 import { draftMode } from "next/headers";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import { twMerge } from "tailwind-merge";
 import {
   AnimatedWrapper,
-  BackgroundImage,
   ButtonLink,
   HeadingWithIcon,
   type ButtonLinkProps,
 } from "@/components";
+import { HERO_VIDEO } from "@/constants";
 import type { LocaleOption, RawUrl } from "@/types";
 import { getCachedGlobal, getGlobal } from "@/utils/server";
 import { getMediaUrlAndAlt, getUrl, processText } from "@/utils";
+import HeroVideo from "./HeroVideo";
 import ScrollDownIndicator from "./ScrollDownIndicator";
 
 const Hero = async () => {
@@ -27,88 +27,25 @@ const Hero = async () => {
     return null;
   }
 
-  // Parse Vimeo embed code
-  const parseVimeoEmbed = (embedCode: string | null | undefined) => {
-    if (!embedCode) {
-      return null;
-    }
-
-    // Decode HTML entities (e.g., &amp; -> &)
-    const decodedCode = embedCode
-      .replace(/&amp;/g, "&")
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">");
-
-    // Extract iframe src using regex (more flexible pattern)
-    const iframeSrcMatch = decodedCode.match(/src=["']([^"']+)["']/);
-    let iframeSrc = iframeSrcMatch ? iframeSrcMatch[1] : null;
-
-    if (!iframeSrc) {
-      return null;
-    }
-
-    // Extract title
-    const titleMatch = decodedCode.match(/title=["']([^"']+)["']/);
-    const title = titleMatch ? titleMatch[1] : "Latin Flow Academy Hero";
-
-    // Extract allow attribute
-    const allowMatch = decodedCode.match(/allow=["']([^"']+)["']/);
-    const allow = allowMatch
-      ? allowMatch[1]
-      : "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share";
-
-    // Extract referrerPolicy
-    const referrerPolicyMatch = decodedCode.match(
-      /referrerpolicy=["']([^"']+)["']/i,
-    );
-    const referrerPolicy = referrerPolicyMatch
-      ? referrerPolicyMatch[1]
-      : "strict-origin-when-cross-origin";
-
-    // Add background video parameters to src
-    try {
-      const url = new URL(iframeSrc);
-      url.searchParams.set("autoplay", "1");
-      url.searchParams.set("muted", "1");
-      url.searchParams.set("loop", "1");
-      url.searchParams.set("background", "1");
-
-      return {
-        src: url.toString(),
-        title,
-        allow,
-        referrerPolicy,
-      };
-    } catch (error) {
-      // If URL parsing fails, return null
-      console.error("Failed to parse Vimeo URL:", error);
-      return null;
-    }
-  };
-
-  const background = (
-    hero as {
-      background?: { vimeoEmbedCode?: string | null; firstFrame?: unknown };
-    }
-  ).background;
-
-  // Parse Vimeo embed code, or use fallback if not set
-  let vimeoData = parseVimeoEmbed(background?.vimeoEmbedCode);
-  if (!vimeoData && !background?.vimeoEmbedCode) {
-    // Fallback to hardcoded video if background field is not set
-    vimeoData = {
-      src: "https://player.vimeo.com/video/1157690323?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1",
-      title: "Latin Flow Academy Hero",
-      allow:
-        "autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share",
-      referrerPolicy: "strict-origin-when-cross-origin" as const,
-    };
-  }
-  const { url: firstFrameUrl, alt: firstFrameAlt } = background?.firstFrame
-    ? getMediaUrlAndAlt(background.firstFrame)
-    : { url: "/assets/hero-image.webp", alt: "Latin Flow Academy" };
+  // Poster (the video's first frame), art-directed per orientation
+  const posterProps = {
+    alt: "",
+    sizes: "100vw",
+    loading: "eager",
+    fetchPriority: "high",
+  } as const;
+  const { props: portraitPoster } = getImageProps({
+    ...posterProps,
+    src: HERO_VIDEO.portrait.poster,
+    width: HERO_VIDEO.portrait.width,
+    height: HERO_VIDEO.portrait.height,
+  });
+  const { props: landscapePoster } = getImageProps({
+    ...posterProps,
+    src: HERO_VIDEO.landscape.poster,
+    width: HERO_VIDEO.landscape.width,
+    height: HERO_VIDEO.landscape.height,
+  });
 
   // First button URL
   const buttonUrl = getUrl(hero.button as RawUrl, {
@@ -145,7 +82,7 @@ const Hero = async () => {
         "relative w-full h-screen min-h-[800px] max-h-[min(1200px,240vw)] px-8",
       )}
     >
-      {/* Background image and video container */}
+      {/* Background poster and video container */}
       <div
         className={twMerge(
           "absolute inset-0 z-0 overflow-hidden",
@@ -153,34 +90,27 @@ const Hero = async () => {
           "[-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_30%,transparent_100%)]",
         )}
       >
-        {/* Background image */}
-        {firstFrameUrl && (
-          <BackgroundImage src={firstFrameUrl} alt={firstFrameAlt} />
-        )}
+        {/* Poster */}
+        <picture>
+          <source
+            media="(orientation: portrait)"
+            srcSet={portraitPoster.srcSet ?? portraitPoster.src}
+            sizes={portraitPoster.sizes}
+          />
+          <img
+            {...landscapePoster}
+            className="absolute inset-0 w-full h-full object-cover"
+            alt=""
+          />
+        </picture>
 
-        {/* Background Vimeo video (cover: fill hero in both dimensions) */}
-        {vimeoData && (
-          <div className="z-1 absolute inset-0 overflow-hidden">
-            <iframe
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full border-0"
-              style={{
-                width: "max(100%, 177.78vh)",
-                height: "max(100%, 56.25vw)",
-              }}
-              allow={vimeoData.allow}
-              referrerPolicy={
-                vimeoData.referrerPolicy as "strict-origin-when-cross-origin"
-              }
-              src={vimeoData.src}
-              title={vimeoData.title}
-            />
-          </div>
-        )}
+        {/* Background video */}
+        <HeroVideo
+          className="z-1"
+          landscapeSrc={HERO_VIDEO.landscape.src}
+          portraitSrc={HERO_VIDEO.portrait.src}
+        />
       </div>
-      <Script
-        src="https://player.vimeo.com/api/player.js"
-        strategy="afterInteractive"
-      />
 
       {/* Dark overlay */}
       <div className="absolute inset-0 z-2 bg-dark/20" aria-hidden="true" />
